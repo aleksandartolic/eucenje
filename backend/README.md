@@ -7,6 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+<p align="center">
+    php -v > 8.0
+    
+    Koraci za pokretanje API-ja: 
+    git clone <url> --branch master
+    cd eucenje/backend
+    composer install
+    cp .env.example .env (izmeniti .env varijable za bazu ukoliko je potrebno)
+    php artisan migrate
+    php artisan serve
+    
+    API bi trebalo da bude dostupan na localhost:8000
+</p>
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
