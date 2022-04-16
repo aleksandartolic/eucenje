@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 
 export default function Home() {
-    const { user } = useAuth({ middleware: 'guest' })
+    const { user } = useAuth()
 
     return (
         <>

@@ -11,7 +11,7 @@ import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 
 const ForgotPassword = () => {
-    const { forgotPassword } = useAuth({ middleware: 'guest' })
+    const { forgotPassword } = useAuth()
 
     const [email, setEmail] = useState('')
     const [errors, setErrors] = useState([])

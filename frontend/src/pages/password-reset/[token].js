@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 const PasswordReset = () => {
     const router = useRouter()
 
-    const { resetPassword } = useAuth({ middleware: 'guest' })
+    const { resetPassword } = useAuth()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

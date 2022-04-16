@@ -7,9 +7,7 @@ import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 
 const VerifyEmail = () => {
-    const { logout, resendEmailVerification } = useAuth({
-        middleware: 'auth',
-    })
+    const { logout, resendEmailVerification } = useAuth()
 
     const [status, setStatus] = useState(null)
 

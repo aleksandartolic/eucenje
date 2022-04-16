@@ -15,7 +15,6 @@ const Login = () => {
     const router = useRouter()
 
     const { login } = useAuth({
-        middleware: 'guest',
         redirectIfAuthenticated: '/dashboard',
     })
 
