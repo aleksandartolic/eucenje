@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::put('/createCourse', [CourseController::class, 'store'])
+    ->name('create.course');
+
+Route::put('/updateCourse', [CourseController::class, 'update'])
+    ->name('update.course');
+
+Route::delete('/deleteCourse/{course_id}', [CourseController::class, 'delete'])
+    ->name('delete.course');
+
+Route::post('/uploadMedium', [CourseMediaController::class, 'store'])
+    ->name('upload.medium');
+
+Route::put('/updateMedium', [CourseMediaController::class, 'update'])
+    ->name('update.medium');
+
+Route::delete('/deleteMedium/{cm_id}', [CourseMediaController::class, 'delete'])
+    ->name('delete.medium');
