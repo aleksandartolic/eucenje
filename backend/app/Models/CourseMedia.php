@@ -10,4 +10,13 @@ class CourseMedia extends Model
     use HasFactory;
 
     protected $primaryKey = "cm_id";
+
+    protected $fillable = [
+        'course_id',
+        'title',
+        'duration',
+        'filename',
+        'description',
+        'full_path',
+    ];
 }
