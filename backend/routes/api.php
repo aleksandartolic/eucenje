@@ -37,3 +37,12 @@ Route::put('/updateMedium', [CourseMediaController::class, 'update'])
 
 Route::delete('/deleteMedium/{cm_id}', [CourseMediaController::class, 'delete'])
     ->name('delete.medium');
+
+Route::get('/listUsers', [\App\Http\Controllers\AdminDashboardController::class, 'listUsers'])
+    ->name('users.list.admin');
+
+Route::get('/listCourses', [\App\Http\Controllers\AdminDashboardController::class, 'listCourses'])
+    ->name('courses.list.admin');
+
+Route::get('/listMedia', [\App\Http\Controllers\AdminDashboardController::class, 'listMedia'])
+    ->name('courseMedia.list.admin');
