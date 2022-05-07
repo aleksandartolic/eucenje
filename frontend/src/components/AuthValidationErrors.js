@@ -1,19 +1,28 @@
+import styled from 'styled-components'
 const AuthValidationErrors = ({ errors = [], ...props }) => (
     <>
         {errors.length > 0 && (
-            <div {...props}>
-                <div className="font-medium text-red-600">
-                    Whoops! Something went wrong.
-                </div>
+            <ErrorWrapper {...props}>
+                <div>Whoops! Something went wrong.</div>
 
-                <ul className="mt-3 list-disc list-inside text-sm text-red-600">
+                <ul>
                     {errors.map(error => (
                         <li key={error}>{error}</li>
                     ))}
                 </ul>
-            </div>
+            </ErrorWrapper>
         )}
     </>
 )
 
 export default AuthValidationErrors
+
+const ErrorWrapper = styled.div`
+    font-size: 1.4rem;
+    color: red;
+    margin-bottom: 2rem;
+
+    ul {
+        list-style: none;
+    }
+`
