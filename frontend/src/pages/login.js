@@ -1,121 +1,135 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
-import AuthCard from '@/components/AuthCard'
-import AuthSessionStatus from '@/components/AuthSessionStatus'
 import AuthValidationErrors from '@/components/AuthValidationErrors'
-import Button from '@/components/Button'
-import GuestLayout from '@/components/Layouts/GuestLayout'
-import Input from '@/components/Input'
-import Label from '@/components/Label'
-import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import image from '../assets/images/backgroundLogin.jpg'
+import FormWrapper from '../components/FormWrapper'
+import { Button, TextField, Typography } from '@mui/material'
+import { useState } from 'react'
+import Link from 'next/link'
 
 const Login = () => {
-    const router = useRouter()
-
-    const { login } = useAuth({
-        redirectIfAuthenticated: '/dashboard',
-    })
-
+    const { login } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
-
-    useEffect(() => {
-        if (router.query.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.query.reset))
-        } else {
-            setStatus(null)
-        }
-    })
-
+    const [loading, setLoading] = useState(false)
     const submitForm = async event => {
+        setLoading(true)
         event.preventDefault()
-
         login({ email, password, setErrors, setStatus })
+        setLoading(false)
+    }
+    if (loading) {
+        return <p>Loading</p>
     }
 
     return (
-        <GuestLayout>
-            <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
-                }>
-
-                {/* Session Status */}
-                <AuthSessionStatus className="mb-4" status={status} />
-
-                {/* Validation Errors */}
-                <AuthValidationErrors className="mb-4" errors={errors} />
-
-                <form onSubmit={submitForm}>
-                    {/* Email Address */}
-                    <div>
-                        <Label htmlFor="email">Email</Label>
-
-                        <Input
+        <LoginLayout image={image}>
+            <LoginWrapper>
+                <FormWrapper>
+                    <Typography
+                        style={{
+                            marginBottom: '3rem',
+                            textAlign: 'center',
+                            color: '#6495ED',
+                        }}
+                        variant="h3">
+                        A d e m y
+                    </Typography>
+                    <AuthValidationErrors
+                        style={{ marginBottom: '20px' }}
+                        errors={errors}
+                    />
+                    <form
+                        style={{ width: '100%', height: '100%' }}
+                        onSubmit={submitForm}>
+                        <TextField
+                            inputProps={{ style: { fontSize: 16 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 13 } }}
+                            style={{
+                                width: '100%',
+                                margin: '5px',
+                                marginBottom: '2rem',
+                            }}
+                            label="Email"
+                            variant="outlined"
                             id="email"
                             type="email"
                             value={email}
-                            className="block mt-1 w-full"
                             onChange={event => setEmail(event.target.value)}
                             required
                             autoFocus
                         />
-                    </div>
-
-                    {/* Password */}
-                    <div className="mt-4">
-                        <Label htmlFor="password">Password</Label>
-
-                        <Input
+                        <br />
+                        <TextField
+                            inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 13 } }}
+                            style={{
+                                width: '100%',
+                                margin: '5px',
+                                marginBottom: '2rem',
+                            }}
+                            label="Password"
+                            variant="outlined"
                             id="password"
                             type="password"
                             value={password}
-                            className="block mt-1 w-full"
                             onChange={event => setPassword(event.target.value)}
                             required
                             autoComplete="current-password"
                         />
-                    </div>
+                        <br />
 
-                    {/* Remember Me */}
-                    <div className="block mt-4">
-                        <label
-                            htmlFor="remember_me"
-                            className="inline-flex items-center">
-                            <input
-                                id="remember_me"
-                                type="checkbox"
-                                name="remember"
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
-
-                            <span className="ml-2 text-sm text-gray-600">
-                                Remember me
-                            </span>
-                        </label>
-                    </div>
-
-                    <div className="flex items-center justify-end mt-4">
-                        <Link href="/forgot-password">
-                            <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                                Forgot your password?
-                            </a>
-                        </Link>
-
-                        <Button className="ml-3">Login</Button>
-                    </div>
-                </form>
-            </AuthCard>
-        </GuestLayout>
+                        <Typography variant="h5">
+                            {' '}
+                            You don't have an account ?{' '}
+                            <Link prefetch href="/register">
+                                <StyledLink href="/register">
+                                    Register
+                                </StyledLink>
+                            </Link>
+                        </Typography>
+                        <br />
+                        <Button
+                            style={{
+                                fontSize: 10,
+                                width: '90px',
+                                height: '30px',
+                            }}
+                            type="submit"
+                            variant="contained"
+                            color="primary">
+                            login
+                        </Button>
+                    </form>
+                </FormWrapper>
+            </LoginWrapper>
+        </LoginLayout>
     )
 }
 
 export default Login
+
+const LoginWrapper = styled.div`
+    position: absolute;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`
+
+const LoginLayout = styled.div`
+    background: url(${props => props.image.src});
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+`
+const StyledLink = styled.a`
+    text-decoration: none;
+    color: #93b5f2;
+    :visited {
+        color: #93b5f2;
+    }
+`
