@@ -10,4 +10,10 @@ class Course extends Model
     use HasFactory;
 
     protected $primaryKey = "course_id";
+
+    protected $fillable = [
+        'uid',
+        'name',
+        'description'
+    ];
 }
