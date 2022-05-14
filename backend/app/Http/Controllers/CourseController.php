@@ -87,19 +87,4 @@ class CourseController extends Controller
         }
     }
 
-    public function listUserCourses(Request $request)
-    {
-        if(!$request->uid) {
-            return response()->json(['success' => false, 'message' => 'You have to provide user id (uid)!']);
-        }
-
-        try {
-            $courses = Course::where('uid', '=', $request->uid)->get();
-
-            return response()->json(['success' => true, 'courses' => $courses]);
-        } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting course.']);
-        }
-    }
-
 }
