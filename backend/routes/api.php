@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMediaController;
 use Illuminate\Http\Request;
@@ -23,6 +24,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::put('/createCourse', [CourseController::class, 'store'])
     ->name('create.course');
 
+Route::delete('/deleteUser/{uid}', [AdminDashboardController::class, 'deleteUser'])
+    ->name('delete.user');
+
+Route::delete('/deleteUsers', [AdminDashboardController::class, 'deleteUsers'])
+    ->name('delete.users');
+
 Route::put('/updateCourse', [CourseController::class, 'update'])
     ->name('update.course');
 
@@ -38,13 +45,13 @@ Route::put('/updateMedium', [CourseMediaController::class, 'update'])
 Route::delete('/deleteMedium/{cm_id}', [CourseMediaController::class, 'delete'])
     ->name('delete.medium');
 
-Route::get('/listUsers', [\App\Http\Controllers\AdminDashboardController::class, 'listUsers'])
+Route::get('/listUsers', [AdminDashboardController::class, 'listUsers'])
     ->name('users.list.admin');
 
-Route::get('/listCourses', [\App\Http\Controllers\AdminDashboardController::class, 'listCourses'])
+Route::get('/listCourses', [AdminDashboardController::class, 'listCourses'])
     ->name('courses.list.admin');
 
-Route::get('/listMedia', [\App\Http\Controllers\AdminDashboardController::class, 'listMedia'])
+Route::get('/listMedia', [AdminDashboardController::class, 'listMedia'])
     ->name('courseMedia.list.admin');
 
 Route::get('/listUserCourses/{uid}', [CourseController::class, 'listUserCourses'])
