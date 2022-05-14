@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseMedia;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -49,6 +50,37 @@ class AdminDashboardController extends Controller
         } else {
             $allCourseMedia = CourseMedia::all();
             return response()->json(['response' => $allCourseMedia]);
+        }
+    }
+
+    public function deleteUser(Request $request)
+    {
+        try {
+            $user = User::findOrFail($request->uid);
+            $user->delete();
+
+            return response()->json(['success' => true, 'message' => 'User successfully deleted.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting user.']);
+        }
+    }
+
+    public function deleteUsers(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        if(User::whereIn('id', $ids) === null) {
+            return response()->json(['success' => false, 'message' => 'No users found.']);
+        }
+
+        try {
+            foreach(User::whereIn('id', $ids)->get() as $usr) {
+                $usr->delete();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Users successfully deleted.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting user.']);
         }
     }
 }
