@@ -8,7 +8,7 @@ export const useAuth = () => {
         setErrors([])
 
         axios
-            .post('http://127.0.0.1:8000/register', props)
+            .post('http://127.0.0.1:8001/register', props)
             .then(res => {
                 if (res.data.success) {
                     router.push('/login')
@@ -22,17 +22,33 @@ export const useAuth = () => {
                 setErrors(Object.values(error.response.data.errors).flat())
             })
     }
+    const addUser = async ({ setErrors, ...props }) => {
+        setErrors([])
+
+        axios
+            .post('http://127.0.0.1:8001/register', props)
+            .then(res => {
+                return res
+            })
+            .catch(error => {
+                console.log(error.response.data)
+                // console.log(error)
+                if (error.response.status !== 422) throw error
+                setErrors(Object.values(error.response.data.errors).flat())
+            })
+
+    }
 
     const login = async ({ setErrors, setStatus, ...props }) => {
         setErrors([])
         setStatus(null)
 
         axios
-            .post('http://127.0.0.1:8000/login', props)
+            .post('http://127.0.0.1:8001/login', props)
             .then(res => {
                 console.log(res.data)
                 if (res.data.success) {
-                    router.push('/dashboard')
+                    router.push('/admin')
                 } else {
                     setErrors(['Wrong password or username'])
                 }
@@ -46,7 +62,7 @@ export const useAuth = () => {
     }
 
     const logout = async () => {
-        const data = await axios.post('http://127.0.0.1:8000/logout')
+        const data = await axios.post('http://127.0.0.1:8001/logout')
         console.log(data)
         window.location.pathname = '/login'
     }
@@ -55,5 +71,6 @@ export const useAuth = () => {
         register,
         login,
         logout,
+        addUser,
     }
 }

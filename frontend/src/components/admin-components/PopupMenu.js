@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const BasicMenu = props => {
+
+
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
 
@@ -23,6 +25,7 @@ const BasicMenu = props => {
     }
 
     return (
+
         <div>
             <MoreIcon
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -38,7 +41,7 @@ const BasicMenu = props => {
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}>
-                <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                <MenuItem onClick={props.deleteUser}>Delete</MenuItem>
                 <MenuItem>
                     <Link href="/userId">Edit</Link>
                 </MenuItem>

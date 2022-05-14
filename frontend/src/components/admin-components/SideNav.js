@@ -21,18 +21,19 @@ const SideNav = () => {
                 <LogoDiv>
                     <Typography variant="h3">A d e m y</Typography>
                 </LogoDiv>
-                <List>
+                <List key={Math.random()* 100000}>
                     {['Media', 'Users', 'Courses'].map((text, index) => (
                         <Link
-                            key={text}
+                            key={Math.random()* 10000}
                             style={{ textDecoration: 'none' }}
                             href={'/' + text.toLowerCase()}>
                             <ListItem
+                                key={Math.random()* 100000}
                                 className={
                                     router.pathname == '/' ? 'active' : ''
                                 }
-                                key={text}>
-                                <ListItemIcon>
+                                >
+                                <ListItemIcon key={Math.random()* 100000}>
                                     {index % 2 === 0 ? (
                                         <InboxIcon />
                                     ) : (
@@ -40,8 +41,9 @@ const SideNav = () => {
                                     )}
                                 </ListItemIcon>
                                 <ListItemText
+                                    key={Math.random()* 100000}
                                     primary={
-                                        <Typography fontSize={16}>
+                                        <Typography fontSize={14}>
                                             {text}
                                         </Typography>
                                     }
@@ -50,12 +52,12 @@ const SideNav = () => {
                         </Link>
                     ))}
                 </List>
-                <Divider />
-                <List>
+                <Divider key={Math.random()* 100000} />
+                <List key={Math.random()* 100000}>
                     {['Courses Stats', 'User Stats', 'Logout'].map(
                         (text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>
+                            <ListItem button key={Math.random()* 100000}>
+                                <ListItemIcon key={Math.random()* 100000}>
                                     {index % 2 === 0 ? (
                                         <InboxIcon />
                                     ) : (
@@ -63,8 +65,9 @@ const SideNav = () => {
                                     )}
                                 </ListItemIcon>
                                 <ListItemText
+                                    key={Math.random()* 100000}
                                     primary={
-                                        <Typography fontSize={16}>
+                                        <Typography fontSize={14}>
                                             {text}
                                         </Typography>
                                     }
