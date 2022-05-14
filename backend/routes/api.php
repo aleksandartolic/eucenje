@@ -46,3 +46,6 @@ Route::get('/listCourses', [\App\Http\Controllers\AdminDashboardController::clas
 
 Route::get('/listMedia', [\App\Http\Controllers\AdminDashboardController::class, 'listMedia'])
     ->name('courseMedia.list.admin');
+
+Route::get('/listUserCourses/{uid}', [CourseController::class, 'listUserCourses'])
+    ->name('courses.list.users');
