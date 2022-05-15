@@ -14,7 +14,6 @@ const BasicMenu = props => {
 
     const handleClick = event => {
         props.stopPropagation(event)
-
         setAnchorEl(event.currentTarget)
     }
     const handleClose = () => {
@@ -42,9 +41,7 @@ const BasicMenu = props => {
                     'aria-labelledby': 'basic-button',
                 }}>
                 <MenuItem onClick={props.deleteUser}>Delete</MenuItem>
-                <MenuItem>
-                    <Link href="/userId">Edit</Link>
-                </MenuItem>
+                <MenuItem onClick={props.editUser}>Edit</MenuItem>
             </Menu>
         </div>
     )
