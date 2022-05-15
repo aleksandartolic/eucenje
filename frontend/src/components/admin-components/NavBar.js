@@ -9,6 +9,7 @@ import Drawer from '@mui/material/Drawer'
 import SideNav from '@/components/admin-components/SideNav'
 import PropTypes from 'prop-types'
 import CssBaseline from '@mui/material/CssBaseline'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 const drawerWidth = 240
 const NavBar = props => {
@@ -29,7 +30,11 @@ const NavBar = props => {
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
                 }}>
-                <Toolbar>
+                <Toolbar
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -41,6 +46,26 @@ const NavBar = props => {
                     <Typography variant="h6" noWrap component="div">
                         Admin Dashboard
                     </Typography>
+                    <Box display="flex" alignItems="center">
+                        <Box mr={3}>
+                            <Typography
+                                style={{ cursor: 'pointer' }}
+                                variant="h6"
+                                noWrap
+                                component="div">
+                                Go to frontend
+                            </Typography>
+                        </Box>
+                        <Box mr={5}>
+                            <Typography
+                                style={{ cursor: 'pointer' }}
+                                variant="h6"
+                                noWrap
+                                component="div">
+                                <AccountCircleIcon fontSize="large" />
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Box
