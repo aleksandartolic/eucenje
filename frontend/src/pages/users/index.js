@@ -1,26 +1,23 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
 import BasicMenu from '@/components/admin-components/PopupMenu'
 import axios from '@/lib/axios'
-
 const drawerWidth = 240
 import AdminLayout from '@/components/admin-components/AdminLayout'
 import Box from '@mui/material/Box'
-import Typography from "@mui/material/Typography";
-import ComposedTextField from "@/components/admin-components/AddForm";
-import AuthValidationErrors from "@/components/AuthValidationErrors";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import {Button} from "@mui/material";
-import {useAuth} from "@/hooks/auth";
-
+import Typography from '@mui/material/Typography'
+import AuthValidationErrors from '@/components/AuthValidationErrors'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import { Button } from '@mui/material'
+import { useAuth } from '@/hooks/auth'
+import { useRouter } from 'next/router'
 
 const Users = () => {
-
-   const [rows, setRows] = useState (null);
-   const [selectedRowId, setSelectedRowId] = useState(null);
+    const [rows, setRows] = useState(null)
+    const [selectedRowId, setSelectedRowId] = useState(null)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -29,10 +26,13 @@ const Users = () => {
     const [username, setUsername] = useState('')
     const [errors, setErrors] = useState([])
     const { addUser } = useAuth()
+    const router = useRouter()
 
-
-    const addUserHandler = (e)=> {
-        e.preventDefault();
+    const editUser = e => {
+        router.push(`/users/${selectedRowId}`)
+    }
+    const addUserHandler = e => {
+        e.preventDefault()
         addUser({
             name,
             email,
@@ -41,30 +41,27 @@ const Users = () => {
             username,
             role,
             setErrors,
-        });
-        setName("");
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setPasswordConfirmation("");
-        setRole("");
+        })
+        setName('')
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setPasswordConfirmation('')
+        setRole('')
     }
 
-
-
-  const handleDelete = () =>{
-
-        axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`);
-  }
+    const handleDelete = () => {
+        axios.delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
+    }
 
     const columns = [
-        { field: 'id', headerName: 'ID', flex:1 },
-        { field: 'name', headerName: 'Name', flex:1 },
-        { field: 'email', headerName: 'Email', flex:1 },
+        { field: 'id', headerName: 'ID', flex: 1 },
+        { field: 'name', headerName: 'Name', flex: 1 },
+        { field: 'email', headerName: 'Email', flex: 1 },
         {
             field: 'username',
             headerName: 'Username',
-            flex:1,
+            flex: 1,
         },
         {
             disableColumnMenu: true,
@@ -79,12 +76,12 @@ const Users = () => {
                 return (
                     <BasicMenu
                         stopPropagation={stopPropagation}
-                        key={Math.floor(Math.random() * 1000)}
-                        deleteUser = {handleDelete}
+                        deleteUser={handleDelete}
+                        editUser={editUser}
                     />
                 )
             },
-            flex:1,
+            flex: 1,
         },
         {
             disableColumnMenu: true,
@@ -94,24 +91,30 @@ const Users = () => {
                     fontSize="large"
                     sx={{ cursor: 'pointer', marginTop: '20px' }}
                     onClick={() => {
-                       axios.delete(`http://localhost:8001/deleteUsers/${selectedRowId.join(',')}`,{
-                       }).then((value)=>{
-                           console.log(value);
-                       }).catch((error)=>{
-                       })
+                        axios
+                            .delete(
+                                `http://localhost:8000/deleteUsers/${selectedRowId.join(
+                                    ',',
+                                )}`,
+                                {},
+                            )
+                            .then(value => {
+                                console.log(value)
+                            })
+                            .catch(error => {})
                     }}
                 />
             ),
-            flex:1,
+            flex: 1,
             sortable: false,
             headerAlign: 'center',
         },
     ]
-    useEffect(()=>{
-        axios.get("http://localhost:8001/listUsers").then(value => {
-            setRows(value.data.response);
-        } )
-    },[handleDelete,addUser])
+    useEffect(() => {
+        axios.get('http://localhost:8000/listUsers').then(value => {
+            setRows(value.data.response)
+        })
+    }, [handleDelete, addUser])
 
     return (
         <Fragment>
@@ -124,27 +127,23 @@ const Users = () => {
                         p: 7,
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
                     }}>
-                        <Box pb={4} pl={2}>
-                            <Typography variant="h4">
-                                Users
-                            </Typography>
-                        </Box>
-                        <Box  pt={2} sx={{ height: 400, width: '100%' }}>
-                            <DataGrid
-                                onSelectionModelChange={(id) => {
-                                   setSelectedRowId(id)
-                                }}
-                                rows={rows}
-                                columns={columns}
-                                pageSize={5}
-                                rowsPerPageOptions={[5]}
-                                checkboxSelection
-                            />
-                        </Box>
-                    <Box mt={15}  pl={2}>
-                        <Typography variant="h4">
-                            Add user
-                        </Typography>
+                    <Box pb={4} pl={2}>
+                        <Typography variant="h4">Users</Typography>
+                    </Box>
+                    <Box pt={2} sx={{ height: 400, width: '100%' }}>
+                        <DataGrid
+                            onSelectionModelChange={id => {
+                                setSelectedRowId(id)
+                            }}
+                            rows={rows}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                        />
+                    </Box>
+                    <Box mt={15} pl={2}>
+                        <Typography variant="h4">Add user</Typography>
                     </Box>
                     <Box pt={5}>
                         <Fragment>
@@ -159,70 +158,94 @@ const Users = () => {
                                 pl={0}
                                 component="form"
                                 sx={{
-                                    width:"600px",
-                                    display:"flex",
-                                    flexDirection:"column",
-                                    justifyContent:'space-between',
-                                    borderRadius:'10px',
+                                    width: '600px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    borderRadius: '10px',
                                     '& > :not(style)': { m: 1 },
                                 }}
                                 noValidate
-                                autoComplete="off"
-                            >
-
+                                autoComplete="off">
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Name</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Name
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         value={name}
-                                        onChange={event => setName(event.target.value)}
+                                        onChange={event =>
+                                            setName(event.target.value)
+                                        }
                                         label="Name"
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Email</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Email
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         value={email}
-                                        onChange={event => setEmail(event.target.value)}
+                                        onChange={event =>
+                                            setEmail(event.target.value)
+                                        }
                                         label="Email"
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Username</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Username
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         value={username}
-                                        onChange={event => setUsername(event.target.value)}
+                                        onChange={event =>
+                                            setUsername(event.target.value)
+                                        }
                                         label="username"
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Password</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Password
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         value={password}
                                         type="password"
-                                        onChange={event => setPassword(event.target.value)}
+                                        onChange={event =>
+                                            setPassword(event.target.value)
+                                        }
                                         label="Password"
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Confirm password</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Confirm password
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         type="password"
                                         value={confirmPassword}
-                                        onChange={event => setPasswordConfirmation(event.target.value)}
+                                        onChange={event =>
+                                            setPasswordConfirmation(
+                                                event.target.value,
+                                            )
+                                        }
                                         label="Confirm Password"
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">Role</InputLabel>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Role
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="component-outlined"
                                         value={role}
-                                        onChange={event => setRole(event.target.value)}
+                                        onChange={event =>
+                                            setRole(event.target.value)
+                                        }
                                         label="Role"
                                     />
                                 </FormControl>
@@ -242,8 +265,6 @@ const Users = () => {
                             </Box>
                         </Fragment>
                     </Box>
-
-
                 </Box>
                 );
             </AdminLayout>
