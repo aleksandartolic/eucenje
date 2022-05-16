@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMediaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,3 +57,6 @@ Route::get('/listMedia', [AdminDashboardController::class, 'listMedia'])
 
 Route::get('/listUserCourses/{uid}', [CourseController::class, 'listUserCourses'])
     ->name('courses.list.users');
+
+Route::get('/getUser/{uid}', [RegisteredUserController::class, 'getUser'])
+    ->name('user.get');
