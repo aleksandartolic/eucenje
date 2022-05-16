@@ -100,4 +100,14 @@ class CourseMediaController extends Controller
             return response()->json(['success' => false, 'message' => 'Error deleting medium.']);
         }
     }
+
+    public function getMedium(Request $request)
+    {
+        try {
+            $media = CourseMedia::findOrFail($request->mid);
+            return response()->json(['success' => true, 'media' => $media]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'user' => 'Unable to get medium.']);
+        }
+    }
 }

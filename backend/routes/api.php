@@ -60,3 +60,6 @@ Route::get('/listUserCourses/{uid}', [CourseController::class, 'listUserCourses'
 
 Route::get('/getUser/{uid}', [RegisteredUserController::class, 'getUser'])
     ->name('user.get');
+
+Route::get('/getMedium/{mid}', [CourseMediaController::class, 'getMedium'])
+    ->name('courseMedium.get');
