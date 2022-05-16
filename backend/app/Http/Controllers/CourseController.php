@@ -102,4 +102,13 @@ class CourseController extends Controller
         }
     }
 
+    public function getCourse(Request $request)
+    {
+        try {
+            $course = Course::findOrFail($request->cid);
+            return response()->json(['success' => true, 'media' => $course]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'user' => 'Unable to get course.']);
+        }
+    }
 }
