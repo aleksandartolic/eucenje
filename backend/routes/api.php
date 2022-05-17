@@ -66,3 +66,6 @@ Route::get('/getMedium/{mid}', [CourseMediaController::class, 'getMedium'])
 
 Route::get('/getCourse/{cid}', [CourseController::class, 'getCourse'])
     ->name('course.get');
+
+Route::put('/updateUser', [RegisteredUserController::class, 'update'])
+    ->name('user.update');
