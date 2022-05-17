@@ -41,11 +41,15 @@ class RegisteredUserController extends Controller
         ]);
 
         return response()->json(['success' => true, 'user' => $user]);
+    }
 
-        // event(new Registered($user));
-
-        // Auth::login($user);
-
-        // return response()->noContent();
+    public function getUser(Request $request)
+    {
+        try {
+            $user = User::findOrFail($request->uid);
+            return response()->json(['success' => true, 'user' => $user]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'user' => 'Unable to get user.']);
+        }
     }
 }
