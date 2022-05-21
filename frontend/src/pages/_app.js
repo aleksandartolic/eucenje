@@ -1,4 +1,13 @@
 import './index.css'
-const App = ({ Component, pageProps }) => <Component {...pageProps} />
 
-export default App
+import { AppWrapper } from "../../state"
+
+import React from "react";
+import {ToastProvider} from "react-toast-notifications";
+
+const App = ({ Component, pageProps }) => {
+
+    return  <ToastProvider placement="bottom-right"><AppWrapper><Component {...pageProps} /></AppWrapper></ToastProvider>
+}
+
+export default App;

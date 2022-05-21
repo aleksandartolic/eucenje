@@ -11,28 +11,42 @@ import Divider from '@mui/material/Divider'
 import * as React from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import classes from "./sideNav.module.css"
+import {useAuth} from "@/hooks/auth";
+
 
 const SideNav = () => {
-    const router = useRouter()
 
+    // const dispatch = useDispatch()
+    const router = useRouter()
+    const {logout} = useAuth();
+    console.log(router.pathname)
+    const logoutUser = ()=>{
+
+        logout();
+        router.push("/login")
+
+    }
     return (
         <Fragment>
             <div>
                 <LogoDiv>
                     <Typography variant="h3">A d e m y</Typography>
                 </LogoDiv>
-                <List key={Math.random()* 100000}>
+                <List style={{padding:"10px"}} key={Math.random()* 100000}>
                     {['Media', 'Users', 'Courses'].map((text, index) => (
+
                         <Link
                             key={Math.random()* 10000}
                             style={{ textDecoration: 'none' }}
                             href={'/' + text.toLowerCase()}>
+
                             <ListItem
+                                style={{ marginTop:"2px", cursor:"pointer"}}
                                 key={Math.random()* 100000}
-                                className={
-                                    router.pathname == '/' ? 'active' : ''
-                                }
+                                className={router.pathname === `/${text.toLowerCase()}`? classes.active : " "}
                                 >
+                                {/*{  console.log(text.toLowerCase())}*/}
                                 <ListItemIcon key={Math.random()* 100000}>
                                     {index % 2 === 0 ? (
                                         <InboxIcon />
@@ -56,7 +70,7 @@ const SideNav = () => {
                 <List key={Math.random()* 100000}>
                     {['Courses Stats', 'User Stats', 'Logout'].map(
                         (text, index) => (
-                            <ListItem button key={Math.random()* 100000}>
+                            <ListItem onClick={text ==="Logout" && logoutUser} button key={Math.random()* 100000}>
                                 <ListItemIcon key={Math.random()* 100000}>
                                     {index % 2 === 0 ? (
                                         <InboxIcon />

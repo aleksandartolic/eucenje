@@ -5,12 +5,14 @@ import Toolbar from '@mui/material/Toolbar'
 import styled from 'styled-components'
 
 import AdminLayout from '@/components/admin-components/AdminLayout'
+import NavBar from "@/components/admin-components/NavBar";
 
 const drawerWidth = 240
 
 function ResponsiveDrawer() {
     return (
         <AdminLayout>
+            <NavBar/>
             <Box
                 component="main"
                 sx={{

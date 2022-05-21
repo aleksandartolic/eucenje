@@ -24,7 +24,7 @@ html {
     width:100%;
     padding: 2rem;
    background-size: cover;
-    height: 70rem;
+    height: 100vh;
     background-image:linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../assets/images/bgbg.jpg);
     background-repeat: no-repeat;
     transition: 1s ease-in;

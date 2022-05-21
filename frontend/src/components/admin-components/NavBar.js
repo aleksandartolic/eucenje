@@ -10,19 +10,27 @@ import SideNav from '@/components/admin-components/SideNav'
 import PropTypes from 'prop-types'
 import CssBaseline from '@mui/material/CssBaseline'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import Router from 'next/router'
+import {useEffect, useState} from "react";
 
 const drawerWidth = 240
 const NavBar = props => {
-    const [mobileOpen, setMobileOpen] = React.useState(false)
 
+    const [mobileOpen, setMobileOpen] = useState(false)
+    const [userID, setUserId] = useState(null);
+
+    useEffect(()=>{
+
+        setUserId(localStorage.getItem('userID'));
+
+    },[])
     const { window } = props
     const container =
         window !== undefined ? () => window().document.body : undefined
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)
     }
-    return (
-        <>
+    return  <>
             <CssBaseline />
             <AppBar
                 position="fixed"
@@ -62,7 +70,8 @@ const NavBar = props => {
                                 variant="h6"
                                 noWrap
                                 component="div">
-                                <AccountCircleIcon fontSize="large" />
+                                <AccountCircleIcon onClick={()=>{Router.push(`/users/7`)}} fontSize="large" />
+
                             </Typography>
                         </Box>
                     </Box>
@@ -104,7 +113,7 @@ const NavBar = props => {
                 </Drawer>
             </Box>
         </>
-    )
+
 }
 export default NavBar
 NavBar.propTypes = {

@@ -14,10 +14,11 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import { Button } from '@mui/material'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
+import {useToasts} from "react-toast-notifications";
 
 const Users = () => {
     const [rows, setRows] = useState(null)
-    const [selectedRowId, setSelectedRowId] = useState(null)
+    const [selectedRowId, setSelectedRowId] = useState([])
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,12 +26,16 @@ const Users = () => {
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
     const [errors, setErrors] = useState([])
-    const { addUser } = useAuth()
+    const [loading, setLoading] = useState(false);
+    const { addUser } = useAuth();
+    const { addToast } = useToasts();
     const router = useRouter()
 
     const editUser = e => {
         router.push(`/users/${selectedRowId}`)
     }
+    console.log(selectedRowId.length);
+
     const addUserHandler = e => {
         e.preventDefault()
         addUser({
@@ -48,10 +53,28 @@ const Users = () => {
         setPassword('')
         setPasswordConfirmation('')
         setRole('')
+        getData();
+        addToast(`User ${username} added successfully`, {     autoDismiss: true,
+            autoDismissTimeout: 5000,
+            appearance: 'success'});
     }
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
+        if(selectedRowId.length !== 0  ) {
+            setLoading(true);
+            axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
+            getData();
+            addToast(`User deleted successfully`, {     autoDismiss: true,
+                autoDismissTimeout: 5000,
+                appearance: 'success'});
+            setLoading(false);
+
+        } else {
+            addToast(`Please select user`, {     autoDismiss: true,
+                autoDismissTimeout: 5000,
+                appearance: 'error'});
+        }
+
     }
 
     const columns = [
@@ -91,9 +114,12 @@ const Users = () => {
                     fontSize="large"
                     sx={{ cursor: 'pointer', marginTop: '20px' }}
                     onClick={() => {
+                        setLoading(true);
+
+                        if(selectedRowId.length !== 0  ){
                         axios
                             .delete(
-                                `http://localhost:8000/deleteUsers/${selectedRowId.join(
+                                `http://localhost:8001/deleteUsers/${selectedRowId.join(
                                     ',',
                                 )}`,
                                 {},
@@ -101,8 +127,22 @@ const Users = () => {
                             .then(value => {
                                 console.log(value)
                             })
-                            .catch(error => {})
+                            .catch(error => {});
+                        getData();
+                            addToast(`User deleted successfully`, {     autoDismiss: true,
+                                autoDismissTimeout: 5000,
+                                appearance: 'success'});
+
+                            setLoading(false);
+                    } else {
+                            addToast(`Please select user`, {     autoDismiss: true,
+                                autoDismissTimeout: 5000,
+                                appearance: 'error'});
+
+
+                        }
                     }}
+
                 />
             ),
             flex: 1,
@@ -110,11 +150,16 @@ const Users = () => {
             headerAlign: 'center',
         },
     ]
-    useEffect(() => {
-        axios.get('http://localhost:8000/listUsers').then(value => {
+    const getData = ()=>{
+        setLoading(true);
+        axios.get('http://localhost:8001/listUsers').then(value => {
             setRows(value.data.response)
         })
-    }, [handleDelete, addUser])
+        setLoading(false);
+    }
+    useEffect(() => {
+       getData();
+    }, [])
 
     return (
         <Fragment>
@@ -133,6 +178,7 @@ const Users = () => {
                     <Box pt={2} sx={{ height: 400, width: '100%' }}>
                         <DataGrid
                             onSelectionModelChange={id => {
+                                console.log(id);
                                 setSelectedRowId(id)
                             }}
                             rows={rows}

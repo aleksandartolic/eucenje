@@ -7,38 +7,46 @@ const drawerWidth = 240
 import AdminLayout from '@/components/admin-components/AdminLayout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import AuthValidationErrors from '@/components/AuthValidationErrors'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { Button } from '@mui/material'
-import { useAuth } from '@/hooks/auth'
+import {Button, CircularProgress, TextareaAutosize} from '@mui/material'
+
 import { useRouter } from 'next/router'
-import UUID from 'uuid-int'
+
 // import { AddIcon } from "@material-ui/icons";
+import { AppearanceTypes, useToasts } from 'react-toast-notifications';
 
 const Media = () => {
-const [rows, setRows] = useState(null)
-const [selectedRowId, setSelectedRowId] = useState(null)
+    const { addToast } = useToasts();
+const [rows, setRows] = useState([])
+const [selectedRowId, setSelectedRowId] = useState([])
 const [name, setName] = useState('')
 const [description, setDescription] = useState('')
-
 const [errors, setErrors] = useState([])
-const { addUser } = useAuth()
+const [loading, setLoading ] = useState(false)
 const router = useRouter()
+    const [userID, setUserId] = useState(null);
 
+    useEffect(()=>{
+
+        setUserId(localStorage.getItem('userID'));
+
+    },[])
+
+    const getData = ()=>{
+
+        setLoading(true);
+
+        axios.get("http://localhost:8001/listCourses").then(value=>{
+
+            setRows(value.data.response);
+            setLoading(false);
+
+        })
+    }
 useEffect(()=>{
-
-
-    axios.get("http://localhost:8000/listCourses").then(value=>{
-
-    const data = value.data.response.map((row)=>{
-
-        return {id:Math.round(Math.random()*1000), ...row}
-    })
-    console.log(value.data.response)
-    setRows(data);
-    })
+  getData();
 },[])
 
 const editCourse = e => {
@@ -46,28 +54,40 @@ const editCourse = e => {
 }
 const createCourseHandler = e => {
     e.preventDefault()
-    axios.put("http://localhost:8000/createCourse",{
-        uid:51,
+    setLoading(true)
+    axios.put("http://localhost:8001/createCourse/",{
+        uid:6,
         name:name,
         description:description,
-        
+
     })
+    getData();
+    addToast('Course added successful!', {     autoDismiss: true,
+        autoDismissTimeout: 5000,
+        appearance: 'success'});
+    setLoading(false)
     setName('')
     setDescription('')
-  
+
 }
 
 const handleDeleteCourse = () => {
-    axios.delete(`http://localhost:8000/deleteCourse/${selectedRowId}/`)
+    setLoading(true);
+    axios.delete(`http://localhost:8001/deleteCourse/${selectedRowId}/`)
+    getData();
+    addToast('Course deleted successful!', {     autoDismiss: true,
+        autoDismissTimeout: 5000,
+        appearance: 'success'});
+    setLoading(false)
 }
 
 const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
+    { field: 'course_id', headerName: 'ID', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
-    { field: 'course_id', headerName: 'Description', flex: 1 },
 
-    
+
+
 
     {
         disableColumnMenu: true,
@@ -97,18 +117,33 @@ const columns = [
                 fontSize="large"
                 sx={{ cursor: 'pointer', marginTop: '20px' }}
                 onClick={() => {
-                    axios
-                        .delete(
-                            `http://localhost:8000/deleteCourse/${selectedRowId.join(
-                                ',',
-                            )}`,
-                            {},
-                        )
-                        .then(value => {
-                            console.log(value)
-                        })
-                        .catch(error => {})
-                }}
+                    if(selectedRowId.length !== 0  ) {
+                        setLoading(true);
+                        axios
+                            .delete(
+                                `http://localhost:8001/deleteCourse/${selectedRowId.join(
+                                    ',',
+                                )}`,
+                                {},
+                            )
+                            .then(value => {
+                                console.log(value)
+                            })
+                            .catch(error => {
+                            });
+                        setLoading(false)
+                        getData();
+                        addToast(`Course deleted successfully`, {     autoDismiss: true,
+                            autoDismissTimeout: 5000,
+                            appearance: 'success'});
+                        setLoading(false);
+                    } else{
+
+                        addToast(`Please select course`, {     autoDismiss: true,
+                            autoDismissTimeout: 5000,
+                            appearance: 'error'});
+                    } }}
+
             />
         ),
         flex: 1,
@@ -116,7 +151,6 @@ const columns = [
         headerAlign: 'center',
     },
 ]
-
 
 return (
     <Fragment>
@@ -133,7 +167,9 @@ return (
                     <Typography variant="h4">Courses</Typography>
                 </Box>
                 <Box pt={2} sx={{ height: 400, width: '100%' }}>
-                    <DataGrid
+                    {loading === true? <CircularProgress />
+                        :<DataGrid
+                        getRowId={(row) => row.course_id}
                         onSelectionModelChange={id => {
                             setSelectedRowId(id)
                         }}
@@ -142,9 +178,9 @@ return (
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                         checkboxSelection
-                    />
+                    />}
                 </Box>
-                <Box mt={15} pl={2}>
+                <Box  mb={5} mt={15} pl={2}>
                     <Typography variant="h4">Create course</Typography>
                 </Box>
                 <Box
@@ -163,8 +199,8 @@ return (
                                 }}
                                 noValidate
                                 autoComplete="off">
-                               
-                               
+
+
                                 <FormControl>
                                     <InputLabel htmlFor="component-outlined">
                                         Name
@@ -178,21 +214,27 @@ return (
                                         label="name"
                                     />
                                 </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Description
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
+                                <FormControl sx={{
+
+                                    ".MuiFormControl-root":{
+                                        fontSize:"5px",
+                                        backgroundColor:"#000000"
+                                    }
+                                }}>
+                                    <TextareaAutosize
+                                        sx={{fontSize:"9px"}}
+                                        aria-label="minimum height"
+                                        minRows={10}
                                         value={description}
                                         type="text"
+                                        placeholder="Description"
+                                        style={{ width: "100%", fontSize:"10px", padding:"10px", fontFamily:"sans-serif" }}
                                         onChange={event =>
                                             setDescription(event.target.value)
                                         }
-                                        label="Description"
                                     />
                                 </FormControl>
-                               
+
                                 <Button
                                     className="ml-4"
                                     style={{
@@ -208,8 +250,8 @@ return (
                                 </Button>
                             </Box>
                 <Box pt={5}>
-                  
-                </Box>   
+
+                </Box>
                 </Box>
             );
         </AdminLayout>
