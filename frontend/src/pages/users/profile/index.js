@@ -1,6 +1,6 @@
 import AdminLayout from '@/components/admin-components/AdminLayout'
 import Box from '@mui/material/Box'
-import image from './profileImage-removebg-preview.png'
+import image from '../profileImage-removebg-preview.png'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 
 import Image from 'next/image'
@@ -13,51 +13,39 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/router'
 import TitlebarImageList from '@/components/admin-components/CoursesList'
-import { AppearanceTypes, useToasts } from 'react-toast-notifications';
-const drawerWidth =100;
+const drawerWidth = 240
 function Overview() {
+    const [userData, setUserData] = useState([])
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setPasswordConfirmation] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
     const [errors, setErrors] = useState([])
     const router = useRouter()
     const { id } = router.query
+    console.log(id)
 
-    const { addToast } = useToasts();
-    console.log(id);
-    const getUser = () =>{
-        axios.get(`http://localhost:8000/getUser/${id}/`).then(value => {
-            console.log(value);
-            const {id, username, name, email, role} = value.data.user;
+    useEffect(() => {
+        axios.get(`http://localhost:8000/listUsers?${id}`).then(value => {
+            const { id, username, name, email } = value.data.response[0]
             setName(name)
             setUsername(username)
             setEmail(email)
-            setRole(role);
         })
-    }
-
-        useEffect(() => {
-        getUser();
-        }, [])
-
+    }, [])
 
     const editUserHandler = e => {
-        e.preventDefault();
-        axios.put(`http://localhost:8000/updateUser?${id}`, {
+        e.preventDefault()
+        axios.put('http://localhost:8000/updateUser?50', {
             name: name,
             username: username,
             email: email,
-            role:role,
-            id:id,
         })
-        addToast('Profile updated successful!', {     autoDismiss: true,
-            autoDismissTimeout: 5000,
-            appearance: 'success'});
-
-        getUser();
     }
-    return <AdminLayout>
+    return (
+        <AdminLayout>
             <Box
                 display="flex"
                 component="main"
@@ -65,7 +53,7 @@ function Overview() {
                 mt={5}
                 sx={{
                     flexGrow: 1,
-                    pt: 7,
+                    p: 7,
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                 }}>
                 {' '}
@@ -171,6 +159,36 @@ function Overview() {
                                 </FormControl>
                                 <FormControl>
                                     <InputLabel htmlFor="component-outlined">
+                                        Password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        id="component-outlined"
+                                        value={password}
+                                        type="password"
+                                        onChange={event =>
+                                            setPassword(event.target.value)
+                                        }
+                                        label="Password"
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <InputLabel htmlFor="component-outlined">
+                                        Confirm password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        id="component-outlined"
+                                        type="password"
+                                        value={confirmPassword}
+                                        onChange={event =>
+                                            setPasswordConfirmation(
+                                                event.target.value,
+                                            )
+                                        }
+                                        label="Confirm Password"
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <InputLabel htmlFor="component-outlined">
                                         Role
                                     </InputLabel>
                                     <OutlinedInput
@@ -204,14 +222,13 @@ function Overview() {
                         </Box>
 
                         <Box>
-                            <TitlebarImageList imageData={3} />
+                            <TitlebarImageList />
                         </Box>
                     </Box>
                 </Box>
-
             </Box>
         </AdminLayout>
-
+    )
 }
 
 export default Overview

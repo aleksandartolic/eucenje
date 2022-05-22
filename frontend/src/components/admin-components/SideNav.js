@@ -21,17 +21,18 @@ const SideNav = () => {
     const router = useRouter()
     const {logout} = useAuth();
     console.log(router.pathname)
-    const logoutUser = ()=>{
-
+    const logoutUser = (e)=>{
+    e.preventDefault();
         logout();
-        router.push("/login")
+        router.replace("/login")
 
     }
+    console.log(router.query)
     return (
         <Fragment>
             <div>
                 <LogoDiv>
-                    <Typography variant="h3">A d e m y</Typography>
+                   <Typography sx={{cursor:"pointer"}} onClick={()=>{router.push(`/admin?id=${router.query.id}`)}} variant="h3">A d e m y</Typography>
                 </LogoDiv>
                 <List style={{padding:"10px"}} key={Math.random()* 100000}>
                     {['Media', 'Users', 'Courses'].map((text, index) => (
@@ -39,7 +40,7 @@ const SideNav = () => {
                         <Link
                             key={Math.random()* 10000}
                             style={{ textDecoration: 'none' }}
-                            href={'/' + text.toLowerCase()}>
+                            href={'/' + text.toLowerCase()+`?id=${router.query.id}`}>
 
                             <ListItem
                                 style={{ marginTop:"2px", cursor:"pointer"}}

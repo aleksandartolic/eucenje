@@ -12,10 +12,11 @@ import CssBaseline from '@mui/material/CssBaseline'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Router from 'next/router'
 import {useEffect, useState} from "react";
+import { useRouter } from 'next/router'
 
 const drawerWidth = 240
 const NavBar = props => {
-
+    const router = useRouter();
     const [mobileOpen, setMobileOpen] = useState(false)
     const [userID, setUserId] = useState(null);
 
@@ -70,7 +71,7 @@ const NavBar = props => {
                                 variant="h6"
                                 noWrap
                                 component="div">
-                                <AccountCircleIcon onClick={()=>{Router.push(`/users/7`)}} fontSize="large" />
+                                <AccountCircleIcon onClick={()=>{Router.push(`/users/${router.query.id}`)}} fontSize="large" />
 
                             </Typography>
                         </Box>

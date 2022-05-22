@@ -1,19 +1,21 @@
 import axios from '@/lib/axios'
 import { useRouter } from 'next/router'
-import { useAppContext } from "../../state"
+
 export const useAuth = () => {
 
-    const { state, dispatch } = useAppContext();
+
+
     const router = useRouter()
-    console.log(state);
+
 
     const register = async ({ setErrors, ...props }) => {
         setErrors([])
 
         axios
-            .post('http://127.0.0.1:8001/register', props)
+            .post('http://127.0.0.1:8000/register', props)
             .then(res => {
                 if (res.data.success) {
+                    
                     router.push('/login')
                 }
                 return res
@@ -29,7 +31,7 @@ export const useAuth = () => {
         setErrors([])
 
         axios
-            .post('http://127.0.0.1:8001/register', props)
+            .post('http://127.0.0.1:8000/register', props)
             .then(res => {
                 return res
             })
@@ -47,11 +49,16 @@ export const useAuth = () => {
         setStatus(null)
 
         axios
-            .post('http://127.0.0.1:8001/login', props)
+            .post('http://127.0.0.1:8000/login', props)
             .then(res => {
                 console.log(res.data)
                 if (res.data.success) {
-                    router.push('/admin')
+                    console.log(res.data.user.id)
+                    if(res.data.user.role === 1){
+                    router.push(`/admin?id=${res.data.user.id}`)
+                    } else {
+                        router.push(`/student?id=${res.data.user.id}`)
+                    }
                 }
             })
             .catch(error => {
@@ -63,7 +70,7 @@ export const useAuth = () => {
     }
 
     const logout = async () => {
-        const data = await axios.post('http://127.0.0.1:8001/logout')
+        const data = await axios.post('http://127.0.0.1:8000/logout')
         console.log(data)
         window.location.pathname = '/login'
     }

@@ -6,13 +6,14 @@ export default function Footer() {
         <Box
             sx={{ width: '100%' }}
             style={{
-                bottom: 0,
                 height: '100px',
                 fontSize: '1.2rem',
                 display: 'flex',
+            
                 justifyContent: 'flex-end',
-                padding: '1rem 1rem 1rem 1rem',
+            
                 alignItems: 'flex-end',
+                color:"#1976d2"
             }}>
             <FooterActions>
                 <Company>

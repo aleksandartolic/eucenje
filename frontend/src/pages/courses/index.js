@@ -38,7 +38,7 @@ const router = useRouter()
 
         setLoading(true);
 
-        axios.get("http://localhost:8001/listCourses").then(value=>{
+        axios.get("http://localhost:8000/listCourses").then(value=>{
 
             setRows(value.data.response);
             setLoading(false);
@@ -55,8 +55,8 @@ const editCourse = e => {
 const createCourseHandler = e => {
     e.preventDefault()
     setLoading(true)
-    axios.put("http://localhost:8001/createCourse/",{
-        uid:6,
+    axios.put("http://localhost:8000/createCourse/",{
+        uid:50,
         name:name,
         description:description,
 
@@ -73,7 +73,7 @@ const createCourseHandler = e => {
 
 const handleDeleteCourse = () => {
     setLoading(true);
-    axios.delete(`http://localhost:8001/deleteCourse/${selectedRowId}/`)
+    axios.delete(`http://localhost:8000/deleteCourse/${selectedRowId}/`)
     getData();
     addToast('Course deleted successful!', {     autoDismiss: true,
         autoDismissTimeout: 5000,
@@ -121,7 +121,7 @@ const columns = [
                         setLoading(true);
                         axios
                             .delete(
-                                `http://localhost:8001/deleteCourse/${selectedRowId.join(
+                                `http://localhost:8000/deleteCourse/${selectedRowId.join(
                                     ',',
                                 )}`,
                                 {},

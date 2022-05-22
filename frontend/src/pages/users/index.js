@@ -62,7 +62,7 @@ const Users = () => {
     const handleDelete = () => {
         if(selectedRowId.length !== 0  ) {
             setLoading(true);
-            axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
+            axios.delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
             getData();
             addToast(`User deleted successfully`, {     autoDismiss: true,
                 autoDismissTimeout: 5000,
@@ -119,7 +119,7 @@ const Users = () => {
                         if(selectedRowId.length !== 0  ){
                         axios
                             .delete(
-                                `http://localhost:8001/deleteUsers/${selectedRowId.join(
+                                `http://localhost:8000/deleteUsers/${selectedRowId.join(
                                     ',',
                                 )}`,
                                 {},
@@ -152,7 +152,7 @@ const Users = () => {
     ]
     const getData = ()=>{
         setLoading(true);
-        axios.get('http://localhost:8001/listUsers').then(value => {
+        axios.get('http://localhost:8000/listUsers').then(value => {
             setRows(value.data.response)
         })
         setLoading(false);
