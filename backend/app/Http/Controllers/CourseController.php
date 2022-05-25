@@ -26,15 +26,26 @@ class CourseController extends Controller
           $response['message'] = $validator->messages();
         } else {
             try {
-                $course = Course::create([
-                    'uid' => $request->uid,
-                    'name' => strip_tags(htmlentities($request->name)),
-                    'description' => strip_tags(htmlentities($request->description)),
-                ]);
+                if($file = $request->file('picture')) {
+                    $path = $file->store('public/picture');
+                    $exploded = explode('/', $path);
+                    $pictureName = end($exploded);
+                    $course = Course::create([
+                        'uid' => $request->uid,
+                        'name' => strip_tags(htmlentities($request->name)),
+                        'description' => strip_tags(htmlentities($request->description)),
+                        'picture' => strip_tags(htmlentities($pictureName)),
+                    ]);
 
-                $response['success'] = true;
-                $response['course'] = $course;
+                    $response['success'] = true;
+                    $response['course'] = $course;
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'No file found.';
+                }
+
             } catch (Exception $e) {
+                dd($e->getMessage());
                 return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
             }
         }

@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "james-heinrich/getid3": "^1.9",
         "lanin/laravel-api-debugger": "^4.0",
         "laravel/framework": "^9.2",
         "laravel/passport": "^10.3",

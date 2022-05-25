@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMediaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -22,7 +23,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::put('/createCourse', [CourseController::class, 'store'])
+Route::post('/createCourse', [CourseController::class, 'store'])
     ->name('create.course');
 
 Route::delete('/deleteUser/{uid}', [AdminDashboardController::class, 'deleteUser'])
@@ -69,3 +70,9 @@ Route::get('/getCourse/{cid}', [CourseController::class, 'getCourse'])
 
 Route::put('/updateUser', [RegisteredUserController::class, 'update'])
     ->name('user.update');
+
+Route::post('/createComment', [CommentsController::class, 'store'])
+    ->name('create.comment');
+
+Route::get('/listComments/{cm_id}', [CommentsController::class, 'listComments'])
+    ->name('course.listComments');
