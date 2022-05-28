@@ -3,12 +3,9 @@ import * as React from 'react'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreIcon from '@mui/icons-material/MoreVert'
-import Link from 'next/link'
 import { useState } from 'react'
 
 const BasicMenu = props => {
-
-
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
 
@@ -19,12 +16,7 @@ const BasicMenu = props => {
     const handleClose = () => {
         setAnchorEl(null)
     }
-    const handleDelete = () => {
-        setAnchorEl(null)
-    }
-
     return (
-
         <div>
             <MoreIcon
                 aria-controls={open ? 'basic-menu' : undefined}

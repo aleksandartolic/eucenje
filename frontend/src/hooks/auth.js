@@ -2,20 +2,15 @@ import axios from '@/lib/axios'
 import { useRouter } from 'next/router'
 
 export const useAuth = () => {
-
-
-
     const router = useRouter()
-
 
     const register = async ({ setErrors, ...props }) => {
         setErrors([])
 
         axios
-            .post('http://127.0.0.1:8000/register', props)
+            .post('http://127.0.0.1:8001/register', props)
             .then(res => {
                 if (res.data.success) {
-                    
                     router.push('/login')
                 }
                 return res
@@ -31,7 +26,7 @@ export const useAuth = () => {
         setErrors([])
 
         axios
-            .post('http://127.0.0.1:8000/register', props)
+            .post('http://127.0.0.1:8001/register', props)
             .then(res => {
                 return res
             })
@@ -41,7 +36,6 @@ export const useAuth = () => {
                 if (error.response.status !== 422) throw error
                 setErrors(Object.values(error.response.data.errors).flat())
             })
-
     }
 
     const login = async ({ setErrors, setStatus, ...props }) => {
@@ -49,20 +43,22 @@ export const useAuth = () => {
         setStatus(null)
 
         axios
-            .post('http://127.0.0.1:8000/login', props)
+            .post('http://127.0.0.1:8001/login', props)
             .then(res => {
                 console.log(res.data)
                 if (res.data.success) {
                     console.log(res.data.user.id)
-                    if(res.data.user.role === 1){
-                    router.push(`/admin?id=${res.data.user.id}`)
-                    } else {
+                    if (res.data.user.role === 1) {
+                        router.push(`/admin?id=${res.data.user.id}`)
+                    } else if (res.data.user.role === 3) {
                         router.push(`/student?id=${res.data.user.id}`)
+                    } else {
+                        router.push(`/teacher?id=${res.data.user.id}`)
                     }
                 }
             })
             .catch(error => {
-                console.log(error.response);
+                console.log(error.response)
                 if (error.response.status !== 422) throw error
 
                 setErrors(Object.values(error.response.data.errors).flat())
@@ -70,8 +66,7 @@ export const useAuth = () => {
     }
 
     const logout = async () => {
-        const data = await axios.post('http://127.0.0.1:8000/logout')
-        console.log(data)
+        const data = await axios.post('http://127.0.0.1:8001/logout')
         window.location.pathname = '/login'
     }
 

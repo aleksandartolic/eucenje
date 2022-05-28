@@ -191,8 +191,8 @@ const Register = () => {
                                 className="block mt-1 w-full"
                                 onChange={event => setRole(event.target.value)}
                                 required>
-                                <MenuItem value={1}>Polaznik</MenuItem>
-                                <MenuItem value={2}>Predavac</MenuItem>
+                                <MenuItem value={3}>Student</MenuItem>
+                                <MenuItem value={2}>Teacher</MenuItem>
                             </Select>
                         </FormControl>
                         <br />
