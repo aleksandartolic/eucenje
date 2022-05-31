@@ -8,10 +8,11 @@ import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import Sidenav from '@/components/admin-components/Sidenav'
 import PropTypes from 'prop-types'
-import CssBaseline from '@mui/material/CssBaseline'
+import HomeIcon from '@mui/icons-material/Home'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LogoutIcon from '@mui/icons-material/Logout'
 import Router from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 const drawerWidth = 240
@@ -55,10 +56,10 @@ const Navbar = props => {
                                 variant="h6"
                                 noWrap
                                 component="div">
-                                Go to frontend
+                                <HomeIcon fontSize="large" />
                             </Typography>
                         </Box>
-                        <Box mr={5}>
+                        <Box mr={3}>
                             <Typography
                                 style={{ cursor: 'pointer' }}
                                 variant="h6"
@@ -70,6 +71,15 @@ const Navbar = props => {
                                     }}
                                     fontSize="large"
                                 />
+                            </Typography>
+                        </Box>
+                        <Box mr={3}>
+                            <Typography
+                                style={{ cursor: 'pointer' }}
+                                variant="h6"
+                                noWrap
+                                component="div">
+                                <LogoutIcon fontSize="large" />
                             </Typography>
                         </Box>
                     </Box>
