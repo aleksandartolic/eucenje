@@ -1,8 +1,8 @@
-import axios from '@/lib/axios'
-import { useRouter } from 'next/router'
+import axios from '../lib/axios'
+import { useNavigate } from 'react-router-dom'
 
 export const useAuth = () => {
-    const router = useRouter()
+    const navigate = useNavigate()
 
     const register = async ({ setErrors, ...props }) => {
         setErrors([])
@@ -11,13 +11,11 @@ export const useAuth = () => {
             .post('http://127.0.0.1:8001/register', props)
             .then(res => {
                 if (res.data.success) {
-                    router.push('/login')
+                    navigate('/login')
                 }
                 return res
             })
             .catch(error => {
-                console.log(error.response.data)
-                // console.log(error)
                 if (error.response.status !== 422) throw error
                 setErrors(Object.values(error.response.data.errors).flat())
             })
@@ -31,42 +29,37 @@ export const useAuth = () => {
                 return res
             })
             .catch(error => {
-                console.log(error.response.data)
-                // console.log(error)
                 if (error.response.status !== 422) throw error
                 setErrors(Object.values(error.response.data.errors).flat())
             })
     }
 
-    const login = async ({ setErrors, setStatus, ...props }) => {
-        setErrors([])
-        setStatus(null)
-
-        axios
-            .post('http://127.0.0.1:8001/login', props)
-            .then(res => {
-                console.log(res.data)
-                if (res.data.success) {
-                    console.log(res.data.user.id)
-                    if (res.data.user.role === 1) {
-                        router.push(`/admin?id=${res.data.user.id}`)
-                    } else if (res.data.user.role === 3) {
-                        router.push(`/student?id=${res.data.user.id}`)
-                    } else {
-                        router.push(`/teacher?id=${res.data.user.id}`)
-                    }
-                }
-            })
-            .catch(error => {
-                console.log(error.response)
-                if (error.response.status !== 422) throw error
-
-                setErrors(Object.values(error.response.data.errors).flat())
-            })
-    }
+    // const login = async ({ setErrors, setStatus, ...props }) => {
+    //     setErrors([])
+    //
+    //
+    //     axios
+    //         .post('http://127.0.0.1:8001/login', props)
+    //         .then(res => {
+    //             if (res.data.success) {
+    //                 if (res.data.user.role === 1) {
+    //                     navigate(`/admin?id=${res.data.user.id}`)
+    //                 } else if (res.data.user.role === 3) {
+    //                     navigate.push(`/student?id=${res.data.user.id}`)
+    //                 } else {
+    //                     navigate(`/teacher?id=${res.data.user.id}`)
+    //                 }
+    //             }
+    //         })
+    //         .catch(error => {
+    //             if (error.response.status !== 422) throw error
+    //
+    //             setErrors(Object.values(error.response.data.errors).flat())
+    //         })
+    // }
 
     const logout = async () => {
-        const data = await axios.post('http://127.0.0.1:8001/logout')
+        await axios.post('http://127.0.0.1:8001/logout')
         window.location.pathname = '/login'
     }
 

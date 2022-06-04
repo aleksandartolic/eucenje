@@ -1,22 +1,22 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
-import BasicMenu from '@/components/admin-components/PopupMenu'
-import axios from '@/lib/axios'
+import BasicMenu from '../../../../components/admin-components/PopupMenu'
+import axios from 'axios'
 const drawerWidth = 240
-import AdminLayout from '@/components/Layouts/AdminLayout'
+import AdminLayout from '../../../../components/Layouts/AdminLayout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { CircularProgress } from '@mui/material'
 
-import { useRouter } from 'next/router'
+import { useNavigate } from 'react-router-dom'
 
 import { useToasts } from 'react-toast-notifications'
 
 const Media = () => {
     const { addToast } = useToasts()
-    const router = useRouter()
+    const navigate = useNavigate()
     const [rows, setRows] = useState([])
     const [selectedRowId, setSelectedRowId] = useState([])
     const [loading, setLoading] = useState(false)
@@ -36,7 +36,7 @@ const Media = () => {
 
     const editCourse = () => {
         // TODO edit course functionality
-        router.push(`/users/${selectedRowId}`)
+        navigate(`/users/${selectedRowId}`)
     }
 
     const handleDeleteCourse = () => {
@@ -86,11 +86,13 @@ const Media = () => {
         },
         {
             disableColumnMenu: true,
-            headerName: (
+            headerName: 'delete icon',
+            field: 'delete icon',
+            renderHeader: () => (
                 <DeleteIcon
                     color="info"
                     fontSize="large"
-                    sx={{ cursor: 'pointer', marginTop: '20px' }}
+                    sx={{ cursor: 'pointer' }}
                     onClick={() => {
                         setLoading(true)
 
@@ -147,7 +149,6 @@ const Media = () => {
                                 getRowId={row => row.course_id}
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)
-                                    console.log(selectedRowId)
                                 }}
                                 rows={rows}
                                 columns={columns}

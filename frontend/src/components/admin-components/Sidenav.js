@@ -1,24 +1,23 @@
-import { Fragment } from 'react'
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
-import Link from 'next/link'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
+
 import ListItemText from '@mui/material/ListItemText'
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import * as React from 'react'
 import GroupIcon from '@mui/icons-material/Group'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
+
 import classes from './sideNav.module.css'
 import { Box } from '@mui/material'
-import { useAuth } from '@/hooks/auth'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const links = [
     {
@@ -27,12 +26,12 @@ const links = [
         nested: [
             {
                 name: 'Media Overview',
-                href: 'admin/media/media-overview',
+                href: '/admin/media/media-overview',
                 icon: <SubscriptionsIcon />,
             },
             {
                 name: 'Add Media',
-                href: 'admin/media/add-media',
+                href: '/admin/media/add-media',
                 icon: <AddAPhotoIcon />,
             },
         ],
@@ -43,12 +42,12 @@ const links = [
         nested: [
             {
                 name: 'Users Overview',
-                href: 'admin/users/users-overview',
+                href: '/admin/users/users-overview',
                 icon: <GroupIcon />,
             },
             {
                 name: 'Add user',
-                href: 'admin/users/add-user',
+                href: '/admin/users/add-user',
                 icon: <GroupAddIcon />,
             },
         ],
@@ -59,12 +58,12 @@ const links = [
         nested: [
             {
                 name: 'Courses Overview',
-                href: 'admin/courses/courses-overview',
+                href: '/admin/courses/courses-overview',
                 icon: <GroupIcon />,
             },
             {
                 name: 'Add course',
-                href: 'admin/courses/add-course',
+                href: '/admin/courses/add-course',
                 icon: <GroupAddIcon />,
             },
         ],
@@ -72,21 +71,14 @@ const links = [
 ]
 
 const Sidenav = () => {
-    // const dispatch = useDispatch()
-    const router = useRouter()
-    const { logout } = useAuth()
-
+    const navigate = useNavigate()
+    const location = useLocation()
     const [expanded, setExpanded] = React.useState(false)
 
     const handleChange = panel => (event, isExpanded) => {
+        event.stopPropagation()
         setExpanded(isExpanded ? panel : false)
     }
-    const logoutUser = e => {
-        e.preventDefault()
-        logout()
-        router.replace('/login')
-    }
-
     return (
         <Box
             sx={{
@@ -102,7 +94,7 @@ const Sidenav = () => {
                     <Typography
                         sx={{ color: '#1976d2', cursor: 'pointer' }}
                         onClick={() => {
-                            router.push(`/admin?id=${router.query.id}`)
+                            navigate(`/admin`)
                         }}
                         variant="h3">
                         A d e m y
@@ -126,7 +118,6 @@ const Sidenav = () => {
                         key={link.name}
                         expanded={expanded === `panel${index}`}
                         onChange={handleChange(`panel${index}`)}>
-                        {console.log(link.nested)}
                         <AccordionSummary
                             sx={{
                                 backgroundColor: '#fff',
@@ -135,12 +126,6 @@ const Sidenav = () => {
                                     color: '#fff',
                                 },
                             }}
-                            className={
-                                router.pathname ===
-                                `/${link.name.toLowerCase()}`
-                                    ? classes.active
-                                    : ' '
-                            }
                             expandIcon={
                                 <ExpandMoreIcon
                                     sx={{
@@ -162,9 +147,18 @@ const Sidenav = () => {
                         {link.nested &&
                             link.nested.map(value => (
                                 <AccordionDetails
+                                    onClick={() => {
+                                        navigate(value.href, { replace: true })
+                                    }}
                                     key={value.name}
                                     sx={{ padding: '0 0 0 7px' }}>
                                     <AccordionSummary
+                                        className={
+                                            location.pathname ===
+                                            `/${link.name.toLowerCase()}`
+                                                ? classes.active
+                                                : ' '
+                                        }
                                         sx={{
                                             paddingRight: '20px',
                                             backgroundColor: '#fff',
@@ -189,30 +183,21 @@ const Sidenav = () => {
             </Box>
             <Box pb={4}>
                 <List key={Math.random() * 100000}>
-                    {['Courses Stats', 'User Stats', 'Logout'].map(
-                        (text, index) => (
-                            <ListItem
-                                onClick={text === 'Logout' && logoutUser}
-                                button
-                                key={Math.random() * 100000}>
-                                <ListItemIcon key={Math.random() * 100000}>
-                                    {index % 2 === 0 ? (
-                                        <InboxIcon />
-                                    ) : (
-                                        <MailIcon />
-                                    )}
-                                </ListItemIcon>
-                                <ListItemText
-                                    key={Math.random() * 100000}
-                                    primary={
-                                        <Typography fontSize={14}>
-                                            {text}
-                                        </Typography>
-                                    }
-                                />
-                            </ListItem>
-                        ),
-                    )}
+                    {['Courses Stats', 'User Stats'].map((text, index) => (
+                        <ListItem button key={Math.random() * 100000}>
+                            <ListItemIcon key={Math.random() * 100000}>
+                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                            </ListItemIcon>
+                            <ListItemText
+                                key={Math.random() * 100000}
+                                primary={
+                                    <Typography fontSize={14}>
+                                        {text}
+                                    </Typography>
+                                }
+                            />
+                        </ListItem>
+                    ))}
                 </List>
             </Box>
         </Box>

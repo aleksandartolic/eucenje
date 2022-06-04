@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import Box from '@mui/material/Box'
 
-import AdminLayout from '@/components/Layouts/AdminLayout'
-import Dashboard from '@/components/admin-components/Dashboard'
+import AdminLayout from '../../components/Layouts/AdminLayout'
+import Dashboard from '../../components/admin-components/Dashboard'
 const drawerWidth = 240
 
-function ResponsiveDrawer() {
+function Admin() {
     return (
         <AdminLayout>
             <Box
@@ -24,4 +24,4 @@ function ResponsiveDrawer() {
     )
 }
 
-export default ResponsiveDrawer
+export default Admin

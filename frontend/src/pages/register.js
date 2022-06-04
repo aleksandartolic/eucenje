@@ -1,9 +1,7 @@
-import AuthValidationErrors from '@/components/AuthValidationErrors'
-
-import { useAuth } from '@/hooks/auth'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import image from '../assets/images/backgroundLogin.jpg'
-import FormWrapper from '@/components/FormWrapper'
+import image from '../assets/images/backgroundLogin.png'
+import FormWrapper from '../components/FormWrapper'
 import {
     TextField,
     Typography,
@@ -14,29 +12,38 @@ import {
     InputLabel,
 } from '@mui/material'
 import styled from 'styled-components'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Register = () => {
-    const { register } = useAuth()
+    const navigate = useNavigate()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [password_confirmation, setPasswordConfirmation] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
-    const [errors, setErrors] = useState([])
 
     const submitForm = async event => {
         event.preventDefault()
-        register({
-            name,
-            email,
-            password,
-            password_confirmation,
-            username,
-            role,
-            setErrors,
-        })
+        axios
+            .post('http://127.0.0.1:8001/register', {
+                name,
+                email,
+                password,
+                password_confirmation,
+                username,
+                role,
+            })
+            .then(res => {
+                if (res.data.success) {
+                    navigate('/login')
+                }
+                return res
+            })
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+            })
     }
 
     return (
@@ -52,10 +59,7 @@ const Register = () => {
                         variant="h3">
                         A d e m y
                     </Typography>
-                    <AuthValidationErrors
-                        style={{ marginBottom: '20px' }}
-                        errors={errors}
-                    />
+
                     <form
                         style={{ width: '100%', height: '100%' }}
                         onSubmit={submitForm}>
@@ -66,10 +70,6 @@ const Register = () => {
                                 width: '100%',
                                 margin: '5px',
                                 marginBottom: '2rem',
-                            }}
-                            style={{
-                                width: '100%',
-                                margin: '5px',
                             }}
                             label="Name"
                             variant="outlined"
@@ -89,10 +89,6 @@ const Register = () => {
                                 margin: '5px',
                                 marginBottom: '2rem',
                             }}
-                            style={{
-                                width: '100%',
-                                margin: '5px',
-                            }}
                             label="Email"
                             variant="outlined"
                             id="email"
@@ -111,10 +107,6 @@ const Register = () => {
                                 margin: '5px',
                                 marginBottom: '2rem',
                             }}
-                            style={{
-                                width: '100%',
-                                margin: '5px',
-                            }}
                             label="Username"
                             variant="outlined"
                             id="username"
@@ -132,10 +124,6 @@ const Register = () => {
                                 width: '100%',
                                 margin: '5px',
                                 marginBottom: '2rem',
-                            }}
-                            style={{
-                                width: '100%',
-                                margin: '5px',
                             }}
                             label="Password"
                             variant="outlined"
@@ -193,15 +181,14 @@ const Register = () => {
                                 required>
                                 <MenuItem value={3}>Student</MenuItem>
                                 <MenuItem value={2}>Teacher</MenuItem>
+                                <MenuItem value={1}>Admin</MenuItem>
                             </Select>
                         </FormControl>
                         <br />
                         <Typography variant="h5">
                             {' '}
                             You already have an account ?{' '}
-                            <Link prefetch href="/login">
-                                <StyledLink href="/login">Sign In</StyledLink>
-                            </Link>
+                            <Link to="/login">Sign In</Link>
                         </Typography>
                         <br />
                         <Button
@@ -236,16 +223,16 @@ const LoginWrapper = styled.div`
 `
 
 const LoginLayout = styled.div`
-    background: url(${props => props.image.src});
+    background: url(${image});
     background-size: cover;
     width: 100%;
     height: 100vh;
 `
 
-const StyledLink = styled.a`
-    text-decoration: none;
-    color: #93b5f2;
-    :visited {
-        color: #93b5f2;
-    }
-`
+// const StyledLink = styled.a`
+//     text-decoration: none;
+//     color: #93b5f2;
+//     :visited {
+//         color: #93b5f2;
+//     }
+// `

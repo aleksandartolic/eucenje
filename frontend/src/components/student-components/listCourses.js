@@ -11,12 +11,9 @@ import {
     Typography,
     CardMedia,
     Button,
-    CircularProgress,
 } from '@mui/material'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/router'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import TextField from '@mui/material/TextField'
@@ -29,26 +26,19 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }))
 
-import course1 from '../../assets/images/course1Image.jpg'
-import course2 from '../../assets/images/course2.jpg'
-import course3 from '../../assets/images/course3.jpg'
-import course4 from '../../assets/images/course4.jpg'
+import { useNavigate } from 'react-router-dom'
 
 export default function ListCourses() {
-    const router = useRouter()
+    const navigate = useNavigate()
     const [courses, setCourses] = useState([])
 
     useEffect(() => {
         axios.get('http://localhost:8001/listCourses').then(course => {
-            console.log(course)
             setCourses(course.data.response)
         })
     }, [])
     const proceedToCourseHandler = e => {
-        console.log(e.target.id)
-        router.push(
-            `/student/${e.target.id}?id=${router.query.id}&courseId=${e.target.id}`,
-        )
+        navigate(`/student/courses/${e.target.id}`)
     }
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -59,9 +49,6 @@ export default function ListCourses() {
                 <form>
                     <TextField
                         id="search-bar"
-                        onInput={e => {
-                            setSearchQuery(e.target.value)
-                        }}
                         label="Enter a city name"
                         variant="outlined"
                         placeholder="Search..."
@@ -83,14 +70,13 @@ export default function ListCourses() {
                             <Card sx={{ maxWidth: 345 }}>
                                 <CardActionArea>
                                     <CardMedia>
-                                        <Image
+                                        <img
                                             width={300}
                                             height={300}
                                             id={course.course_id}
                                             onClick={proceedToCourseHandler}
                                             src={`http://localhost:8001/storage/picture/${course.picture}`}
                                             placeholder="blur"
-                                            blurDataURL={course1}
                                         />
                                     </CardMedia>
                                     <CardContent>

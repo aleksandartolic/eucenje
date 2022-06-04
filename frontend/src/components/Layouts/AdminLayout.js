@@ -1,14 +1,18 @@
-import Navbar from '@/components/admin-components/Navbar'
+import Navbar from '../../components/admin-components/Navbar'
 import { Fragment } from 'react'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
-import Footer from '@/components/admin-components/Footer'
+import Footer from '../../components/admin-components/Footer'
 import * as React from 'react'
 
 const AdminLayout = props => {
     return (
         <Fragment>
-            <Box sx={{ backgroundColor:"#E8F9FD", display: 'flex', height: '85vh' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    height: '85vh',
+                }}>
                 <CssBaseline />
                 <Navbar />
                 {props.children}

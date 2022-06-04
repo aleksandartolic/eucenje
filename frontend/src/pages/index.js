@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
     return (
@@ -6,12 +6,8 @@ export default function Home() {
             <div className="nav">
                 <div className="nav__logo">Ademy</div>
                 <div className="nav__items">
-                    <Link href="/login">
-                        <a>Login</a>
-                    </Link>
-                    <Link href="/register">
-                        <a>Register</a>
-                    </Link>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
                 </div>
             </div>
             <div className="hero-container">

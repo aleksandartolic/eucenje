@@ -9,11 +9,11 @@ export default function Footer() {
                 height: '100px',
                 fontSize: '1.2rem',
                 display: 'flex',
-            
+
                 justifyContent: 'flex-end',
-            
+
                 alignItems: 'flex-end',
-                color:"#1976d2"
+                color: '#1976d2',
             }}>
             <FooterActions>
                 <Company>

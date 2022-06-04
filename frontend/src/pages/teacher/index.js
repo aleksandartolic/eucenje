@@ -1,4 +1,4 @@
-import StudentLayout from '@/components/Layouts/StudentLayout'
+import StudentLayout from '../../components/Layouts/StudentLayout'
 
 const Teacher = () => {
     return (

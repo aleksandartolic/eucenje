@@ -1,64 +1,29 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
-import BasicMenu from '@/components/admin-components/PopupMenu'
-import axios from '@/lib/axios'
+import BasicMenu from '../../../components/admin-components/PopupMenu'
+import axios from 'axios'
 const drawerWidth = 240
-import AdminLayout from '@/components/Layouts/AdminLayout'
+import AdminLayout from '../../../components/Layouts/AdminLayout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import AuthValidationErrors from '@/components/AuthValidationErrors'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { Button } from '@mui/material'
-import { useAuth } from '@/hooks/auth'
-import { useRouter } from 'next/router'
+
+import { CircularProgress } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { useToasts } from 'react-toast-notifications'
 
 const Users = () => {
-    const [rows, setRows] = useState(null)
+    const [rows, setRows] = useState([])
     const [selectedRowId, setSelectedRowId] = useState([])
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setPasswordConfirmation] = useState('')
-    const [role, setRole] = useState('')
-    const [username, setUsername] = useState('')
-    const [errors, setErrors] = useState([])
+
     const [loading, setLoading] = useState(false)
-    const { addUser } = useAuth()
+
     const { addToast } = useToasts()
-    const router = useRouter()
+    const navigate = useNavigate()
 
     const editUser = e => {
-        router.push(`/users/${selectedRowId}`)
-    }
-    console.log(selectedRowId.length)
-
-    const addUserHandler = e => {
         e.preventDefault()
-        addUser({
-            name,
-            email,
-            password,
-            confirmPassword,
-            username,
-            role,
-            setErrors,
-        })
-        setName('')
-        setUsername('')
-        setEmail('')
-        setPassword('')
-        setPasswordConfirmation('')
-        setRole('')
-        getData()
-        addToast(`User ${username} added successfully`, {
-            autoDismiss: true,
-            autoDismissTimeout: 5000,
-            appearance: 'success',
-        })
+        navigate(`/admin/users/${selectedRowId}`, { replace: true })
     }
 
     const handleDelete = () => {
@@ -112,7 +77,9 @@ const Users = () => {
         },
         {
             disableColumnMenu: true,
-            headerName: (
+            headerName: 'delete icon',
+            field: 'delete icon',
+            renderHeader: () => (
                 <DeleteIcon
                     color="info"
                     fontSize="large"
@@ -128,10 +95,9 @@ const Users = () => {
                                     )}`,
                                     {},
                                 )
-                                .then(value => {
-                                    console.log(value)
+                                .catch(error => {
+                                    throw new Error(`${error.message}`)
                                 })
-                                .catch(error => {})
                             getData()
                             addToast(`User deleted successfully`, {
                                 autoDismiss: true,
@@ -181,140 +147,20 @@ const Users = () => {
                         <Typography variant="h4">Users</Typography>
                     </Box>
                     <Box pt={2} sx={{ height: 400, width: '100%' }}>
-                        <DataGrid
-                            onSelectionModelChange={id => {
-                                setSelectedRowId(id)
-                                console.log(selectedRowId)
-                            }}
-                            rows={rows}
-                            columns={columns}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                            checkboxSelection
-                        />
-                    </Box>
-                    <Box mt={15} pl={2}>
-                        <Typography variant="h4">Add user</Typography>
-                    </Box>
-                    <Box pt={5}>
-                        <Fragment>
-                            <AuthValidationErrors
-                                style={{ marginBottom: '20px' }}
-                                errors={errors}
-                            />
-                            <Box
-                                onSubmit={addUserHandler}
-                                p={5}
-                                pt={0}
-                                pl={0}
-                                component="form"
-                                sx={{
-                                    width: '600px',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    borderRadius: '10px',
-                                    '& > :not(style)': { m: 1 },
+                        {loading ? (
+                            <CircularProgress />
+                        ) : (
+                            <DataGrid
+                                onSelectionModelChange={id => {
+                                    setSelectedRowId(id)
                                 }}
-                                noValidate
-                                autoComplete="off">
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Name
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={name}
-                                        onChange={event =>
-                                            setName(event.target.value)
-                                        }
-                                        label="Name"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Email
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={email}
-                                        onChange={event =>
-                                            setEmail(event.target.value)
-                                        }
-                                        label="Email"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Username
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={username}
-                                        onChange={event =>
-                                            setUsername(event.target.value)
-                                        }
-                                        label="username"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Password
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={password}
-                                        type="password"
-                                        onChange={event =>
-                                            setPassword(event.target.value)
-                                        }
-                                        label="Password"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Confirm password
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={event =>
-                                            setPasswordConfirmation(
-                                                event.target.value,
-                                            )
-                                        }
-                                        label="Confirm Password"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Role
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={role}
-                                        onChange={event =>
-                                            setRole(event.target.value)
-                                        }
-                                        label="Role"
-                                    />
-                                </FormControl>
-                                <Button
-                                    className="ml-4"
-                                    style={{
-                                        marginTop: '3rem',
-                                        fontSize: 10,
-                                        width: '90px',
-                                        height: '30px',
-                                    }}
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary">
-                                    Add
-                                </Button>
-                            </Box>
-                        </Fragment>
+                                rows={rows}
+                                columns={columns}
+                                pageSize={5}
+                                rowsPerPageOptions={[5]}
+                                checkboxSelection
+                            />
+                        )}
                     </Box>
                 </Box>
                 );

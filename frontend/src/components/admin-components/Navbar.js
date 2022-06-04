@@ -6,18 +6,17 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
-import Sidenav from '@/components/admin-components/Sidenav'
+import Sidenav from '../../components/admin-components/Sidenav'
 import PropTypes from 'prop-types'
 import HomeIcon from '@mui/icons-material/Home'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
-import Router from 'next/router'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240
 const Navbar = props => {
-    const router = useRouter()
+    const navigate = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false)
     const { window } = props
     const container =
@@ -67,7 +66,7 @@ const Navbar = props => {
                                 component="div">
                                 <AccountCircleIcon
                                     onClick={() => {
-                                        Router.push(`/users/${router.query.id}`)
+                                        navigate(`/users/3`)
                                     }}
                                     fontSize="large"
                                 />
