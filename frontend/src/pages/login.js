@@ -5,8 +5,10 @@ import { Button, Link, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import axios from '../lib/axios'
 import { useNavigate } from 'react-router-dom'
-
+import { getUserId } from '../redux/loginSlice'
+import { useDispatch } from 'react-redux'
 const Login = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -16,12 +18,14 @@ const Login = () => {
         setLoading(true)
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8001/login', {
+            .post('http://127.0.0.1:8000/login', {
                 email,
                 password,
             })
             .then(res => {
                 if (res.data.success) {
+                    dispatch(getUserId(res.data.user.id))
+                    localStorage.setItem('userId', res.data.user.id)
                     if (res.data.user.role === 1) {
                         navigate(`/admin`)
                     } else if (res.data.user.role === 3) {

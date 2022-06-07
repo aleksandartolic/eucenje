@@ -14,7 +14,7 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { useToasts } from 'react-toast-notifications'
 const Register = () => {
     const navigate = useNavigate()
     const [name, setName] = useState('')
@@ -23,11 +23,11 @@ const Register = () => {
     const [password_confirmation, setPasswordConfirmation] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
-
+    const { addToast } = useToasts()
     const submitForm = async event => {
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8001/register', {
+            .post('http://127.0.0.1:8000/register', {
                 name,
                 email,
                 password,
@@ -37,6 +37,11 @@ const Register = () => {
             })
             .then(res => {
                 if (res.data.success) {
+                    addToast('Registered successfully!', {
+                        autoDismiss: true,
+                        autoDismissTimeout: 5000,
+                        appearance: 'success',
+                    })
                     navigate('/login')
                 }
                 return res

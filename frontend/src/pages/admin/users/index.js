@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
-import BasicMenu from '../../../components/admin-components/PopupMenu'
 import axios from 'axios'
 const drawerWidth = 240
 import AdminLayout from '../../../components/Layouts/AdminLayout'
@@ -11,11 +10,25 @@ import Typography from '@mui/material/Typography'
 import { CircularProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useToasts } from 'react-toast-notifications'
+import MoreIcon from '@mui/icons-material/MoreVert'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import MediaToolbar from '../../../pages/admin/media/mediaToolbar'
 
 const Users = () => {
     const [rows, setRows] = useState([])
     const [selectedRowId, setSelectedRowId] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null)
+    const open = Boolean(anchorEl)
+    const [pageSize, setPageSize] = useState(10)
 
+    const handleClick = event => {
+        event.stopPropagation()
+        setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
     const [loading, setLoading] = useState(false)
 
     const { addToast } = useToasts()
@@ -25,18 +38,32 @@ const Users = () => {
         e.preventDefault()
         navigate(`/admin/users/${selectedRowId}`, { replace: true })
     }
+    const getData = () => {
+        setLoading(true)
+        axios.get('http://localhost:8000/listUsers').then(value => {
+            setRows(value.data.response)
+        })
+        setLoading(false)
+    }
+    useEffect(() => {
+        getData()
+    }, [])
 
     const handleDelete = () => {
+        setAnchorEl(null)
+        console.log('executed')
         if (selectedRowId.length !== 0) {
-            setLoading(true)
-            axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
-            getData()
+            axios
+                .delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
+                .then(() => {
+                    getData()
+                })
+
             addToast(`User deleted successfully`, {
                 autoDismiss: true,
                 autoDismissTimeout: 5000,
                 appearance: 'success',
             })
-            setLoading(false)
         } else {
             addToast(`Please select user`, {
                 autoDismiss: true,
@@ -61,16 +88,26 @@ const Users = () => {
             headerName: 'Action',
             sortable: false,
             renderCell: () => {
-                const stopPropagation = e => {
-                    e.stopPropagation()
-                }
-
                 return (
-                    <BasicMenu
-                        stopPropagation={stopPropagation}
-                        deleteUser={handleDelete}
-                        editUser={editUser}
-                    />
+                    <div>
+                        <MoreIcon
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        />
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}>
+                            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                            <MenuItem onClick={editUser}>Edit</MenuItem>
+                        </Menu>
+                    </div>
                 )
             },
             flex: 1,
@@ -85,20 +122,21 @@ const Users = () => {
                     fontSize="large"
                     sx={{ cursor: 'pointer', marginTop: '20px' }}
                     onClick={() => {
-                        setLoading(true)
-
                         if (selectedRowId.length !== 0) {
                             axios
                                 .delete(
-                                    `http://localhost:8001/deleteUsers/${selectedRowId.join(
+                                    `http://localhost:8000/deleteUsers/${selectedRowId.join(
                                         ',',
                                     )}`,
                                     {},
                                 )
+                                .then(() => {
+                                    getData()
+                                })
                                 .catch(error => {
                                     throw new Error(`${error.message}`)
                                 })
-                            getData()
+
                             addToast(`User deleted successfully`, {
                                 autoDismiss: true,
                                 autoDismissTimeout: 5000,
@@ -121,16 +159,6 @@ const Users = () => {
             headerAlign: 'center',
         },
     ]
-    const getData = () => {
-        setLoading(true)
-        axios.get('http://localhost:8001/listUsers').then(value => {
-            setRows(value.data.response)
-        })
-        setLoading(false)
-    }
-    useEffect(() => {
-        getData()
-    }, [])
 
     return (
         <Fragment>
@@ -154,11 +182,18 @@ const Users = () => {
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)
                                 }}
+                                autoHeight
+                                sx={{ fontSize: '13px' }}
                                 rows={rows}
                                 columns={columns}
-                                pageSize={5}
-                                rowsPerPageOptions={[5]}
+                                pageSize={pageSize}
+                                onPageSizeChange={newPageSize =>
+                                    setPageSize(newPageSize)
+                                }
+                                rowsPerPageOptions={[10, 25, 50, 100]}
+                                pagination
                                 checkboxSelection
+                                components={{ Toolbar: MediaToolbar }}
                             />
                         )}
                     </Box>

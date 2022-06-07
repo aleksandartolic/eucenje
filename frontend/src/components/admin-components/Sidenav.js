@@ -12,12 +12,11 @@ import * as React from 'react'
 import GroupIcon from '@mui/icons-material/Group'
 import styled from 'styled-components'
 
-import classes from './sideNav.module.css'
 import { Box } from '@mui/material'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const links = [
     {
@@ -72,9 +71,7 @@ const links = [
 
 const Sidenav = () => {
     const navigate = useNavigate()
-    const location = useLocation()
     const [expanded, setExpanded] = React.useState(false)
-
     const handleChange = panel => (event, isExpanded) => {
         event.stopPropagation()
         setExpanded(isExpanded ? panel : false)
@@ -138,34 +135,40 @@ const Sidenav = () => {
                             }
                             aria-controls={`panel${index}bh-content`}
                             id={`panel${index}bh-header`}>
-                            <ListItemIcon key={Math.random() * 100000}>
+                            <ListItemIcon
+                                sx={{
+                                    color: '#1976d2',
+                                }}
+                                key={Math.random() * 100000}>
                                 {link.icon}
                             </ListItemIcon>
-                            <Typography fontSize={13}>{link.name}</Typography>
+                            <Typography fontSize="15px">{link.name}</Typography>
                         </AccordionSummary>
 
                         {link.nested &&
                             link.nested.map(value => (
                                 <AccordionDetails
+                                    sx={{
+                                        padding: '0 7px 0 7px',
+                                    }}
                                     onClick={() => {
                                         navigate(value.href, { replace: true })
                                     }}
-                                    key={value.name}
-                                    sx={{ padding: '0 0 0 7px' }}>
+                                    key={value.name}>
                                     <AccordionSummary
-                                        className={
-                                            location.pathname ===
-                                            `/${link.name.toLowerCase()}`
-                                                ? classes.active
-                                                : ' '
-                                        }
                                         sx={{
-                                            paddingRight: '20px',
                                             backgroundColor: '#fff',
+                                            '&:hover': {
+                                                backgroundColor:
+                                                    'rgba(18,83,147,0.4)',
+                                                color: '#fff',
+                                            },
+                                            paddingRight: '20px',
                                             margin: '4px 0 2px 2px',
                                             borderRadius: '3px',
                                         }}>
                                         <ListItemIcon
+                                            sx={{ color: '#1976d2' }}
                                             key={Math.random() * 100000}>
                                             {value.icon}
                                         </ListItemIcon>
@@ -185,13 +188,15 @@ const Sidenav = () => {
                 <List key={Math.random() * 100000}>
                     {['Courses Stats', 'User Stats'].map((text, index) => (
                         <ListItem button key={Math.random() * 100000}>
-                            <ListItemIcon key={Math.random() * 100000}>
+                            <ListItemIcon
+                                sx={{ color: '#1976d2' }}
+                                key={Math.random() * 100000}>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
                             <ListItemText
                                 key={Math.random() * 100000}
                                 primary={
-                                    <Typography fontSize={14}>
+                                    <Typography fontSize="13px">
                                         {text}
                                     </Typography>
                                 }

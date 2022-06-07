@@ -21,7 +21,7 @@ const Media = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get('http://localhost:8001/listMedia').then(value => {
+        axios.get('http://localhost:8000/listMedia').then(value => {
             setRows(value.data.response)
         })
         setLoading(false)
@@ -35,38 +35,38 @@ const Media = () => {
     }
 
     const columns = [
-        { field: 'cm_id', headerName: 'ID', flex: 1 },
-        { field: 'course_id', headerName: 'Course ID', flex: 1 },
-        { field: 'title', headerName: 'Title', flex: 1 },
+        { field: 'cm_id', headerName: 'ID', width: 150 },
+        { field: 'course_id', headerName: 'Course ID', width: 150 },
+        { field: 'title', headerName: 'Title', width: 150 },
         {
             field: 'duration',
             headerName: 'Duration',
-            flex: 1,
+            width: 150,
         },
         {
             field: 'description',
             headerName: 'Description',
-            flex: 1,
+            width: 150,
         },
         {
             field: 'filename',
             headerName: 'Filename',
-            flex: 1,
+            width: 150,
         },
         {
             field: 'created_at',
             headerName: 'Created At',
-            flex: 1,
+            width: 150,
         },
         {
             field: 'updated_at',
             headerName: 'Updated At',
-            flex: 1,
+            width: 150,
         },
         {
             field: 'full_path',
             headerName: 'Full Path',
-            flex: 1,
+            width: 150,
         },
         {
             disableColumnMenu: true,
@@ -107,7 +107,7 @@ const Media = () => {
                     />
                 )
             },
-            flex: 1,
+            width: 150,
         },
     ]
 
@@ -132,7 +132,7 @@ const Media = () => {
                             <DataGrid
                                 getRowId={row => row.cm_id}
                                 autoHeight
-                                sx={{ fontSize: '14px' }}
+                                sx={{ width: 'auto', fontSize: '14px' }}
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)
                                 }}

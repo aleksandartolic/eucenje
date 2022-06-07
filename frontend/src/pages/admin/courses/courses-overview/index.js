@@ -24,7 +24,7 @@ const Media = () => {
     const getData = () => {
         setLoading(true)
 
-        axios.get('http://localhost:8001/listCourses').then(value => {
+        axios.get('http://localhost:8000/listCourses').then(value => {
             setRows(value.data.response)
             setLoading(false)
         })
@@ -42,7 +42,7 @@ const Media = () => {
     const handleDeleteCourse = () => {
         setLoading(true)
         if (selectedRowId.length === 1) {
-            axios.delete(`http://localhost:8001/deleteCourse/${selectedRowId}/`)
+            axios.delete(`http://localhost:8000/deleteCourse/${selectedRowId}/`)
             getData()
             addToast('Course deleted successful!', {
                 autoDismiss: true,
@@ -98,7 +98,7 @@ const Media = () => {
 
                         if (selectedRowId.length !== 0) {
                             axios.delete(
-                                `http://localhost:8001/deleteCourse/${selectedRowId.join(
+                                `http://localhost:8000/deleteCourse/${selectedRowId.join(
                                     ',',
                                 )}`,
                             )

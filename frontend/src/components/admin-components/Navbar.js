@@ -14,8 +14,14 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { getUserId } from '../../redux/loginSlice'
+
 const drawerWidth = 240
 const Navbar = props => {
+    const userId = localStorage.getItem('userId')
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false)
     const { window } = props
@@ -55,18 +61,9 @@ const Navbar = props => {
                                 variant="h6"
                                 noWrap
                                 component="div">
-                                <HomeIcon fontSize="large" />
-                            </Typography>
-                        </Box>
-                        <Box mr={3}>
-                            <Typography
-                                style={{ cursor: 'pointer' }}
-                                variant="h6"
-                                noWrap
-                                component="div">
-                                <AccountCircleIcon
+                                <HomeIcon
                                     onClick={() => {
-                                        navigate(`/users/3`)
+                                        navigate('/admin')
                                     }}
                                     fontSize="large"
                                 />
@@ -78,7 +75,39 @@ const Navbar = props => {
                                 variant="h6"
                                 noWrap
                                 component="div">
-                                <LogoutIcon fontSize="large" />
+                                <AccountCircleIcon
+                                    onClick={() => {
+                                        navigate(`/admin/profile/${userId}`)
+                                    }}
+                                    fontSize="large"
+                                />
+                            </Typography>
+                        </Box>
+                        <Box mr={3}>
+                            <Typography
+                                style={{ cursor: 'pointer' }}
+                                variant="h6"
+                                noWrap
+                                component="div">
+                                <LogoutIcon
+                                    onClick={() => {
+                                        axios
+                                            .post(
+                                                'http://127.0.0.1:8000/logout',
+                                            )
+                                            .then(() => {
+                                                localStorage.removeItem(
+                                                    'userId',
+                                                )
+                                                dispatch(getUserId(null))
+                                                navigate('/login')
+                                            })
+                                            .catch(err => {
+                                                console.log(err.message)
+                                            })
+                                    }}
+                                    fontSize="large"
+                                />
                             </Typography>
                         </Box>
                     </Box>

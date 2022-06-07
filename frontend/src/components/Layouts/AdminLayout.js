@@ -11,7 +11,7 @@ const AdminLayout = props => {
             <Box
                 sx={{
                     display: 'flex',
-                    height: '85vh',
+                    height: 'auto',
                 }}>
                 <CssBaseline />
                 <Navbar />
