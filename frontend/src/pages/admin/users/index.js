@@ -36,11 +36,13 @@ const Users = () => {
 
     const editUser = e => {
         e.preventDefault()
-        navigate(`/admin/users/${selectedRowId}`, { replace: true })
+        navigate(`/admin/users/edit-profile/${selectedRowId}`, {
+            replace: true,
+        })
     }
     const getData = () => {
         setLoading(true)
-        axios.get('http://localhost:8000/listUsers').then(value => {
+        axios.get('http://localhost:8001/listUsers').then(value => {
             setRows(value.data.response)
         })
         setLoading(false)
@@ -54,7 +56,7 @@ const Users = () => {
         console.log('executed')
         if (selectedRowId.length !== 0) {
             axios
-                .delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
+                .delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
                 .then(() => {
                     getData()
                 })
@@ -125,7 +127,7 @@ const Users = () => {
                         if (selectedRowId.length !== 0) {
                             axios
                                 .delete(
-                                    `http://localhost:8000/deleteUsers/${selectedRowId.join(
+                                    `http://localhost:8001/deleteUsers/${selectedRowId.join(
                                         ',',
                                     )}`,
                                     {},

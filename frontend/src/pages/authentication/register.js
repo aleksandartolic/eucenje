@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import image from '../assets/images/backgroundLogin.png'
-import FormWrapper from '../components/FormWrapper'
+import image from '../../assets/images/backgroundLogin.png'
+import FormWrapper from '../../components/FormWrapper'
 import {
     TextField,
     Typography,
@@ -27,7 +27,7 @@ const Register = () => {
     const submitForm = async event => {
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8000/register', {
+            .post('http://127.0.0.1:8001/register', {
                 name,
                 email,
                 password,

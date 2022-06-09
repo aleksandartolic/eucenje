@@ -5,54 +5,40 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 
 import { Button, Typography } from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
-// import AuthValidationErrors from '@/components/AuthValidationErrors'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
-import { useToasts } from 'react-toast-notifications'
-
-const drawerWidth = 100
-function Overview() {
-    // const userId = useSelector(state => state.login.userId)
-
+const drawerWidth = 240
+function editUser() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
+    const params = useParams()
+    const { uid } = params
 
-    const { addToast } = useToasts()
-
-    const userId = localStorage.getItem('userId')
-    const getUser = () => {
-        axios.get(`http://localhost:/getUser/${userId}/`).then(value => {
-            const { username, name, email, role } = value.data.user
+    useEffect(() => {
+        axios.get(`http://localhost:8001/getUser/${uid}`).then(value => {
+            const { name, username, email, role } = value.data.user
             setName(name)
             setUsername(username)
             setEmail(email)
             setRole(role)
         })
-    }
+    }, [])
 
     const editUserHandler = e => {
         e.preventDefault()
-        axios.put(`http://localhost:/updateUser?${userId}`, {
+        axios.put(`http://localhost:8001/updateUser?${uid}`, {
+            id: uid,
             name: name,
             username: username,
             email: email,
-            role: role,
-            id: userId,
-        })
-        addToast('Profile updated successful!', {
-            autoDismiss: true,
-            autoDismissTimeout: 5000,
-            appearance: 'success',
         })
     }
-    useEffect(() => {
-        getUser()
-    }, [])
     return (
         <AdminLayout>
             <Box
@@ -62,7 +48,7 @@ function Overview() {
                 mt={5}
                 sx={{
                     flexGrow: 1,
-                    pt: 7,
+                    p: 7,
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                 }}>
                 {' '}
@@ -80,7 +66,7 @@ function Overview() {
                             textAlign="center"
                             fontWeight="bold"
                             variant="h4">
-                            Nikola Markovic
+                            {name}
                         </Typography>
                     </Box>
                     <Box mt={2}>
@@ -89,7 +75,7 @@ function Overview() {
                             variant="h6"
                             fontWeight="bold"
                             fontSize="16px">
-                            admin@admin.com
+                            {email}
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="space-around" mt={2}>
@@ -191,11 +177,15 @@ function Overview() {
                             </Box>
                         </Fragment>
                     </Box>
-                    <Box alignSelf="flex-start" />
+                    <Box alignSelf="flex-start">
+                        <Box mt={5} mb={5}>
+                            <Typography variant="h3">Your Courses</Typography>
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
         </AdminLayout>
     )
 }
 
-export default Overview
+export default editUser

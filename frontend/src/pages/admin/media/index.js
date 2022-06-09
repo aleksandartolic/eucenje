@@ -19,16 +19,19 @@ const Media = () => {
     const [loading, setLoading] = useState(false)
     const [rows, setRows] = useState([])
 
-    useEffect(() => {
+    const getData = () => {
         setLoading(true)
-        axios.get('http://localhost:8000/listMedia').then(value => {
+        axios.get('http://localhost:8001/listMedia').then(value => {
             setRows(value.data.response)
         })
         setLoading(false)
+    }
+    useEffect(() => {
+        getData()
     }, [])
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:8000/deleteUser/${selectedRowId}/`)
+        axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
     }
     const editCourse = () => {
         // TODO: edit course functionality
@@ -83,11 +86,12 @@ const Media = () => {
                     onClick={() => {
                         axios
                             .delete(
-                                `http://localhost:8000/deleteUsers/${selectedRowId.join(
-                                    ',',
-                                )}`,
-                                {},
+                                `http://localhost:8001/deleteMedia/${selectedRowId}/`,
                             )
+
+                            .then(() => {
+                                getData()
+                            })
                             .catch(error => {
                                 throw new Error(`${error.message}`)
                             })

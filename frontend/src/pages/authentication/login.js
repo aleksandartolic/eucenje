@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import image from '../assets/images/backgroundLogin.png'
-import FormWrapper from '../components/FormWrapper'
+import image from '../../assets/images/backgroundLogin.png'
+import FormWrapper from '../../components/FormWrapper'
 import { Button, Link, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import axios from '../lib/axios'
+import axios from '../../lib/axios'
 import { useNavigate } from 'react-router-dom'
-import { getUserId } from '../redux/loginSlice'
+import { getUserId } from '../../redux/loginSlice'
 import { useDispatch } from 'react-redux'
 const Login = () => {
     const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const Login = () => {
         setLoading(true)
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8000/login', {
+            .post('http://127.0.0.1:8001/login', {
                 email,
                 password,
             })

@@ -14,14 +14,9 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
-import axios from 'axios'
-import { getUserId } from '../../redux/loginSlice'
-
 const drawerWidth = 240
 const Navbar = props => {
     const userId = localStorage.getItem('userId')
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false)
     const { window } = props
@@ -91,20 +86,8 @@ const Navbar = props => {
                                 component="div">
                                 <LogoutIcon
                                     onClick={() => {
-                                        axios
-                                            .post(
-                                                'http://127.0.0.1:8000/logout',
-                                            )
-                                            .then(() => {
-                                                localStorage.removeItem(
-                                                    'userId',
-                                                )
-                                                dispatch(getUserId(null))
-                                                navigate('/login')
-                                            })
-                                            .catch(err => {
-                                                console.log(err.message)
-                                            })
+                                        navigate('/login')
+                                        localStorage.removeItem('userId')
                                     }}
                                     fontSize="large"
                                 />

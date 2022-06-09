@@ -1,44 +1,49 @@
-import AdminLayout from '@/components/Layouts/AdminLayout'
+import AdminLayout from '../../../../components/Layouts/AdminLayout'
 import Box from '@mui/material/Box'
-import image from '../profileImage-removebg-preview.png'
+import image from '../../../../assets/images/profileImage.png'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 
-import Image from 'next/image'
 import { Button, Typography } from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
-import AuthValidationErrors from '@/components/AuthValidationErrors'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import axios from '@/lib/axios'
-import { useRouter } from 'next/router'
-import TitlebarImageList from '@/components/admin-components/CoursesList'
+import axios from 'axios'
+import Paper from '@mui/material/Paper'
+import { styled } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}))
+
 const drawerWidth = 240
-function Overview() {
-    const [userData, setUserData] = useState([])
+function Profile() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setPasswordConfirmation] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
-    const [errors, setErrors] = useState([])
-    const router = useRouter()
-    const { id } = router.query
-    console.log(id)
+
+    const userId = localStorage.getItem('userId')
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/listUsers?${id}`).then(value => {
-            const { id, username, name, email } = value.data.response[0]
+        axios.get(`http://localhost:8001/getUser/${userId}`).then(value => {
+            const { name, username, email, role } = value.data.user
             setName(name)
             setUsername(username)
             setEmail(email)
+            setRole(role)
         })
     }, [])
 
     const editUserHandler = e => {
         e.preventDefault()
-        axios.put('http://localhost:8000/updateUser?50', {
+        axios.put(`http://localhost:8001/updateUser?${userId}`, {
+            id: userId,
             name: name,
             username: username,
             email: email,
@@ -59,7 +64,7 @@ function Overview() {
                 {' '}
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Box display="flex" justifyContent="center">
-                        <Image
+                        <img
                             src={image}
                             alt="Picture of the author"
                             width={250}
@@ -71,7 +76,7 @@ function Overview() {
                             textAlign="center"
                             fontWeight="bold"
                             variant="h4">
-                            Nikola Markovic
+                            {name}
                         </Typography>
                     </Box>
                     <Box mt={2}>
@@ -80,7 +85,7 @@ function Overview() {
                             variant="h6"
                             fontWeight="bold"
                             fontSize="16px">
-                            admin@admin.com
+                            {email}
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="space-around" mt={2}>
@@ -98,10 +103,6 @@ function Overview() {
                     </Box>
                     <Box pt={5}>
                         <Fragment>
-                            <AuthValidationErrors
-                                style={{ marginBottom: '20px' }}
-                                errors={errors}
-                            />
                             <Box
                                 onSubmit={editUserHandler}
                                 p={5}
@@ -159,36 +160,6 @@ function Overview() {
                                 </FormControl>
                                 <FormControl>
                                     <InputLabel htmlFor="component-outlined">
-                                        Password
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        value={password}
-                                        type="password"
-                                        onChange={event =>
-                                            setPassword(event.target.value)
-                                        }
-                                        label="Password"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Confirm password
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="component-outlined"
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={event =>
-                                            setPasswordConfirmation(
-                                                event.target.value,
-                                            )
-                                        }
-                                        label="Confirm Password"
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
                                         Role
                                     </InputLabel>
                                     <OutlinedInput
@@ -220,9 +191,21 @@ function Overview() {
                         <Box mt={5} mb={5}>
                             <Typography variant="h3">Your Courses</Typography>
                         </Box>
-
                         <Box>
-                            <TitlebarImageList />
+                            <Grid container spacing={2}>
+                                <Grid item xs={6} md={8}>
+                                    <img width={200} height={200} src={image} />
+                                </Grid>
+                                <Grid item xs={6} md={4}>
+                                    <Item>xs=6 md=4</Item>
+                                </Grid>
+                                <Grid item xs={6} md={4}>
+                                    <Item>xs=6 md=4</Item>
+                                </Grid>
+                                <Grid item xs={6} md={8}>
+                                    <Item>xs=6 md=8</Item>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Box>
                 </Box>
@@ -231,4 +214,4 @@ function Overview() {
     )
 }
 
-export default Overview
+export default Profile

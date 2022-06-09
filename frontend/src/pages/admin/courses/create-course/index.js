@@ -1,78 +1,32 @@
 import AdminLayout from '../../../../components/Layouts/AdminLayout'
-import Box from '@mui/material/Box'
-
-import * as React from 'react'
+import {
+    Box,
+    Button,
+    InputLabel,
+    OutlinedInput,
+    TextareaAutosize,
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { Button, CircularProgress, TextareaAutosize } from '@mui/material'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useToasts } from 'react-toast-notifications'
-
+import { useState } from 'react'
+const drawerWidth = 240
 const CreateCourse = () => {
-    // const userId = localStorage.getItem('userId')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [loading, setLoading] = useState(false)
-    const { addToast } = useToasts()
-    const [video, setVideo] = useState('')
-    const [disabled, setDisabled] = useState(true)
-
-    useEffect(() => {
-        if (video !== '') {
-            setDisabled(false)
-        }
-    }, [video])
-    console.log(video)
-    const createCourseHandler = e => {
-        e.preventDefault()
-        setLoading(true)
-        if (video !== '') {
-            console.log(video)
-            axios.post('http://localhost:8000/uploadMedium/', {
-                course_id: 3,
-                title: 'gfdfdg',
-                description: 'dsdsdfs',
-                filename: video.name,
-                headers: {
-                    'Content-Type': 'video/mp4',
-                    'Access-Control-Allow-Origin': '*',
-                },
-            })
-        }
-
-        addToast('Course added successful!', {
-            autoDismiss: true,
-            autoDismissTimeout: 5000,
-            appearance: 'success',
-        })
-        setLoading(false)
-        setName('')
-        setDescription('')
-    }
-    const handleInputChange = async e => {
-        e.preventDefault()
-
-        let file = e.target.files[0]
-
-        if (file) {
-            let reader = new FileReader()
-            reader.onload = () => {
-                setVideo(file)
-            }
-            reader.readAsDataURL(file)
-        }
-    }
-
     return (
         <AdminLayout>
-            {loading ? (
-                <CircularProgress />
-            ) : (
+            <Box
+                component="main"
+                mt={10}
+                sx={{
+                    flexGrow: 1,
+                    p: 7,
+                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                }}>
+                <Box mb={5} mt={15} pl={2}>
+                    <Typography variant="h4">Create Course</Typography>
+                </Box>
                 <Box
-                    onSubmit={createCourseHandler}
                     p={5}
                     pt={0}
                     pl={0}
@@ -87,9 +41,6 @@ const CreateCourse = () => {
                     }}
                     noValidate
                     autoComplete="off">
-                    <Box>
-                        <Typography variant="h4">Create course</Typography>
-                    </Box>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">
                             Name
@@ -126,34 +77,22 @@ const CreateCourse = () => {
                             }
                         />
                     </FormControl>
-                    <FormControl>
-                        <h1>File Upload</h1>
-                        <input
-                            type="file"
-                            name="the-name"
-                            onChange={handleInputChange}
-                            multiple
-                        />
-                    </FormControl>
-
                     <Button
-                        disabled={disabled}
                         className="ml-4"
                         style={{
                             marginTop: '3rem',
                             fontSize: 10,
-                            width: '150px',
-                            height: '40px',
+                            width: '90px',
+                            height: '30px',
                         }}
                         type="submit"
                         variant="contained"
                         color="primary">
-                        Create Course
+                        Upload
                     </Button>
                 </Box>
-            )}
+            </Box>
         </AdminLayout>
     )
 }
-
 export default CreateCourse
