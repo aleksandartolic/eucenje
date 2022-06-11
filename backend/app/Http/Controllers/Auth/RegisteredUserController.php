@@ -32,6 +32,11 @@ class RegisteredUserController extends Controller
             'role' => ['required', 'integer', 'min:1', 'max:3'],
         ]);
 
+        if($request->password !== $request->confirmPassword) 
+        {
+            return response()->json(['success' => false, 'message' => 'Passwords must be identical.']);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
