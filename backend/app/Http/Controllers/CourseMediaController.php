@@ -111,4 +111,23 @@ class CourseMediaController extends Controller
             return response()->json(['success' => false, 'user' => 'Unable to get medium.']);
         }
     }
+
+    public function deleteMedia(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        if(CourseMedia::whereIn('cm_id', $ids) === null) {
+            return response()->json(['success' => false, 'message' => 'No users found.']);
+        }
+
+        try {
+            foreach(CourseMedia::whereIn('cm_id', $ids)->get() as $medium) {
+                $medium->delete();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Media successfully deleted.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting media.']);
+        }
+    }
 }
