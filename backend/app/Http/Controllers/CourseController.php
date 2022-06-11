@@ -34,7 +34,7 @@ class CourseController extends Controller
                         'uid' => $request->uid,
                         'name' => strip_tags(htmlentities($request->name)),
                         'description' => strip_tags(htmlentities($request->description)),
-                        'picture' => strip_tags(htmlentities($pictureName)),
+                        'picture' => basename($path),
                     ]);
 
                     $response['success'] = true;
