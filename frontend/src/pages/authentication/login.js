@@ -1,18 +1,18 @@
-import styled from 'styled-components'
 import image from '../../assets/images/backgroundLogin.png'
 import FormWrapper from '../../components/FormWrapper'
 import { Button, Link, TextField, Typography } from '@mui/material'
+import styled from 'styled-components'
 import { useState } from 'react'
 import axios from '../../lib/axios'
 import { useNavigate } from 'react-router-dom'
 import { getUserId } from '../../redux/loginSlice'
 import { useDispatch } from 'react-redux'
-import AuthValidationErrors from "../../components/AuthValidationErrors";
+import AuthValidationErrors from '../../components/AuthValidationErrors'
 import React from 'react'
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [errors,setErrors] = useState([]);
+    const [errors, setErrors] = useState([])
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -37,9 +37,10 @@ const Login = () => {
                         navigate(`/teacher`)
                     }
                 }
-            }).catch((error)=>{
-
-        })
+            })
+            .catch(error => {
+                console.log(error)
+            })
         setLoading(false)
     }
     if (loading) {

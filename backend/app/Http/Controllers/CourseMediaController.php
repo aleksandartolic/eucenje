@@ -25,7 +25,6 @@ class CourseMediaController extends Controller
             $response['message'] = $validator->messages();
         } else {
             try {
-                var_dump($request->file('filename'));
                 if($file = $request->file('filename')) {
                     $path = $file->store('public/media');
                     $fullPath = storage_path() . '/app/' . $path;

@@ -1,12 +1,16 @@
-import AdminLayout from '../../../../components/Layouts/AdminLayout'
-import Box from '@mui/material/Box'
-
 import * as React from 'react'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { Button, CircularProgress, TextareaAutosize } from '@mui/material'
+import AdminLayout from '../../../../components/Layouts/AdminLayout'
+import {
+    Button,
+    CircularProgress,
+    LinearProgress,
+    TextareaAutosize,
+} from '@mui/material'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
@@ -19,6 +23,50 @@ const CreateCourse = () => {
     const { addToast } = useToasts()
     const [video, setVideo] = useState('')
     const [disabled, setDisabled] = useState(true)
+    const [selectedFiles, setSelectedFiles] = useState(undefined)
+    const [currentFile, setCurrentFile] = useState(undefined)
+    const [progress, setProgress] = useState(0)
+    const [message, setMessage] = useState('')
+    const [fileInfos, setFileInfos] = useState([])
+
+    function selectFiles(event) {
+        setSelectedFiles(event.target.files[0])
+    }
+
+    function upload(file, onUploadProgress) {
+        let formData = new FormData()
+        formData.append('filename', file)
+        formData.append('course_id', 49)
+        formData.append('title', name)
+        formData.append('description', description)
+        // formData.append('filename', video)
+        return axios.post('http://localhost:8001/uploadMedium/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            onUploadProgress,
+        })
+    }
+
+    function uploadService() {
+        let currentFile = selectedFiles
+
+        setProgress(0)
+        setCurrentFile(currentFile)
+
+        upload(currentFile, event => {
+            setProgress(Math.round((100 * event.loaded) / event.total))
+        })
+            .then(files => {
+                setFileInfos(files.data)
+            })
+            .catch(() => {
+                setProgress(0)
+                setMessage('Could not upload the file!')
+                setCurrentFile(undefined)
+            })
+        setSelectedFiles(undefined)
+    }
 
     useEffect(() => {
         if (video !== '') {
@@ -30,14 +78,15 @@ const CreateCourse = () => {
         e.preventDefault()
         setLoading(true)
         console.log(video)
+        const formData = new FormData()
+        formData.append('course_id', 49)
+        formData.append('title', name)
+        formData.append('description', description)
+        formData.append('filename', video)
         if (video !== '') {
-            axios.post('http://localhost:8001/uploadMedium/', {
-                course_id: 1,
-                title: name,
-                description: description,
-                filename: video,
+            axios.post('http://localhost:8001/uploadMedium/', formData, {
                 headers: {
-                    'Content-Type': 'video/mp4'
+                    'Content-Type': 'multipart/form-data',
                 },
             })
         }
@@ -55,14 +104,14 @@ const CreateCourse = () => {
         e.preventDefault()
 
         let file = e.target.files[0]
-
-        if (file) {
-            let reader = new FileReader()
-            reader.onload = () => {
-                setVideo(reader.result)
-            }
-            reader.readAsDataURL(file)
-        }
+        setVideo(file)
+        // if (file) {
+        //     let reader = new FileReader()
+        //     reader.onload = () => {
+        //         setVideo(reader.result)
+        //     }
+        //     reader.readAsDataURL(file)
+        // }
     }
 
     return (
@@ -89,7 +138,7 @@ const CreateCourse = () => {
                     noValidate
                     autoComplete="off">
                     <Box>
-                        <Typography variant="h4">Create course</Typography>
+                        <Typography variant="h4">Add media</Typography>
                     </Box>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">
@@ -129,7 +178,7 @@ const CreateCourse = () => {
                     </FormControl>
                     <FormControl>
                         <h2>Upload Video</h2>
-                        <br/>
+                        <br />
                         <input
                             type="file"
                             name="the-name"
@@ -138,6 +187,38 @@ const CreateCourse = () => {
                         />
                     </FormControl>
 
+                    <div>
+                        {currentFile && (
+                            <LinearProgress
+                                value={progress}
+                                variant="determinate"
+                            />
+                        )}
+                        <label className="btn btn-default">
+                            <input type="file" onChange={selectFiles} />
+                        </label>
+                        <button
+                            className="btn btn-success"
+                            disabled={!selectedFiles}
+                            onClick={uploadService}>
+                            Upload
+                        </button>
+                        <div className="alert alert-light" role="alert">
+                            {message}
+                        </div>
+                        <div className="card">
+                            <div className="card-header">List of Files</div>
+                            <ul className="list-group list-group-flush">
+                                {fileInfos && (
+                                    <li className="list-group-item">
+                                        <a href={fileInfos.url}>
+                                            {fileInfos.name}
+                                        </a>
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
                     <Button
                         disabled={disabled}
                         className="ml-4"
@@ -150,7 +231,7 @@ const CreateCourse = () => {
                         type="submit"
                         variant="contained"
                         color="primary">
-                        Add media
+                        submit
                     </Button>
                 </Box>
             )}

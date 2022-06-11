@@ -1,5 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react'
+
 import { DataGrid } from '@mui/x-data-grid'
+import React, { Fragment, useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import axios from 'axios'
 const drawerWidth = 240
@@ -43,8 +44,12 @@ const Media = () => {
     }, [])
 
     const handleDelete = () => {
+        setAnchorEl(null)
         axios
-            .delete(`http://localhost:8001/deleteMedia/${selectedRowId}`)
+            .delete(`http://localhost:8001/deleteMedium/${selectedRowId[0]}`)
+            .then(() => {
+                getData()
+            })
             .catch(error => {
                 console.log(error.message)
             })
@@ -95,9 +100,10 @@ const Media = () => {
                     fontSize="large"
                     sx={{ cursor: 'pointer', marginTop: '20px' }}
                     onClick={() => {
+                        console.log(selectedRowId)
                         axios
                             .delete(
-                                `http://localhost:8001/deleteMedia/${selectedRowId}`,
+                                `http://localhost:8001/deleteMedium/${selectedRowId[0]}`,
                             )
 
                             .then(() => {
