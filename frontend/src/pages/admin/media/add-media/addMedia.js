@@ -32,13 +32,12 @@ const CreateCourse = () => {
         console.log(video)
         if (video !== '') {
             axios.post('http://localhost:8001/uploadMedium/', {
-                course_id: 26,
+                course_id: 1,
                 title: name,
                 description: description,
                 filename: video,
                 headers: {
-                    'Content-Type': 'video/mp4',
-                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'video/mp4'
                 },
             })
         }
