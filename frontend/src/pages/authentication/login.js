@@ -7,9 +7,12 @@ import axios from '../../lib/axios'
 import { useNavigate } from 'react-router-dom'
 import { getUserId } from '../../redux/loginSlice'
 import { useDispatch } from 'react-redux'
+import AuthValidationErrors from "../../components/AuthValidationErrors";
+import React from 'react'
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [errors,setErrors] = useState([]);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -34,7 +37,9 @@ const Login = () => {
                         navigate(`/teacher`)
                     }
                 }
-            })
+            }).catch((error)=>{
+
+        })
         setLoading(false)
     }
     if (loading) {
@@ -57,6 +62,10 @@ const Login = () => {
                     <form
                         style={{ width: '100%', height: '100%' }}
                         onSubmit={submitForm}>
+                        <AuthValidationErrors
+                            style={{ marginBottom: '20px' }}
+                            errors={errors}
+                        />
                         <TextField
                             inputProps={{ style: { fontSize: 16 } }} // font size of input text
                             InputLabelProps={{ style: { fontSize: 13 } }}

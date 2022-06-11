@@ -15,8 +15,10 @@ import { useToasts } from 'react-toast-notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import MediaToolbar from '../../../../pages/admin/media/mediaToolbar'
 
 const Media = () => {
+    const [pageSize, setPageSize] = useState(10)
     const { addToast } = useToasts()
     const navigate = useNavigate()
     const [rows, setRows] = useState([])
@@ -110,7 +112,7 @@ const Media = () => {
                     </div>
                 )
             },
-            flex: 1,
+            width:60,
         },
         {
             disableColumnMenu: true,
@@ -152,14 +154,14 @@ const Media = () => {
                     }}
                 />
             ),
-            flex: 1,
+           width:60,
             sortable: false,
             headerAlign: 'center',
         },
     ]
 
     return (
-        <Fragment>
+
             <AdminLayout>
                 <Box
                     component="main"
@@ -168,33 +170,35 @@ const Media = () => {
                         flexGrow: 1,
                         p: 7,
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        height:"100%"
                     }}>
                     <Box pb={4} pl={2}>
                         <Typography variant="h4">Courses</Typography>
                     </Box>
-                    <Box pt={2} sx={{ height: 400, width: '100%' }}>
-                        {loading === true ? (
-                            <CircularProgress />
-                        ) : (
+                    <Box pt={2} sx={{ height: "auto", width: '100%' }}>
+
                             <DataGrid
-                                autoHeight
                                 getRowId={row => row.course_id}
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)
                                 }}
+                                autoHeight
+                                sx={{ fontSize: '13px' }}
                                 rows={rows}
                                 columns={columns}
-                                pageSize={5}
-                                rowsPerPageOptions={[5]}
+                                pageSize={pageSize}
+                                onPageSizeChange={newPageSize =>
+                                    setPageSize(newPageSize)
+                                }
+                                rowsPerPageOptions={[10, 25, 50, 100]}
+                                pagination
                                 checkboxSelection
+                                components={{ Toolbar: MediaToolbar }}
                             />
-                        )}
                     </Box>
-                    <Box pt={5} />
                 </Box>
-                );
+
             </AdminLayout>
-        </Fragment>
     )
 }
 
