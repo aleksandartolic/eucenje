@@ -47,6 +47,7 @@ const Register = () => {
                 return res
             })
             .catch(error => {
+                console.log('error');
                 if (error.response.status !== 422) throw error
             })
     }

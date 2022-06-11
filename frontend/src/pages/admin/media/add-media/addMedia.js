@@ -72,6 +72,8 @@ const CreateCourse = () => {
             ) : (
                 <Box
                     onSubmit={createCourseHandler}
+                    pt={10}
+                    mb={30}
                     mt={10}
                     pl={50}
                     pr={50}
@@ -126,7 +128,8 @@ const CreateCourse = () => {
                         />
                     </FormControl>
                     <FormControl>
-                        <h1>File Upload</h1>
+                        <h2>Upload Video</h2>
+                        <br/>
                         <input
                             type="file"
                             name="the-name"

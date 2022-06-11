@@ -9,14 +9,33 @@ import {
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
+import React from "react";
 const drawerWidth = 240
 const CreateCourse = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
+    const [image, setImage] = useState('')
+    const handleInputChange = async e => {
+        e.preventDefault()
+
+        let file = e.target.files[0]
+
+        if (file) {
+            let reader = new FileReader()
+            reader.onload = () => {
+                setImage(reader.result)
+            }
+            reader.readAsDataURL(file)
+        }
+    }
     return (
         <AdminLayout>
             <Box
                 component="main"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="column"
                 mt={10}
                 sx={{
                     flexGrow: 1,
@@ -75,6 +94,16 @@ const CreateCourse = () => {
                             onChange={event =>
                                 setDescription(event.target.value)
                             }
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <h2>Upload Image</h2>
+                        <br/>
+                        <input
+                            type="file"
+                            name="the-name"
+                            onChange={handleInputChange}
+                            multiple
                         />
                     </FormControl>
                     <Button
