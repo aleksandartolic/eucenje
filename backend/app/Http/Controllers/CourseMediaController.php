@@ -38,7 +38,7 @@ class CourseMediaController extends Controller
                         'title' => $request->title,
                         'duration' => $duration,
                         'description' => $request->description,
-                        'filename' => $request->filename,
+                        'filename' => $path,
                         'full_path' => $fileAnalyze['filenamepath'],
                     ]);
 
