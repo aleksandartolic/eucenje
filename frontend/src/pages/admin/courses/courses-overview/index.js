@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
-import BasicMenu from '../../../../components/admin-components/PopupMenu'
 import axios from 'axios'
 const drawerWidth = 240
 import AdminLayout from '../../../../components/Layouts/AdminLayout'
@@ -13,6 +12,9 @@ import { CircularProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import { useToasts } from 'react-toast-notifications'
+import MoreIcon from '@mui/icons-material/MoreVert'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 const Media = () => {
     const { addToast } = useToasts()
@@ -20,7 +22,16 @@ const Media = () => {
     const [rows, setRows] = useState([])
     const [selectedRowId, setSelectedRowId] = useState([])
     const [loading, setLoading] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null)
+    const open = Boolean(anchorEl)
 
+    const handleClick = event => {
+        event.stopPropagation()
+        setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
     const getData = () => {
         setLoading(true)
 
@@ -41,9 +52,14 @@ const Media = () => {
 
     const handleDeleteCourse = () => {
         setLoading(true)
+        setAnchorEl(null)
         if (selectedRowId.length === 1) {
-            axios.delete(`http://localhost:8001/deleteCourse/${selectedRowId}/`)
-            getData()
+            axios
+                .delete(`http://localhost:8001/deleteCourse/${selectedRowId}/`)
+                .then(() => {
+                    getData()
+                })
+
             addToast('Course deleted successful!', {
                 autoDismiss: true,
                 autoDismissTimeout: 5000,
@@ -70,16 +86,28 @@ const Media = () => {
             headerName: 'Action',
             sortable: false,
             renderCell: () => {
-                const stopPropagation = e => {
-                    e.stopPropagation()
-                }
-
                 return (
-                    <BasicMenu
-                        stopPropagation={stopPropagation}
-                        deleteUser={handleDeleteCourse}
-                        editUser={editCourse}
-                    />
+                    <div>
+                        <MoreIcon
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        />
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}>
+                            <MenuItem onClick={handleDeleteCourse}>
+                                Delete
+                            </MenuItem>
+                            <MenuItem onClick={editCourse}>Edit</MenuItem>
+                        </Menu>
+                    </div>
                 )
             },
             flex: 1,
@@ -97,12 +125,16 @@ const Media = () => {
                         setLoading(true)
 
                         if (selectedRowId.length !== 0) {
-                            axios.delete(
-                                `http://localhost:8001/deleteCourse/${selectedRowId.join(
-                                    ',',
-                                )}`,
-                            )
-                            getData()
+                            axios
+                                .delete(
+                                    `http://localhost:8001/deleteCourse/${selectedRowId.join(
+                                        ',',
+                                    )}`,
+                                )
+                                .then(() => {
+                                    getData()
+                                })
+
                             addToast(`Course deleted successfully`, {
                                 autoDismiss: true,
                                 autoDismissTimeout: 5000,

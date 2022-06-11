@@ -112,7 +112,7 @@ const Users = () => {
                     </div>
                 )
             },
-            flex: 1,
+            width: 80,
         },
         {
             disableColumnMenu: true,
@@ -156,7 +156,7 @@ const Users = () => {
                     }}
                 />
             ),
-            flex: 1,
+            width: 60,
             sortable: false,
             headerAlign: 'center',
         },
@@ -176,7 +176,7 @@ const Users = () => {
                     <Box pb={4} pl={2}>
                         <Typography variant="h4">Users</Typography>
                     </Box>
-                    <Box pt={2} sx={{ height: 400, width: '100%' }}>
+                    <Box pt={2} sx={{ width: '100%' }}>
                         {loading ? (
                             <CircularProgress />
                         ) : (

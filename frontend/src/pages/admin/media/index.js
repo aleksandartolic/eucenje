@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
-import BasicMenu from '../../../components/admin-components/PopupMenu'
 import axios from 'axios'
 const drawerWidth = 240
 import AdminLayout from '../../../components/Layouts/AdminLayout'
@@ -9,6 +8,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import MediaToolbar from '../../../pages/admin/media/mediaToolbar'
 import { CircularProgress } from '@mui/material'
+import MoreIcon from '@mui/icons-material/MoreVert'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 // import { useNavigate } from 'react-router-dom'
 
@@ -18,6 +20,16 @@ const Media = () => {
     const [selectedRowId, setSelectedRowId] = useState(null)
     const [loading, setLoading] = useState(false)
     const [rows, setRows] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null)
+    const open = Boolean(anchorEl)
+
+    const handleClick = event => {
+        event.stopPropagation()
+        setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
 
     const getData = () => {
         setLoading(true)
@@ -31,9 +43,13 @@ const Media = () => {
     }, [])
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:8001/deleteUser/${selectedRowId}/`)
+        axios
+            .delete(`http://localhost:8001/deleteMedia/${selectedRowId}`)
+            .catch(error => {
+                console.log(error.message)
+            })
     }
-    const editCourse = () => {
+    const editMedia = () => {
         // TODO: edit course functionality
     }
 
@@ -67,11 +83,6 @@ const Media = () => {
             width: 150,
         },
         {
-            field: 'full_path',
-            headerName: 'Full Path',
-            width: 150,
-        },
-        {
             disableColumnMenu: true,
             field: 'action',
             headerName: 'Action',
@@ -86,7 +97,7 @@ const Media = () => {
                     onClick={() => {
                         axios
                             .delete(
-                                `http://localhost:8001/deleteMedia/${selectedRowId}/`,
+                                `http://localhost:8001/deleteMedia/${selectedRowId}`,
                             )
 
                             .then(() => {
@@ -99,19 +110,29 @@ const Media = () => {
                 />
             ),
             renderCell: () => {
-                const stopPropagation = e => {
-                    e.stopPropagation()
-                }
-
                 return (
-                    <BasicMenu
-                        stopPropagation={stopPropagation}
-                        deleteUser={handleDelete}
-                        editCourse={editCourse}
-                    />
+                    <div>
+                        <MoreIcon
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        />
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}>
+                            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                            <MenuItem onClick={editMedia}>Edit</MenuItem>
+                        </Menu>
+                    </div>
                 )
             },
-            width: 150,
+            width: 40,
         },
     ]
 
@@ -134,9 +155,12 @@ const Media = () => {
                             <CircularProgress />
                         ) : (
                             <DataGrid
-                                getRowId={row => row.cm_id}
                                 autoHeight
-                                sx={{ width: 'auto', fontSize: '14px' }}
+                                getRowId={row => row.cm_id}
+                                sx={{
+                                    width: 'auto',
+                                    fontSize: '13px',
+                                }}
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)
                                 }}
