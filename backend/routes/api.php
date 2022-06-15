@@ -29,10 +29,10 @@ Route::post('/createCourse', [CourseController::class, 'store'])
 Route::delete('/deleteUser/{uid}', [AdminDashboardController::class, 'deleteUser'])
     ->name('delete.user');
 
-Route::delete('/deleteUsers/{ids}', [CourseMediaController::class, 'deleteMedia'])
+Route::delete('/deleteMedia/{ids}', [CourseMediaController::class, 'deleteMedia'])
     ->name('delete.media');
 
-Route::delete('/deleteMedia/{ids}', [AdminDashboardController::class, 'deleteUsers'])
+Route::delete('/deleteUsers/{ids}', [AdminDashboardController::class, 'deleteUsers'])
     ->name('delete.users');
 
 Route::put('/updateCourse', [CourseController::class, 'update'])

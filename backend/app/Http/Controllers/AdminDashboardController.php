@@ -75,7 +75,7 @@ class AdminDashboardController extends Controller
 
         try {
             foreach(User::whereIn('id', $ids)->get() as $usr) {
-                $usr->delete();
+                $usr->forceDelete();
             }
 
             return response()->json(['success' => true, 'message' => 'Users successfully deleted.']);

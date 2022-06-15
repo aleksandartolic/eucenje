@@ -116,12 +116,12 @@ class CourseMediaController extends Controller
         $ids = explode(',', $request->ids);
 
         if(CourseMedia::whereIn('cm_id', $ids) === null) {
-            return response()->json(['success' => false, 'message' => 'No users found.']);
+            return response()->json(['success' => false, 'message' => 'No media found.']);
         }
 
         try {
             foreach(CourseMedia::whereIn('cm_id', $ids)->get() as $medium) {
-                $medium->delete();
+                $medium->forceDelete();
             }
 
             return response()->json(['success' => true, 'message' => 'Media successfully deleted.']);
