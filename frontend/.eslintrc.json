@@ -3,7 +3,7 @@
         "plugin:react/recommended",
         "prettier"
     ],
-    "plugins": ["react", "prettier"],
+    "plugins": ["import","react", "prettier"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2021
