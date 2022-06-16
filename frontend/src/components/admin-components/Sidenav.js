@@ -4,10 +4,9 @@ import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
-
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import ListItemText from '@mui/material/ListItemText'
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions'
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import * as React from 'react'
 import GroupIcon from '@mui/icons-material/Group'
 import styled from 'styled-components'
@@ -17,7 +16,10 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useNavigate } from 'react-router-dom'
-
+import PreviewIcon from '@mui/icons-material/Preview'
+import AddIcon from '@mui/icons-material/Add'
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 const links = [
     {
         name: 'Media',
@@ -26,7 +28,7 @@ const links = [
             {
                 name: 'Media Overview',
                 href: '/admin/media/media-overview',
-                icon: <SubscriptionsIcon />,
+                icon: <PreviewIcon />,
             },
             {
                 name: 'Add Media',
@@ -47,23 +49,23 @@ const links = [
             {
                 name: 'Add user',
                 href: '/admin/users/add-user',
-                icon: <GroupAddIcon />,
+                icon: <AddIcon />,
             },
         ],
     },
     {
         name: 'Courses',
-        icon: <GroupIcon />,
+        icon: <LibraryBooksIcon />,
         nested: [
             {
                 name: 'Courses Overview',
                 href: '/admin/courses/courses-overview',
-                icon: <GroupIcon />,
+                icon: <VisibilityIcon />,
             },
             {
                 name: 'Add course',
                 href: '/admin/courses/add-course',
-                icon: <GroupAddIcon />,
+                icon: <AddIcon />,
             },
         ],
     },
@@ -103,7 +105,7 @@ const Sidenav = () => {
                     <Accordion
                         id={link.name}
                         sx={{
-                            marginTop: `3px`,
+                            marginTop: `2rem`,
                             boxShadow: 0,
                             '&:before': {
                                 display: 'none',

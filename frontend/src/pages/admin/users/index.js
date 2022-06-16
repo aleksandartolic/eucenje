@@ -124,12 +124,14 @@ const Users = () => {
                     fontSize="large"
                     sx={{ cursor: 'pointer', marginTop: '20px' }}
                     onClick={() => {
+                        console.log(selectedRowId)
                         if (selectedRowId.length !== 0) {
+                            console.log
                             axios
                                 .delete(
                                     `http://localhost:8001/deleteUsers/${selectedRowId.join(
                                         ',',
-                                    )}`,
+                                    )}/`,
                                     {},
                                 )
                                 .then(() => {

@@ -1,11 +1,16 @@
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import image from '../../assets/images/dashbUsers.png'
+import image2 from '../../assets/images/eCourses.jpg'
+import AddIcon from '@mui/icons-material/Add'
+import ViewComfyIcon from '@mui/icons-material/ViewComfy'
 import {
     Button,
     Card,
     CardActionArea,
     CardActions,
     CardContent,
+    CardMedia,
     Typography,
 } from '@mui/material'
 
@@ -46,37 +51,40 @@ const Dashboard = () => {
         <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={6}>
                 <Box>
-                    {' '}
-                    <Card
-                        sx={{
-                            maxWidth: 345,
-                            backgroundColor: '#0d3b69',
-                            color: '#fff',
-                        }}>
-                        <CardActionArea>
-                            <CardContent>
-                                <Typography
-                                    color="#fff"
-                                    gutterBottom
-                                    variant="h3"
-                                    component="div">
-                                    {users}+ users
-                                </Typography>
-                                <Typography
-                                    sx={{ color: '#fff' }}
-                                    variant="h6"
-                                    color="text.secondary">
-                                    This is a user section, check how many users
-                                    are on the platfrom
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions sx={{ backgroundColor: '#5e9fe0' }}>
+                    <Card sx={{ maxWidth: 500, maxHeight: 700 }}>
+                        <CardMedia
+                            component="img"
+                            alt="green iguana"
+                            height="250"
+                            image={image}
+                        />
+                        <CardContent>
+                            <Typography
+                                fontWeight="bold"
+                                gutterBottom
+                                variant="h4"
+                                component="div">
+                                {users}+ users
+                            </Typography>
+                            <Typography variant="h6" color="#000">
+                                This is a platform that have a 3 types of user,
+                                this user are Students, Teachers, and for sure
+                                there must be ADMINS,enjoy with administration
+                                of this beautiful application
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
                             <Button
-                                sx={{ color: '#fff', fontSize: '10px' }}
-                                size="small"
-                                color="primary">
-                                Check
+                                startIcon={<AddIcon />}
+                                variant="contained"
+                                size="large">
+                                Add user
+                            </Button>
+                            <Button
+                                startIcon={<ViewComfyIcon />}
+                                variant="contained"
+                                size="large">
+                                View users
                             </Button>
                         </CardActions>
                     </Card>
@@ -84,37 +92,40 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={6}>
                 <Box>
-                    {' '}
-                    <Card
-                        sx={{
-                            maxWidth: 345,
-                            backgroundColor: '#0d3b69',
-                            color: '#fff',
-                        }}>
-                        <CardActionArea>
-                            <CardContent>
-                                <Typography
-                                    color="#fff"
-                                    gutterBottom
-                                    variant="h3"
-                                    component="div">
-                                    {courses}+ courses
-                                </Typography>
-                                <Typography
-                                    sx={{ color: '#fff' }}
-                                    variant="h6"
-                                    color="text.secondary">
-                                    This is a courses section, check how many
-                                    courses are available on platfrom
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions sx={{ backgroundColor: '#5e9fe0' }}>
+                    <Card sx={{ maxWidth: 500, maxHeight: 700 }}>
+                        <CardMedia
+                            component="img"
+                            alt="green iguana"
+                            height="250"
+                            image={image2}
+                        />
+                        <CardContent>
+                            <Typography
+                                fontWeight="bold"
+                                gutterBottom
+                                variant="h4"
+                                component="div">
+                                {courses}+ courses
+                            </Typography>
+                            <Typography variant="h6" color="#000">
+                                This is a platform that have a 3 types of user,
+                                this user are Students, Teachers, and for sure
+                                there must be ADMINS,enjoy with administration
+                                of this beautiful application
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
                             <Button
-                                sx={{ color: '#fff', fontSize: '10px' }}
-                                size="small"
-                                color="primary">
-                                Check
+                                startIcon={<AddIcon />}
+                                variant="contained"
+                                size="large">
+                                Add user
+                            </Button>
+                            <Button
+                                startIcon={<ViewComfyIcon />}
+                                variant="contained"
+                                size="large">
+                                View users
                             </Button>
                         </CardActions>
                     </Card>

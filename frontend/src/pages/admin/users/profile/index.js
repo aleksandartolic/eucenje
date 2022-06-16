@@ -187,27 +187,6 @@ function Profile() {
                             </Box>
                         </Fragment>
                     </Box>
-                    <Box alignSelf="flex-start">
-                        <Box mt={5} mb={5}>
-                            <Typography variant="h3">Your Courses</Typography>
-                        </Box>
-                        <Box>
-                            <Grid container spacing={2}>
-                                <Grid item xs={6} md={8}>
-                                    <img width={200} height={200} src={image} />
-                                </Grid>
-                                <Grid item xs={6} md={4}>
-                                    <Item>xs=6 md=4</Item>
-                                </Grid>
-                                <Grid item xs={6} md={4}>
-                                    <Item>xs=6 md=4</Item>
-                                </Grid>
-                                <Grid item xs={6} md={8}>
-                                    <Item>xs=6 md=8</Item>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Box>
                 </Box>
             </Box>
         </AdminLayout>

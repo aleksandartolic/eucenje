@@ -177,11 +177,6 @@ function editUser() {
                             </Box>
                         </Fragment>
                     </Box>
-                    <Box alignSelf="flex-start">
-                        <Box mt={5} mb={5}>
-                            <Typography variant="h3">Your Courses</Typography>
-                        </Box>
-                    </Box>
                 </Box>
             </Box>
         </AdminLayout>

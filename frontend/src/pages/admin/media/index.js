@@ -1,4 +1,3 @@
-
 import { DataGrid } from '@mui/x-data-grid'
 import React, { Fragment, useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -12,7 +11,7 @@ import { CircularProgress } from '@mui/material'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-
+import { useNavigate } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom'
 
 const Media = () => {
@@ -23,7 +22,7 @@ const Media = () => {
     const [rows, setRows] = useState([])
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
-
+    const navigate = useNavigate()
     const handleClick = event => {
         event.stopPropagation()
         setAnchorEl(event.currentTarget)
@@ -54,8 +53,9 @@ const Media = () => {
                 console.log(error.message)
             })
     }
-    const editMedia = () => {
-        // TODO: edit course functionality
+    const editMedia = e => {
+        e.preventDefault()
+        navigate(`/admin/courses/edit-medium/${selectedRowId[0]}`)
     }
 
     const columns = [
@@ -103,7 +103,9 @@ const Media = () => {
                         console.log(selectedRowId)
                         axios
                             .delete(
-                                `http://localhost:8001/deleteMedium/${selectedRowId[0]}`,
+                                `http://localhost:8001/deleteMedia/${selectedRowId.join(
+                                    ',',
+                                )}`,
                             )
 
                             .then(() => {

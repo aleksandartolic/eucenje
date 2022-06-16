@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import image from '../../assets/images/backgroundLogin.png'
+import image from '../../assets/images/login.webp'
 import FormWrapper from '../../components/FormWrapper'
 import {
     TextField,
@@ -47,7 +47,7 @@ const Register = () => {
                 return res
             })
             .catch(error => {
-                console.log('error');
+                console.log('error')
                 if (error.response.status !== 422) throw error
             })
     }

@@ -1,9 +1,9 @@
-import image from '../../assets/images/backgroundLogin.png'
+import image from '../../assets/images/login.webp'
 import FormWrapper from '../../components/FormWrapper'
 import { Button, Link, TextField, Typography } from '@mui/material'
 import styled from 'styled-components'
 import { useState } from 'react'
-import axios from '../../lib/axios'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { getUserId } from '../../redux/loginSlice'
 import { useDispatch } from 'react-redux'
@@ -105,7 +105,7 @@ const Login = () => {
                         <br />
 
                         <Typography variant="h5">
-                            You don't have an account ?{' '}
+                            You dont have an account ?{' '}
                             <Link href="/register">Sign Up</Link>
                         </Typography>
                         <br />

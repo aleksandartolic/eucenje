@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 
 import { CircularProgress } from '@mui/material'
 
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useToasts } from 'react-toast-notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
@@ -49,7 +49,7 @@ const Media = () => {
 
     const editCourse = () => {
         // TODO edit course functionality
-        navigate(`/users/${selectedRowId}`)
+        navigate(`/admin/courses/edit-course/${selectedRowId}`)
     }
 
     const handleDeleteCourse = () => {
@@ -112,7 +112,7 @@ const Media = () => {
                     </div>
                 )
             },
-            width:60,
+            width: 60,
         },
         {
             disableColumnMenu: true,
@@ -154,51 +154,48 @@ const Media = () => {
                     }}
                 />
             ),
-           width:60,
+            width: 60,
             sortable: false,
             headerAlign: 'center',
         },
     ]
 
     return (
-
-            <AdminLayout>
-                <Box
-                    component="main"
-                    mt={10}
-                    sx={{
-                        flexGrow: 1,
-                        p: 7,
-                        width: { sm: `calc(100% - ${drawerWidth}px)` },
-                        height:"100%"
-                    }}>
-                    <Box pb={4} pl={2}>
-                        <Typography variant="h4">Courses</Typography>
-                    </Box>
-                    <Box pt={2} sx={{ height: "auto", width: '100%' }}>
-
-                            <DataGrid
-                                getRowId={row => row.course_id}
-                                onSelectionModelChange={id => {
-                                    setSelectedRowId(id)
-                                }}
-                                autoHeight
-                                sx={{ fontSize: '13px' }}
-                                rows={rows}
-                                columns={columns}
-                                pageSize={pageSize}
-                                onPageSizeChange={newPageSize =>
-                                    setPageSize(newPageSize)
-                                }
-                                rowsPerPageOptions={[10, 25, 50, 100]}
-                                pagination
-                                checkboxSelection
-                                components={{ Toolbar: MediaToolbar }}
-                            />
-                    </Box>
+        <AdminLayout>
+            <Box
+                component="main"
+                mt={10}
+                sx={{
+                    flexGrow: 1,
+                    p: 7,
+                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                    height: '100%',
+                }}>
+                <Box pb={4} pl={2}>
+                    <Typography variant="h4">Courses</Typography>
                 </Box>
-
-            </AdminLayout>
+                <Box pt={2} sx={{ height: 'auto', width: '100%' }}>
+                    <DataGrid
+                        getRowId={row => row.course_id}
+                        onSelectionModelChange={id => {
+                            setSelectedRowId(id)
+                        }}
+                        autoHeight
+                        sx={{ fontSize: '13px' }}
+                        rows={rows}
+                        columns={columns}
+                        pageSize={pageSize}
+                        onPageSizeChange={newPageSize =>
+                            setPageSize(newPageSize)
+                        }
+                        rowsPerPageOptions={[10, 25, 50, 100]}
+                        pagination
+                        checkboxSelection
+                        components={{ Toolbar: MediaToolbar }}
+                    />
+                </Box>
+            </Box>
+        </AdminLayout>
     )
 }
 

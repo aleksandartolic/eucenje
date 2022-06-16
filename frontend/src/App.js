@@ -15,6 +15,8 @@ import CoursesOverview from './pages/admin/courses/courses-overview'
 import CreateCourse from './pages/admin/courses/create-course'
 import Profile from './pages/admin/users/profile'
 import EditUser from './pages/admin/users/editUser'
+import EditCourse from './pages/admin/courses/edit-course'
+import EditMedia from './pages/admin/media/edit-media'
 
 function App() {
     const location = useLocation()
@@ -46,8 +48,8 @@ function App() {
                         element={<AddMedia />}
                     />
                     <Route
-                        path="/admin/media/edit-media"
-                        element={<AddMedia />}
+                        path="/admin/courses/edit-medium/:mid"
+                        element={<EditMedia />}
                     />
                     {/* USER ROUTES */}
                     <Route
@@ -70,8 +72,8 @@ function App() {
                         element={<CreateCourse />}
                     />
                     <Route
-                        path="/admin/courses/edit-course"
-                        element={<CreateCourse />}
+                        path="/admin/courses/edit-course/:cid"
+                        element={<EditCourse />}
                     />
                 </Route>
                 {/* TEACHER ROUTES */}

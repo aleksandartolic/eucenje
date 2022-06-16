@@ -12,5 +12,5 @@ const Wrapper = styled.div`
     padding: 2rem 4rem 2rem 4rem;
     //padding-right: 4rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-color: #d4d4d4;
+    background-color: #fff;
 `

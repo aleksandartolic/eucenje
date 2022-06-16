@@ -56,15 +56,15 @@ const AddUser = () => {
                 component="main"
                 mt={10}
                 sx={{
-                    display:"flex",
-                    justifyContent:"center",
-                    alignItems:"center",
-                    flexDirection:"column",
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
                     flexGrow: 1,
                     p: 7,
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                 }}>
-                <Box mt={15} >
+                <Box mt={15}>
                     <Typography variant="h4">Add user</Typography>
                 </Box>
                 <Box pt={5}>
