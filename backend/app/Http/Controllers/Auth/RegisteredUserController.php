@@ -31,8 +31,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:20', 'unique:users'],
             'role' => ['required', 'integer', 'min:1', 'max:3'],
         ]);
-
-        if($request->password !== $request->confirmPassword) 
+        if($request->password !== $request->password_confirmation)
         {
             return response()->json(['success' => false, 'message' => 'Passwords must be identical.']);
         }
