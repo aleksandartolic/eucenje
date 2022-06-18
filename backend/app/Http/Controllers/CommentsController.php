@@ -23,6 +23,7 @@ class CommentsController extends Controller
         if($validator->fails())
         {
             $response['message'] = $validator->messages();
+            return response()->json(['response' => $response], 422);
         } else {
             try {
                 $comment = Comments::create([
@@ -34,7 +35,7 @@ class CommentsController extends Controller
                 $response['success'] = true;
                 $response['comment'] = $comment;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'], 422);
             }
         }
 

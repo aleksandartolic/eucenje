@@ -61,7 +61,7 @@ class AdminDashboardController extends Controller
 
             return response()->json(['success' => true, 'message' => 'User successfully deleted.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting user.'])->setStatusCode(422);
+            return response()->json(['success' => false, 'message' => 'Error deleting user.'], 422);
         }
     }
 
@@ -70,7 +70,7 @@ class AdminDashboardController extends Controller
         $ids = explode(',', $request->ids);
 
         if(User::whereIn('id', $ids) === null) {
-            return response()->json(['success' => false, 'message' => 'No users found.'])->setStatusCode(422);
+            return response()->json(['success' => false, 'message' => 'No users found.'], 422);
         }
 
         try {
@@ -80,7 +80,7 @@ class AdminDashboardController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Users successfully deleted.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting user.'])->setStatusCode(422);
+            return response()->json(['success' => false, 'message' => 'Error deleting user.'], 422);
         }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,7 @@ class RegisteredUserController extends Controller
             $user = User::findOrFail($request->uid);
             return response()->json(['success' => true, 'user' => $user]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'user' => 'Unable to get user.'])->setStatusCode(422);
+            return response()->json(['success' => false, 'user' => 'Unable to get user.'], 422);
         }
     }
 
@@ -73,6 +74,7 @@ class RegisteredUserController extends Controller
         if($validator->fails())
         {
             $response['message'] = $validator->messages();
+            return response()->json(['response' => $response], 422);
         } else {
             try {
                 $user = User::findOrFail($request->id);

@@ -24,6 +24,7 @@ class CourseController extends Controller
         if($validator->fails())
         {
           $response['message'] = $validator->messages();
+          return response()->json(['response' => $response], 422);
         } else {
             try {
                 if($file = $request->file('picture')) {
@@ -45,7 +46,7 @@ class CourseController extends Controller
                 }
 
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'], 422);
             }
         }
 
@@ -67,6 +68,7 @@ class CourseController extends Controller
         if($validator->fails())
         {
             $response['message'] = $validator->messages();
+            return response()->json(['response' => $response], 422);
         } else {
             try {
                 $course = Course::findOrFail($request->course_id);
@@ -77,7 +79,7 @@ class CourseController extends Controller
                 $response['success'] = true;
                 $response['course'] = $course;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'], 422);
             }
         }
 
