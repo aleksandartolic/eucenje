@@ -123,4 +123,23 @@ class CourseController extends Controller
             return response()->json(['success' => false, 'user' => 'Unable to get course.'])->setStatusCode(422);
         }
     }
+
+    public function deleteCourses(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        if(Course::whereIn('course_id', $ids) === null) {
+            return response()->json(['success' => false, 'message' => 'No courses found.'], 422);
+        }
+
+        try {
+            foreach(Course::whereIn('course_id', $ids)->get() as $course) {
+                $course->forceDelete();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Courses successfully deleted.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting courses.'], 422);
+        }
+    }
 }

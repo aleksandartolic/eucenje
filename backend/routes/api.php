@@ -32,6 +32,9 @@ Route::delete('/deleteUser/{uid}', [AdminDashboardController::class, 'deleteUser
 Route::delete('/deleteMedia/{ids}', [CourseMediaController::class, 'deleteMedia'])
     ->name('delete.media');
 
+Route::delete('/deleteCourses/{ids}', [CourseController::class, 'deleteCourses'])
+    ->name('delete.courses');
+
 Route::delete('/deleteUsers/{ids}', [AdminDashboardController::class, 'deleteUsers'])
     ->name('delete.users');
 
