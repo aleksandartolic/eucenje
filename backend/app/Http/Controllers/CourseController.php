@@ -94,6 +94,23 @@ class CourseController extends Controller
                     $path = $file->store('public/picture');
                     $course->picture = basename($path);
                 }
+                if($request->categories) {
+                    $categories = $request->categories;
+                    CourseCategories::where('course_id', $course->course_id)->delete();
+                    foreach ($categories as $category) {
+                        $cat = Category::where('name', $category)->first();
+                        if(!$cat) {
+                            $cat = Category::create([
+                                'name' => $category,
+                            ]);
+                        }
+
+                        CourseCategories::create([
+                            'category_id' => $cat->category_id,
+                            'course_id' => $course->course_id,
+                        ]);
+                    }
+                }
                 $course->name = strip_tags(htmlentities($request->name));
                 $course->description = (strip_tags(htmlentities($request->description)));
                 $course->save();
