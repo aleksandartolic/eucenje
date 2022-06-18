@@ -130,7 +130,10 @@ class CourseController extends Controller
     {
         try {
             $course = Course::findOrFail($request->course_id);
-            $course->delete();
+            if($course) {
+                CourseCategories::where('course_id', $course->course_id)->forceDelete();
+            }
+            $course->forceDelete();
 
             return response()->json(['success' => true, 'message' => 'Course successfully deleted.']);
         } catch (Exception $e) {
@@ -173,6 +176,7 @@ class CourseController extends Controller
 
         try {
             foreach(Course::whereIn('course_id', $ids)->get() as $course) {
+                CourseCategories::where('course_id', $course->course_id)->forceDelete();
                 $course->forceDelete();
             }
 
