@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseCategories;
+use App\Models\CourseMedia;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -185,4 +186,21 @@ class CourseController extends Controller
             return response()->json(['success' => false, 'message' => 'Error deleting courses.'], 422);
         }
     }
+    public function getCourseMedia(Request $request)
+    {
+        try {
+            $course = Course::findOrFail($request->course_id);
+
+            $courseMedia = CourseMedia::where('course_id', $course->course_id)->get();
+            $courseMediaArray = [];
+            foreach ($courseMedia as $medium) {
+                $courseMediaArray[] = ['id' => $medium->cm_id, 'medium' => $medium];
+            }
+
+            return response()->json(['success' => true, 'media' => $courseMediaArray]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'No course media found.'])->setStatusCode(422);
+        }
+    }
+
 }

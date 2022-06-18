@@ -85,3 +85,6 @@ Route::get('/listComments/{cm_id}', [CommentsController::class, 'listComments'])
 
 Route::get('/getUserCourses/{id}', [RegisteredUserController::class, 'getUserCourses'])
     ->name('user.getCourses');
+
+Route::get('/getCourseMedia/{course_id}', [CourseController::class, 'getCourseMedia'])
+    ->name('course.getMedia');
