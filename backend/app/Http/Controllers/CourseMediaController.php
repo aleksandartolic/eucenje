@@ -78,9 +78,9 @@ class CourseMediaController extends Controller
                     $fileAnalyze = $getid3->analyze($fullPath);
                     $duration = date('H:i:s', $fileAnalyze['playtime_seconds']);
 
-                    $courseMedia->filename(basename($path));
-                    $courseMedia->full_path($fileAnalyze['filenamepath']);
-                    $courseMedia->duration($duration);
+                    $courseMedia->filename = basename($path);
+                    $courseMedia->full_path = $fileAnalyze['filenamepath'];
+                    $courseMedia->duration = $duration;
                 }
                 if($request->title) {
                     $courseMedia->title = strip_tags(htmlentities($request->title));
