@@ -64,7 +64,6 @@ class CourseController extends Controller
                 }
 
             } catch (Exception $e) {
-                dd($e->getMessage());
                 return response()->json(['success' => false, 'message' => 'Error saving entry to database.'], 422);
             }
         }
