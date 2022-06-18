@@ -29,8 +29,6 @@ class CourseController extends Controller
             try {
                 if($file = $request->file('picture')) {
                     $path = $file->store('public/picture');
-                    $exploded = explode('/', $path);
-                    $pictureName = end($exploded);
                     $course = Course::create([
                         'uid' => $request->uid,
                         'name' => strip_tags(htmlentities($request->name)),
@@ -72,6 +70,10 @@ class CourseController extends Controller
         } else {
             try {
                 $course = Course::findOrFail($request->course_id);
+                if($file = $request->file('picture')) {
+                    $path = $file->store('public/picture');
+                    $course->picture = basename($path);
+                }
                 $course->name = strip_tags(htmlentities($request->name));
                 $course->description = (strip_tags(htmlentities($request->description)));
                 $course->save();
