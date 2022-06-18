@@ -78,19 +78,19 @@ class RegisteredUserController extends Controller
         } else {
             try {
                 $user = User::findOrFail($request->id);
-                if($request->name) {
+                if($request->name && $request->name !== $user->name) {
                     $user->name = strip_tags(htmlentities($request->name));
                 }
-                if($request->email) {
+                if($request->email && $request->email !== $user->email) {
                     $user->email = (strip_tags(htmlentities($request->email)));
                 }
                 if($request->password) {
                     $user->password = Hash::make($request->password);
                 }
-                if($request->role) {
+                if($request->role && $request->role !== $user->rule) {
                     $user->role = $request->role;
                 }
-                if($request->username) {
+                if($request->username && $request->username !== $user->username) {
                     $user->username = $request->username;
                 }
                 $user->save();
