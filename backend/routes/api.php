@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\CourseCategoriesController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMediaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -85,6 +86,15 @@ Route::get('/listComments/{cm_id}', [CommentsController::class, 'listComments'])
 
 Route::get('/getUserCourses/{id}', [RegisteredUserController::class, 'getUserCourses'])
     ->name('user.getCourses');
+
+Route::get('/getCategories', [CourseCategoriesController::class, 'getCategories'])
+    ->name('course.categories.all');
+
+Route::get('/getCoursesByCategory/{category_id}', [CourseCategoriesController::class, 'getCoursesByCategory'])
+    ->name('category.courses');
+
+Route::get('/getCourseCategories/{course_id}', [CourseCategoriesController::class, 'getCourseCategories'])
+    ->name('course.categories');
 
 Route::get('/getCourseMedia/{course_id}', [CourseController::class, 'getCourseMedia'])
     ->name('course.getMedia');
