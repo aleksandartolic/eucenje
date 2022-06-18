@@ -10,4 +10,6 @@ class CourseCategories extends Model
     use HasFactory;
 
     protected $primaryKey = "cc_id";
+
+    protected $guarded = [];
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Course;
+use App\Models\CourseCategories;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -16,6 +18,7 @@ class CourseController extends Controller
            'uid' => ['required', 'exists:users,id', 'integer'],
            'name' => ['required', 'string', 'max:55', 'unique:courses'],
            'description' => ['required', 'string', 'max:255'],
+           'categories' => ['required'],
         ];
 
         $response = array('success' => false, 'message' => '');
@@ -36,6 +39,23 @@ class CourseController extends Controller
                         'picture' => basename($path),
                     ]);
 
+                    $categories = $request->categories;
+                    foreach ($categories as $category) {
+                        $cat = Category::where('name', $category)->first();
+                        if(!$cat) {
+                            $cat = Category::create([
+                                'name' => $category,
+                            ]);
+                        }
+
+                        CourseCategories::create([
+                            'category_id' => $cat->category_id,
+                            'course_id' => $course->course_id,
+                        ]);
+                    }
+
+
+
                     $response['success'] = true;
                     $response['course'] = $course;
                 } else {
@@ -44,6 +64,7 @@ class CourseController extends Controller
                 }
 
             } catch (Exception $e) {
+                dd($e->getMessage());
                 return response()->json(['success' => false, 'message' => 'Error saving entry to database.'], 422);
             }
         }
