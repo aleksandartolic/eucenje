@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Events\Registered;
@@ -104,5 +105,22 @@ class RegisteredUserController extends Controller
 
         return response()->json(['response' => $response]);
 
+    }
+
+    public function getUserCourses(Request $request)
+    {
+        try {
+            $user = User::findOrFail($request->id);
+
+            $courses = Course::where('uid', $user->id)->get();
+            $coursesArray = [];
+            foreach ($courses as $course) {
+                $coursesArray[] = ['id' => $course->course_id, 'course' => $course];
+            }
+
+            return response()->json(['success' => true, 'courses' => $coursesArray]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'No user found.'])->setStatusCode(422);
+        }
     }
 }

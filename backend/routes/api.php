@@ -82,3 +82,6 @@ Route::post('/createComment', [CommentsController::class, 'store'])
 
 Route::get('/listComments/{cm_id}', [CommentsController::class, 'listComments'])
     ->name('course.listComments');
+
+Route::get('/getUserCourses/{id}', [RegisteredUserController::class, 'getUserCourses'])
+    ->name('user.getCourses');
