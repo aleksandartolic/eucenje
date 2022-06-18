@@ -71,6 +71,17 @@ class CourseMediaController extends Controller
         } else {
             try {
                 $courseMedia = CourseMedia::findOrFail($request->cm_id);
+                if($file = $request->file('filename')) {
+                    $path = $file->store('public/media');
+                    $fullPath = storage_path() . '/app/' . $path;
+                    $getid3 = new \getID3;
+                    $fileAnalyze = $getid3->analyze($fullPath);
+                    $duration = date('H:i:s', $fileAnalyze['playtime_seconds']);
+
+                    $courseMedia->filename(basename($path));
+                    $courseMedia->full_path($fileAnalyze['filenamepath']);
+                    $courseMedia->duration($duration);
+                }
                 if($request->title) {
                     $courseMedia->title = strip_tags(htmlentities($request->title));
                 }
