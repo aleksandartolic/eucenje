@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7978b64361a3384b70f234af857a4673",
+    "content-hash": "ed160ca7613b4cf906595024990721b2",
     "packages": [
         {
             "name": "brick/math",
@@ -2745,6 +2745,65 @@
                 }
             ],
             "time": "2022-02-02T18:37:57+00:00"
+        },
+        {
+            "name": "owen-oj/laravel-getid3",
+            "version": "v2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Owen-oj/laravel-getid3.git",
+                "reference": "63e42fb7eddfe03820797045393484d5e152179e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Owen-oj/laravel-getid3/zipball/63e42fb7eddfe03820797045393484d5e152179e",
+                "reference": "63e42fb7eddfe03820797045393484d5e152179e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0|^9.0",
+                "james-heinrich/getid3": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Owenoj\\LaravelGetId3\\GetId3ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Owenoj\\LaravelGetId3\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Owen Jubilant",
+                    "email": "owen.j@terktrendz.com",
+                    "homepage": "https://github.com/Owen-oj"
+                }
+            ],
+            "description": "This package is a wrapper around james-heinrich/getid3 to extract various information from media files",
+            "homepage": "https://github.com/owen-oj/laravel-getid3",
+            "keywords": [
+                "getid3",
+                "laravel",
+                "laravel-getid3"
+            ],
+            "support": {
+                "issues": "https://github.com/Owen-oj/laravel-getid3/issues",
+                "source": "https://github.com/Owen-oj/laravel-getid3/tree/v2.1"
+            },
+            "time": "2022-06-07T09:08:54+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
