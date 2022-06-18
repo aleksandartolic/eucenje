@@ -47,7 +47,7 @@ Route::delete('/deleteCourse/{course_id}', [CourseController::class, 'delete'])
 Route::post('/uploadMedium', [CourseMediaController::class, 'store'])
     ->name('upload.medium');
 
-Route::put('/updateMedium', [CourseMediaController::class, 'update'])
+Route::post('/updateMedium', [CourseMediaController::class, 'update'])
     ->name('update.medium');
 
 Route::delete('/deleteMedium/{cm_id}', [CourseMediaController::class, 'delete'])
