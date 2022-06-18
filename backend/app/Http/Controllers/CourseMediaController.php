@@ -46,7 +46,7 @@ class CourseMediaController extends Controller
                 }
             } catch (Exception $e) {
                 dd($e->getMessage());
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 
@@ -81,7 +81,7 @@ class CourseMediaController extends Controller
                 $response['success'] = true;
                 $response['course'] = $courseMedia;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 
@@ -97,7 +97,7 @@ class CourseMediaController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Course medium successfully deleted.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting medium.']);
+            return response()->json(['success' => false, 'message' => 'Error deleting medium.'])->setStatusCode(422);
         }
     }
 
@@ -107,7 +107,7 @@ class CourseMediaController extends Controller
             $media = CourseMedia::findOrFail($request->mid);
             return response()->json(['success' => true, 'media' => $media]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'user' => 'Unable to get medium.']);
+            return response()->json(['success' => false, 'user' => 'Unable to get medium.'])->setStatusCode(422);
         }
     }
 
@@ -126,7 +126,7 @@ class CourseMediaController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Media successfully deleted.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting media.']);
+            return response()->json(['success' => false, 'message' => 'Error deleting media.'])->setStatusCode(422);
         }
     }
 }

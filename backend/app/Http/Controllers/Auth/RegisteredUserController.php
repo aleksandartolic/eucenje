@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
         ]);
         if($request->password !== $request->password_confirmation)
         {
-            return response()->json(['success' => false, 'message' => 'Passwords must be identical.']);
+            return response()->json(['success' => false, 'message' => 'Passwords must be identical.'])->setStatusCode(422);
         }
 
         $user = User::create([
@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
             $user = User::findOrFail($request->uid);
             return response()->json(['success' => true, 'user' => $user]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'user' => 'Unable to get user.']);
+            return response()->json(['success' => false, 'user' => 'Unable to get user.'])->setStatusCode(422);
         }
     }
 
@@ -96,7 +96,7 @@ class RegisteredUserController extends Controller
                 $response['success'] = true;
                 $response['user'] = $user;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 

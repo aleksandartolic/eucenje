@@ -45,8 +45,7 @@ class CourseController extends Controller
                 }
 
             } catch (Exception $e) {
-                dd($e->getMessage());
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 
@@ -78,7 +77,7 @@ class CourseController extends Controller
                 $response['success'] = true;
                 $response['course'] = $course;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 
@@ -94,14 +93,14 @@ class CourseController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Course successfully deleted.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting course.']);
+            return response()->json(['success' => false, 'message' => 'Error deleting course.'])->setStatusCode(422);
         }
     }
 
     public function listUserCourses(Request $request)
     {
         if(!$request->uid) {
-            return response()->json(['success' => false, 'message' => 'You have to provide user id (uid)!']);
+            return response()->json(['success' => false, 'message' => 'You have to provide user id (uid)!'])->setStatusCode(422);
         }
 
         try {
@@ -109,7 +108,7 @@ class CourseController extends Controller
 
             return response()->json(['success' => true, 'courses' => $courses]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error deleting course.']);
+            return response()->json(['success' => false, 'message' => 'Error deleting course.'])->setStatusCode(422);
         }
     }
 
@@ -119,7 +118,7 @@ class CourseController extends Controller
             $course = Course::findOrFail($request->cid);
             return response()->json(['success' => true, 'media' => $course]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'user' => 'Unable to get course.']);
+            return response()->json(['success' => false, 'user' => 'Unable to get course.'])->setStatusCode(422);
         }
     }
 }

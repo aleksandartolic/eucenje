@@ -34,7 +34,7 @@ class CommentsController extends Controller
                 $response['success'] = true;
                 $response['comment'] = $comment;
             } catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => 'Error saving entry to database.']);
+                return response()->json(['success' => false, 'message' => 'Error saving entry to database.'])->setStatusCode(422);
             }
         }
 
