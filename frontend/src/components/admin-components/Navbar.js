@@ -14,9 +14,8 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const drawerWidth = 240
+const drawerWidth = 270
 const Navbar = props => {
-    const userId = localStorage.getItem('userId')
     const navigate = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false)
     const { window } = props
@@ -32,6 +31,7 @@ const Navbar = props => {
                 sx={{
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
+                    border: 'none',
                 }}>
                 <Toolbar
                     style={{
@@ -49,7 +49,7 @@ const Navbar = props => {
                     <Typography variant="h6" noWrap component="div">
                         Admin Dashboard
                     </Typography>
-                    <Box display="flex" alignItems="center">
+                    <Box border={0} display="flex" alignItems="center">
                         <Box mr={3}>
                             <Typography
                                 style={{ cursor: 'pointer' }}
@@ -72,7 +72,7 @@ const Navbar = props => {
                                 component="div">
                                 <AccountCircleIcon
                                     onClick={() => {
-                                        navigate(`/admin/profile/${userId}`)
+                                        navigate(`/admin/profile`)
                                     }}
                                     fontSize="large"
                                 />

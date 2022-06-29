@@ -2,7 +2,7 @@ import image from '../../assets/images/login.webp'
 import FormWrapper from '../../components/FormWrapper'
 import { Button, Link, TextField, Typography } from '@mui/material'
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { getUserId } from '../../redux/loginSlice'
@@ -15,8 +15,38 @@ const Login = () => {
     const [errors, setErrors] = useState([])
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
     const [loading, setLoading] = useState(false)
+    const userId = localStorage.getItem('userId')
+
+    useEffect(() => {
+        if (userId) {
+            axios
+                .get(`http://localhost:8001/getUser/${userId}`)
+                .then(response => {
+                    if (response.data.user.role === 3) {
+                        navigate('/student')
+                    }
+                    if (response.data.user.role === 2) {
+                        navigate('/teacher')
+                    }
+                    if (response.data.user.role === 1) {
+                        navigate('/admin')
+                    }
+                })
+        }
+    }, [])
+
+    // if(userId){
+    //     if(userId === 1){
+    //
+    //         navigate('admin')
+    //     }
+    //     if(userId === 2){
+    //         navigate(/studnet)
+    //     }
+    //
+    // }
+
     const submitForm = async event => {
         setLoading(true)
         event.preventDefault()
@@ -26,16 +56,19 @@ const Login = () => {
                 password,
             })
             .then(res => {
+                console.log(res)
                 if (res.data.success) {
                     dispatch(getUserId(res.data.user.id))
                     localStorage.setItem('userId', res.data.user.id)
                     if (res.data.user.role === 1) {
                         navigate(`/admin`)
                     } else if (res.data.user.role === 3) {
-                        navigate.push(`/student`)
+                        navigate(`/student`)
                     } else {
                         navigate(`/teacher`)
                     }
+                } else {
+                    setErrors([res.data.message])
                 }
             })
             .catch(error => {

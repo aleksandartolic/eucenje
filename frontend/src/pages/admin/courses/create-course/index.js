@@ -1,12 +1,16 @@
 import AdminLayout from '../../../../components/Layouts/AdminLayout'
+import AuthValidationErrors from '../../../../components/AuthValidationErrors'
 import {
+    Autocomplete,
     Box,
     Button,
+    Chip,
     Grow,
     InputLabel,
     LinearProgress,
     OutlinedInput,
     TextareaAutosize,
+    TextField,
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
@@ -21,7 +25,8 @@ const CreateCourse = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const { addToast } = useToasts()
-
+    const [categories, setCategories] = useState([])
+    const [errors, setErrors] = useState([])
     const [selectedFiles, setSelectedFiles] = useState(undefined)
     const [currentFile, setCurrentFile] = useState(undefined)
     const [progress, setProgress] = useState(0)
@@ -46,6 +51,9 @@ const CreateCourse = () => {
             formData.append('picture', file)
             formData.append('name', name)
             formData.append('description', description)
+            categories.forEach((category, index) => {
+                formData.append(`categories[${index}]`, category)
+            })
             return axios
                 .post('http://localhost:8001/createCourse/', formData, {
                     headers: {
@@ -54,9 +62,13 @@ const CreateCourse = () => {
                     onUploadProgress,
                 })
                 .then(response => {
+                    setErrors([])
                     setTimeout(() => {
                         setCurrentFile(undefined)
                         setSelectedFiles(undefined)
+                        setName('')
+                        setCategories([])
+                        setDescription('')
                         if (response.status === 200) {
                             addToast('Course added successful!', {
                                 autoDismiss: true,
@@ -65,6 +77,33 @@ const CreateCourse = () => {
                             })
                         }
                     }, 3000)
+                })
+                .catch(error => {
+                    if (error.response.status === 422) {
+                        if (error.response.data.response.message.name) {
+                            setErrors([
+                                error.response.data.response.message.name[0],
+                            ])
+                        } else if (
+                            error.response.data.response.message.description
+                        ) {
+                            setErrors([
+                                error.response.data.response.message
+                                    .description[0],
+                            ])
+                        } else if (
+                            error.response.data.response.message.course_id
+                        ) {
+                            setErrors(['Course is required'])
+                        } else if (
+                            error.response.data.response.message.categories
+                        ) {
+                            setErrors([
+                                error.response.data.response.message
+                                    .categories[0],
+                            ])
+                        }
+                    }
                 })
         }
     }
@@ -87,26 +126,33 @@ const CreateCourse = () => {
     return (
         <AdminLayout>
             <Box
-                component="main"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="column"
-                mt={10}
+                color="#fff"
+                onSubmit={uploadService}
+                p={10}
+                mr={20}
+                ml={40}
+                mb={30}
+                mt={20}
                 sx={{
-                    flexGrow: 1,
-                    p: 7,
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    width: '100%',
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '20px',
+                    '& > :not(style)': { m: 1 },
                 }}>
-                <Box mb={5} mt={15}>
-                    <Typography variant="h4">Create Course</Typography>
+                <Box pb={5} alignSelf="flex-start" mt={15}>
+                    <Typography color="#9c27b0" variant="h4">
+                        Create Course
+                    </Typography>
                 </Box>
                 <Box
-                    p={5}
                     pt={0}
                     pl={0}
                     component="form"
-                    onSubmit={uploadService}
                     sx={{
                         width: '600px',
                         display: 'flex',
@@ -117,6 +163,10 @@ const CreateCourse = () => {
                     }}
                     noValidate
                     autoComplete="off">
+                    <AuthValidationErrors
+                        style={{ marginBottom: '20px' }}
+                        errors={errors}
+                    />
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">
                             Name
@@ -128,6 +178,37 @@ const CreateCourse = () => {
                             label="name"
                         />
                     </FormControl>
+                    <Box mb={7}>
+                        <Autocomplete
+                            multiple
+                            id="tags-filled"
+                            freeSolo
+                            renderTags={(value, getTagProps) => {
+                                setCategories(value)
+                                return value.map((option, index) => (
+                                    <Chip
+                                        sx={{
+                                            color: '#fff',
+                                            backgroundColor: '#9c27b0',
+                                        }}
+                                        key={index}
+                                        variant="outlined"
+                                        label={option}
+                                        {...getTagProps({ index })}
+                                    />
+                                ))
+                            }}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    variant="outlined"
+                                    label="Tags"
+                                    placeholder="Enter a tag..."
+                                />
+                            )}
+                            options={[]}
+                        />
+                    </Box>
                     <FormControl
                         sx={{
                             '.MuiFormControl-root': {
@@ -183,7 +264,9 @@ const CreateCourse = () => {
                         <input type="file" hidden onChange={selectFiles} />
                     </Button>
                     <br />
-                    <p>{selectedFiles && selectedFiles.name}</p>
+                    <Typography variant="h5" color="#9c27b0">
+                        {selectedFiles && selectedFiles.name}
+                    </Typography>
                     <br />
                     <Button
                         sx={{ width: '60px' }}

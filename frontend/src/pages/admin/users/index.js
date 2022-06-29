@@ -176,7 +176,9 @@ const Users = () => {
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
                     }}>
                     <Box pb={4} pl={2}>
-                        <Typography variant="h4">Users</Typography>
+                        <Typography color="#9c27b0" variant="h4">
+                            Users
+                        </Typography>
                     </Box>
                     <Box pt={2} sx={{ width: '100%' }}>
                         {loading ? (
@@ -187,7 +189,15 @@ const Users = () => {
                                     setSelectedRowId(id)
                                 }}
                                 autoHeight
-                                sx={{ fontSize: '13px' }}
+                                sx={{
+                                    width: 'auto',
+                                    fontSize: '13px',
+                                    backgroundColor: '#fff',
+                                    borderRadius: '15px',
+                                    padding: '5px',
+                                    boxShadow:
+                                        'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                                }}
                                 rows={rows}
                                 columns={columns}
                                 pageSize={pageSize}

@@ -1,17 +1,13 @@
 import AdminLayout from '../../../components/Layouts/AdminLayout'
 import Box from '@mui/material/Box'
 import image from '../../../assets/images/profileImage.png'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
 
-import { Button, Typography } from '@mui/material'
+import { Button, TextField, Typography } from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
 import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
-const drawerWidth = 240
 function editUser() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -42,14 +38,21 @@ function editUser() {
     return (
         <AdminLayout>
             <Box
-                display="flex"
-                component="main"
-                justifyContent="center"
-                mt={5}
+                color="#fff"
+                p={5}
+                mr={35}
+                ml={35}
+                mb={30}
+                mt={20}
                 sx={{
-                    flexGrow: 1,
-                    p: 7,
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    width: '100%',
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    borderRadius: '20px',
+                    '& > :not(style)': { m: 1 },
                 }}>
                 {' '}
                 <Box display="flex" flexDirection="column" alignItems="center">
@@ -63,6 +66,7 @@ function editUser() {
                     </Box>
                     <Box mt={2}>
                         <Typography
+                            color="#9c27b0"
                             textAlign="center"
                             fontWeight="bold"
                             variant="h4">
@@ -71,6 +75,7 @@ function editUser() {
                     </Box>
                     <Box mt={2}>
                         <Typography
+                            color="#9c27b0"
                             display="block"
                             variant="h6"
                             fontWeight="bold"
@@ -78,42 +83,33 @@ function editUser() {
                             {email}
                         </Typography>
                     </Box>
-                    <Box display="flex" justifyContent="space-around" mt={2}>
-                        <Box>
-                            <LocationOnIcon fontSize="large" color="info" />
-                        </Box>
-                        <Box>
-                            <Typography
-                                display="block"
-                                variant="h5"
-                                fontSize="16px">
-                                Novi Sad
-                            </Typography>
-                        </Box>
-                    </Box>
                     <Box pt={5}>
                         <Fragment>
                             <Box
-                                onSubmit={editUserHandler}
-                                p={5}
-                                pt={0}
-                                pl={0}
                                 component="form"
+                                color="#fff"
+                                onSubmit={editUserHandler}
+                                p={10}
+                                mr={20}
+                                mb={10}
+                                mt={10}
                                 sx={{
-                                    width: '600px',
+                                    boxShadow:
+                                        'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                                    width: '100%',
+                                    backgroundColor: '#fff',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    borderRadius: '10px',
+                                    justifyContent: 'center',
+                                    borderRadius: '20px',
                                     '& > :not(style)': { m: 1 },
-                                }}
-                                noValidate
-                                autoComplete="off">
+                                }}>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Name
-                                    </InputLabel>
-                                    <OutlinedInput
+                                    <TextField
+                                        inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                                        InputLabelProps={{
+                                            style: { fontSize: 13 },
+                                        }}
                                         id="component-outlined"
                                         value={name}
                                         onChange={event =>
@@ -123,10 +119,11 @@ function editUser() {
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Email
-                                    </InputLabel>
-                                    <OutlinedInput
+                                    <TextField
+                                        inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                                        InputLabelProps={{
+                                            style: { fontSize: 13 },
+                                        }}
                                         id="component-outlined"
                                         value={email}
                                         onChange={event =>
@@ -136,10 +133,11 @@ function editUser() {
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Username
-                                    </InputLabel>
-                                    <OutlinedInput
+                                    <TextField
+                                        inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                                        InputLabelProps={{
+                                            style: { fontSize: 13 },
+                                        }}
                                         id="component-outlined"
                                         value={username}
                                         onChange={event =>
@@ -149,10 +147,11 @@ function editUser() {
                                     />
                                 </FormControl>
                                 <FormControl>
-                                    <InputLabel htmlFor="component-outlined">
-                                        Role
-                                    </InputLabel>
-                                    <OutlinedInput
+                                    <TextField
+                                        inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                                        InputLabelProps={{
+                                            style: { fontSize: 13 },
+                                        }}
                                         id="component-outlined"
                                         value={role}
                                         onChange={event =>

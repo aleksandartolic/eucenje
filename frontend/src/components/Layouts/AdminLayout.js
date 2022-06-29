@@ -9,9 +9,11 @@ const AdminLayout = props => {
     return (
         <Fragment>
             <Box
+                border={0}
                 sx={{
                     display: 'flex',
                     height: 'auto',
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
                 }}>
                 <CssBaseline />
                 <Navbar />

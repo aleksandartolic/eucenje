@@ -15,15 +15,40 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useToasts } from 'react-toast-notifications'
+import AuthValidationErrors from '../../components/AuthValidationErrors'
+import React from 'react'
+import { useEffect } from 'react'
 const Register = () => {
     const navigate = useNavigate()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [errors, setErrors] = useState([])
     const [password, setPassword] = useState('')
     const [password_confirmation, setPasswordConfirmation] = useState('')
     const [role, setRole] = useState('')
     const [username, setUsername] = useState('')
     const { addToast } = useToasts()
+
+    const userId = localStorage.getItem('userId')
+
+    useEffect(() => {
+        if (userId) {
+            axios
+                .get(`http://localhost:8001/getUser/${userId}`)
+                .then(response => {
+                    if (response.data.user.role === 3) {
+                        navigate('/student')
+                    }
+                    if (response.data.user.role === 2) {
+                        navigate('/teacher')
+                    }
+                    if (response.data.user.role === 1) {
+                        navigate('/admin')
+                    }
+                })
+        }
+    }, [])
+
     const submitForm = async event => {
         event.preventDefault()
         axios
@@ -36,6 +61,8 @@ const Register = () => {
                 role,
             })
             .then(res => {
+                console.log(res.data.message)
+                setErrors([res.data.message])
                 if (res.data.success) {
                     addToast('Registered successfully!', {
                         autoDismiss: true,
@@ -47,8 +74,7 @@ const Register = () => {
                 return res
             })
             .catch(error => {
-                console.log('error')
-                if (error.response.status !== 422) throw error
+                setErrors([error.response.data.message])
             })
     }
 
@@ -65,7 +91,10 @@ const Register = () => {
                         variant="h3">
                         A d e m y
                     </Typography>
-
+                    <AuthValidationErrors
+                        style={{ marginBottom: '20px' }}
+                        errors={errors}
+                    />
                     <form
                         style={{ width: '100%', height: '100%' }}
                         onSubmit={submitForm}>

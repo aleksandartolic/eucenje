@@ -1,17 +1,19 @@
-import NavMenu from '../../components/student-components/navMenu'
 import Footer from '../admin-components/Footer'
-import { Fragment } from 'react'
+import Navbar from '../../pages/student/appbar'
 import { Box } from '@mui/material'
 
 const StudentLayout = props => {
     return (
-        <Fragment>
-            <NavMenu />
-            <Box p={5} sx={{ display: 'flex' }}>
+        <Box display="flex" flexDirection="column">
+            <Navbar />
+            <Box
+                height
+                p={5}
+                sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex' }}>
                 {props.children}
             </Box>
             <Footer />
-        </Fragment>
+        </Box>
     )
 }
 export default StudentLayout

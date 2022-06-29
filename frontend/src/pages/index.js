@@ -20,7 +20,7 @@ export default function Home() {
                 flexDirection="column"
                 justifyContent="space-between"
                 alignItems="flex-end">
-                <Box display="flex" flexWrap="nowrap" mb={2}>
+                <Box display="flex" flexWrap="nowrap" mb={2} pr={8}>
                     <Typography variant="h1" color="#fff">
                         Welcome to the<span>&nbsp;</span>
                     </Typography>
@@ -28,7 +28,6 @@ export default function Home() {
                         letterSpacing="initial"
                         variant="h1"
                         color="secondary">
-                        {' '}
                         Ademy
                     </Typography>
                 </Box>

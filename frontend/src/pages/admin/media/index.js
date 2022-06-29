@@ -63,11 +63,6 @@ const Media = () => {
         { field: 'course_id', headerName: 'Course ID', width: 150 },
         { field: 'title', headerName: 'Title', width: 150 },
         {
-            field: 'duration',
-            headerName: 'Duration',
-            width: 150,
-        },
-        {
             field: 'description',
             headerName: 'Description',
             width: 150,
@@ -75,17 +70,23 @@ const Media = () => {
         {
             field: 'filename',
             headerName: 'Filename',
-            width: 150,
+            flex: 1,
         },
         {
             field: 'created_at',
             headerName: 'Created At',
             width: 150,
+            renderCell: date => {
+                return new Date(date.value).toDateString()
+            },
         },
         {
             field: 'updated_at',
             headerName: 'Updated At',
             width: 150,
+            renderCell: date => {
+                return new Date(date.value).toDateString()
+            },
         },
         {
             disableColumnMenu: true,
@@ -98,7 +99,7 @@ const Media = () => {
                 <DeleteIcon
                     color="info"
                     fontSize="large"
-                    sx={{ cursor: 'pointer', marginTop: '20px' }}
+                    sx={{ cursor: 'pointer' }}
                     onClick={() => {
                         console.log(selectedRowId)
                         axios
@@ -156,7 +157,9 @@ const Media = () => {
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
                     }}>
                     <Box pb={4} pl={2}>
-                        <Typography variant="h4">Media</Typography>
+                        <Typography color="#9c27b0" variant="h4">
+                            Media
+                        </Typography>
                     </Box>
                     <Box pt={2} sx={{ height: '100%', width: '100%' }}>
                         {loading ? (
@@ -168,6 +171,11 @@ const Media = () => {
                                 sx={{
                                     width: 'auto',
                                     fontSize: '13px',
+                                    backgroundColor: '#fff',
+                                    borderRadius: '15px',
+                                    padding: '5px',
+                                    boxShadow:
+                                        'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                                 }}
                                 onSelectionModelChange={id => {
                                     setSelectedRowId(id)

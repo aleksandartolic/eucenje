@@ -1,0 +1,567 @@
+Illuminate\Http\Request::__set_state(array(
+   'json' => NULL,
+   'convertedFiles' => NULL,
+   'userResolver' =>
+  Closure::__set_state(array(
+  )),
+   'routeResolver' =>
+  Closure::__set_state(array(
+  )),
+   'attributes' =>
+  Symfony\Component\HttpFoundation\ParameterBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'request' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'query' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'server' =>
+  Symfony\Component\HttpFoundation\ServerBag::__set_state(array(
+     'parameters' =>
+    array (
+      'DOCUMENT_ROOT' => '/home/nmarkovic/Desktop/eucenje/backend/public',
+      'REMOTE_ADDR' => '127.0.0.1',
+      'REMOTE_PORT' => '42404',
+      'SERVER_SOFTWARE' => 'PHP 8.0.19 Development Server',
+      'SERVER_PROTOCOL' => 'HTTP/1.1',
+      'SERVER_NAME' => '127.0.0.1',
+      'SERVER_PORT' => '8001',
+      'REQUEST_URI' => '/updateMedium',
+      'REQUEST_METHOD' => 'PUT',
+      'SCRIPT_NAME' => '/index.php',
+      'SCRIPT_FILENAME' => '/home/nmarkovic/Desktop/eucenje/backend/public/index.php',
+      'PATH_INFO' => '/updateMedium',
+      'PHP_SELF' => '/index.php/updateMedium',
+      'HTTP_HOST' => 'localhost:8001',
+      'HTTP_CONNECTION' => 'keep-alive',
+      'CONTENT_LENGTH' => '373',
+      'HTTP_CONTENT_LENGTH' => '373',
+      'HTTP_SEC_CH_UA' => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      'HTTP_ACCEPT' => 'application/json, text/plain, */*',
+      'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryAIwrl0ZOjbj35ADB',
+      'HTTP_CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryAIwrl0ZOjbj35ADB',
+      'HTTP_SEC_CH_UA_MOBILE' => '?0',
+      'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      'HTTP_SEC_CH_UA_PLATFORM' => '"Linux"',
+      'HTTP_ORIGIN' => 'http://localhost:3000',
+      'HTTP_SEC_FETCH_SITE' => 'same-site',
+      'HTTP_SEC_FETCH_MODE' => 'cors',
+      'HTTP_SEC_FETCH_DEST' => 'empty',
+      'HTTP_REFERER' => 'http://localhost:3000/',
+      'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br',
+      'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,de;q=0.8',
+      'REQUEST_TIME_FLOAT' => 1655540615.749326,
+      'REQUEST_TIME' => 1655540615,
+    ),
+  )),
+   'files' =>
+  Symfony\Component\HttpFoundation\FileBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'cookies' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'headers' =>
+  Symfony\Component\HttpFoundation\HeaderBag::__set_state(array(
+     'headers' =>
+    array (
+      'host' =>
+      array (
+        0 => 'localhost:8001',
+      ),
+      'connection' =>
+      array (
+        0 => 'keep-alive',
+      ),
+      'content-length' =>
+      array (
+        0 => '373',
+      ),
+      'sec-ch-ua' =>
+      array (
+        0 => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      ),
+      'accept' =>
+      array (
+        0 => 'application/json, text/plain, */*',
+      ),
+      'content-type' =>
+      array (
+        0 => 'multipart/form-data; boundary=----WebKitFormBoundaryAIwrl0ZOjbj35ADB',
+      ),
+      'sec-ch-ua-mobile' =>
+      array (
+        0 => '?0',
+      ),
+      'user-agent' =>
+      array (
+        0 => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      ),
+      'sec-ch-ua-platform' =>
+      array (
+        0 => '"Linux"',
+      ),
+      'origin' =>
+      array (
+        0 => 'http://localhost:3000',
+      ),
+      'sec-fetch-site' =>
+      array (
+        0 => 'same-site',
+      ),
+      'sec-fetch-mode' =>
+      array (
+        0 => 'cors',
+      ),
+      'sec-fetch-dest' =>
+      array (
+        0 => 'empty',
+      ),
+      'referer' =>
+      array (
+        0 => 'http://localhost:3000/',
+      ),
+      'accept-encoding' =>
+      array (
+        0 => 'gzip, deflate, br',
+      ),
+      'accept-language' =>
+      array (
+        0 => 'en-US,en;q=0.9,de;q=0.8',
+      ),
+    ),
+     'cacheControl' =>
+    array (
+    ),
+  )),
+   'content' => NULL,
+   'languages' => NULL,
+   'charsets' => NULL,
+   'encodings' => NULL,
+   'acceptableContentTypes' => NULL,
+   'pathInfo' => '/updateMedium',
+   'requestUri' => '/updateMedium',
+   'baseUrl' => '',
+   'basePath' => NULL,
+   'method' => 'PUT',
+   'format' => NULL,
+   'session' =>
+  Illuminate\Session\Store::__set_state(array(
+     'id' => 'zgyaT61V0fTTGag59JQmG4aLPgaPONc9UNQaBOFj',
+     'name' => 'laravel_session',
+     'attributes' =>
+    array (
+      '_token' => 'JkFWabGSM8VFA0ypylFAVSYCRlTBQkpYRvLo0pIb',
+    ),
+     'handler' =>
+    Illuminate\Session\FileSessionHandler::__set_state(array(
+       'files' =>
+      Illuminate\Filesystem\Filesystem::__set_state(array(
+      )),
+       'path' => '/home/nmarkovic/Desktop/eucenje/backend/storage/framework/sessions',
+       'minutes' => '120',
+    )),
+     'serialization' => 'php',
+     'started' => true,
+  )),
+   'locale' => NULL,
+   'defaultLocale' => 'en',
+   'preferredFormat' => NULL,
+   'isHostValid' => true,
+   'isForwardedValid' => true,
+))
+'-----------------------------'
+Illuminate\Http\Request::__set_state(array(
+   'json' => NULL,
+   'convertedFiles' => NULL,
+   'userResolver' =>
+  Closure::__set_state(array(
+  )),
+   'routeResolver' =>
+  Closure::__set_state(array(
+  )),
+   'attributes' =>
+  Symfony\Component\HttpFoundation\ParameterBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'request' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'query' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'server' =>
+  Symfony\Component\HttpFoundation\ServerBag::__set_state(array(
+     'parameters' =>
+    array (
+      'DOCUMENT_ROOT' => '/home/nmarkovic/Desktop/eucenje/backend/public',
+      'REMOTE_ADDR' => '127.0.0.1',
+      'REMOTE_PORT' => '42426',
+      'SERVER_SOFTWARE' => 'PHP 8.0.19 Development Server',
+      'SERVER_PROTOCOL' => 'HTTP/1.1',
+      'SERVER_NAME' => '127.0.0.1',
+      'SERVER_PORT' => '8001',
+      'REQUEST_URI' => '/updateMedium',
+      'REQUEST_METHOD' => 'PUT',
+      'SCRIPT_NAME' => '/index.php',
+      'SCRIPT_FILENAME' => '/home/nmarkovic/Desktop/eucenje/backend/public/index.php',
+      'PATH_INFO' => '/updateMedium',
+      'PHP_SELF' => '/index.php/updateMedium',
+      'HTTP_HOST' => 'localhost:8001',
+      'HTTP_CONNECTION' => 'keep-alive',
+      'CONTENT_LENGTH' => '373',
+      'HTTP_CONTENT_LENGTH' => '373',
+      'HTTP_SEC_CH_UA' => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      'HTTP_ACCEPT' => 'application/json, text/plain, */*',
+      'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundarymOhDBUrqb04RASka',
+      'HTTP_CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundarymOhDBUrqb04RASka',
+      'HTTP_SEC_CH_UA_MOBILE' => '?0',
+      'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      'HTTP_SEC_CH_UA_PLATFORM' => '"Linux"',
+      'HTTP_ORIGIN' => 'http://localhost:3000',
+      'HTTP_SEC_FETCH_SITE' => 'same-site',
+      'HTTP_SEC_FETCH_MODE' => 'cors',
+      'HTTP_SEC_FETCH_DEST' => 'empty',
+      'HTTP_REFERER' => 'http://localhost:3000/',
+      'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br',
+      'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,de;q=0.8',
+      'REQUEST_TIME_FLOAT' => 1655540728.353939,
+      'REQUEST_TIME' => 1655540728,
+    ),
+  )),
+   'files' =>
+  Symfony\Component\HttpFoundation\FileBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'cookies' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'headers' =>
+  Symfony\Component\HttpFoundation\HeaderBag::__set_state(array(
+     'headers' =>
+    array (
+      'host' =>
+      array (
+        0 => 'localhost:8001',
+      ),
+      'connection' =>
+      array (
+        0 => 'keep-alive',
+      ),
+      'content-length' =>
+      array (
+        0 => '373',
+      ),
+      'sec-ch-ua' =>
+      array (
+        0 => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      ),
+      'accept' =>
+      array (
+        0 => 'application/json, text/plain, */*',
+      ),
+      'content-type' =>
+      array (
+        0 => 'multipart/form-data; boundary=----WebKitFormBoundarymOhDBUrqb04RASka',
+      ),
+      'sec-ch-ua-mobile' =>
+      array (
+        0 => '?0',
+      ),
+      'user-agent' =>
+      array (
+        0 => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      ),
+      'sec-ch-ua-platform' =>
+      array (
+        0 => '"Linux"',
+      ),
+      'origin' =>
+      array (
+        0 => 'http://localhost:3000',
+      ),
+      'sec-fetch-site' =>
+      array (
+        0 => 'same-site',
+      ),
+      'sec-fetch-mode' =>
+      array (
+        0 => 'cors',
+      ),
+      'sec-fetch-dest' =>
+      array (
+        0 => 'empty',
+      ),
+      'referer' =>
+      array (
+        0 => 'http://localhost:3000/',
+      ),
+      'accept-encoding' =>
+      array (
+        0 => 'gzip, deflate, br',
+      ),
+      'accept-language' =>
+      array (
+        0 => 'en-US,en;q=0.9,de;q=0.8',
+      ),
+    ),
+     'cacheControl' =>
+    array (
+    ),
+  )),
+   'content' => NULL,
+   'languages' => NULL,
+   'charsets' => NULL,
+   'encodings' => NULL,
+   'acceptableContentTypes' => NULL,
+   'pathInfo' => '/updateMedium',
+   'requestUri' => '/updateMedium',
+   'baseUrl' => '',
+   'basePath' => NULL,
+   'method' => 'PUT',
+   'format' => NULL,
+   'session' =>
+  Illuminate\Session\Store::__set_state(array(
+     'id' => 'ZaLvd61ATPseIQfPejOpr3vrgt4S90rXdbNLQ8vP',
+     'name' => 'laravel_session',
+     'attributes' =>
+    array (
+      '_token' => 'PlPsGhTBIvwjsSGB3zIFCkYl95z8ke9Ihijrcz30',
+    ),
+     'handler' =>
+    Illuminate\Session\FileSessionHandler::__set_state(array(
+       'files' =>
+      Illuminate\Filesystem\Filesystem::__set_state(array(
+      )),
+       'path' => '/home/nmarkovic/Desktop/eucenje/backend/storage/framework/sessions',
+       'minutes' => '120',
+    )),
+     'serialization' => 'php',
+     'started' => true,
+  )),
+   'locale' => NULL,
+   'defaultLocale' => 'en',
+   'preferredFormat' => NULL,
+   'isHostValid' => true,
+   'isForwardedValid' => true,
+))
+'-----------------------------'
+Illuminate\Http\Request::__set_state(array(
+   'json' => NULL,
+   'convertedFiles' => NULL,
+   'userResolver' =>
+  Closure::__set_state(array(
+  )),
+   'routeResolver' =>
+  Closure::__set_state(array(
+  )),
+   'attributes' =>
+  Symfony\Component\HttpFoundation\ParameterBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'request' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+      'cm_id' => '104',
+      'title' => 'editujemo medium',
+      'description' => 'ediujemo medium description',
+    ),
+  )),
+   'query' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'server' =>
+  Symfony\Component\HttpFoundation\ServerBag::__set_state(array(
+     'parameters' =>
+    array (
+      'DOCUMENT_ROOT' => '/home/nmarkovic/Desktop/eucenje/backend/public',
+      'REMOTE_ADDR' => '127.0.0.1',
+      'REMOTE_PORT' => '42444',
+      'SERVER_SOFTWARE' => 'PHP 8.0.19 Development Server',
+      'SERVER_PROTOCOL' => 'HTTP/1.1',
+      'SERVER_NAME' => '127.0.0.1',
+      'SERVER_PORT' => '8001',
+      'REQUEST_URI' => '/updateMedium',
+      'REQUEST_METHOD' => 'POST',
+      'SCRIPT_NAME' => '/index.php',
+      'SCRIPT_FILENAME' => '/home/nmarkovic/Desktop/eucenje/backend/public/index.php',
+      'PATH_INFO' => '/updateMedium',
+      'PHP_SELF' => '/index.php/updateMedium',
+      'HTTP_HOST' => 'localhost:8001',
+      'HTTP_CONNECTION' => 'keep-alive',
+      'CONTENT_LENGTH' => '372',
+      'HTTP_CONTENT_LENGTH' => '372',
+      'HTTP_SEC_CH_UA' => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      'HTTP_ACCEPT' => 'application/json, text/plain, */*',
+      'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryUWiejdK0v8vYtyGx',
+      'HTTP_CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryUWiejdK0v8vYtyGx',
+      'HTTP_SEC_CH_UA_MOBILE' => '?0',
+      'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      'HTTP_SEC_CH_UA_PLATFORM' => '"Linux"',
+      'HTTP_ORIGIN' => 'http://localhost:3000',
+      'HTTP_SEC_FETCH_SITE' => 'same-site',
+      'HTTP_SEC_FETCH_MODE' => 'cors',
+      'HTTP_SEC_FETCH_DEST' => 'empty',
+      'HTTP_REFERER' => 'http://localhost:3000/',
+      'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br',
+      'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,de;q=0.8',
+      'REQUEST_TIME_FLOAT' => 1655540865.095909,
+      'REQUEST_TIME' => 1655540865,
+    ),
+  )),
+   'files' =>
+  Symfony\Component\HttpFoundation\FileBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'cookies' =>
+  Symfony\Component\HttpFoundation\InputBag::__set_state(array(
+     'parameters' =>
+    array (
+    ),
+  )),
+   'headers' =>
+  Symfony\Component\HttpFoundation\HeaderBag::__set_state(array(
+     'headers' =>
+    array (
+      'host' =>
+      array (
+        0 => 'localhost:8001',
+      ),
+      'connection' =>
+      array (
+        0 => 'keep-alive',
+      ),
+      'content-length' =>
+      array (
+        0 => '372',
+      ),
+      'sec-ch-ua' =>
+      array (
+        0 => '" Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"',
+      ),
+      'accept' =>
+      array (
+        0 => 'application/json, text/plain, */*',
+      ),
+      'content-type' =>
+      array (
+        0 => 'multipart/form-data; boundary=----WebKitFormBoundaryUWiejdK0v8vYtyGx',
+      ),
+      'sec-ch-ua-mobile' =>
+      array (
+        0 => '?0',
+      ),
+      'user-agent' =>
+      array (
+        0 => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+      ),
+      'sec-ch-ua-platform' =>
+      array (
+        0 => '"Linux"',
+      ),
+      'origin' =>
+      array (
+        0 => 'http://localhost:3000',
+      ),
+      'sec-fetch-site' =>
+      array (
+        0 => 'same-site',
+      ),
+      'sec-fetch-mode' =>
+      array (
+        0 => 'cors',
+      ),
+      'sec-fetch-dest' =>
+      array (
+        0 => 'empty',
+      ),
+      'referer' =>
+      array (
+        0 => 'http://localhost:3000/',
+      ),
+      'accept-encoding' =>
+      array (
+        0 => 'gzip, deflate, br',
+      ),
+      'accept-language' =>
+      array (
+        0 => 'en-US,en;q=0.9,de;q=0.8',
+      ),
+    ),
+     'cacheControl' =>
+    array (
+    ),
+  )),
+   'content' => NULL,
+   'languages' => NULL,
+   'charsets' => NULL,
+   'encodings' => NULL,
+   'acceptableContentTypes' => NULL,
+   'pathInfo' => '/updateMedium',
+   'requestUri' => '/updateMedium',
+   'baseUrl' => '',
+   'basePath' => NULL,
+   'method' => 'POST',
+   'format' => NULL,
+   'session' =>
+  Illuminate\Session\Store::__set_state(array(
+     'id' => 'onjoM4RmlCKEiFMteZhtJJco7yaRbiNdZzHQYwbr',
+     'name' => 'laravel_session',
+     'attributes' =>
+    array (
+      '_token' => 'cWnmPSZRvqE0chbbOdtfFtSiZzSpgw8gWkdQ1SGu',
+    ),
+     'handler' =>
+    Illuminate\Session\FileSessionHandler::__set_state(array(
+       'files' =>
+      Illuminate\Filesystem\Filesystem::__set_state(array(
+      )),
+       'path' => '/home/nmarkovic/Desktop/eucenje/backend/storage/framework/sessions',
+       'minutes' => '120',
+    )),
+     'serialization' => 'php',
+     'started' => true,
+  )),
+   'locale' => NULL,
+   'defaultLocale' => 'en',
+   'preferredFormat' => NULL,
+   'isHostValid' => true,
+   'isForwardedValid' => true,
+))
+'-----------------------------'

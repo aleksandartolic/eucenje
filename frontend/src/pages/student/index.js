@@ -1,10 +1,9 @@
 import StudentLayout from '../../components/Layouts/StudentLayout'
-import ListCourses from '../../components/student-components/listCourses'
-
+import StudentHome from '../../components/student-components/StudentHome'
 const Student = () => {
     return (
         <StudentLayout>
-            <ListCourses />
+            <StudentHome />
         </StudentLayout>
     )
 }

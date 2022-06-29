@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/Delete'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 
 import { CircularProgress } from '@mui/material'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useToasts } from 'react-toast-notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
@@ -172,7 +172,9 @@ const Media = () => {
                     height: '100%',
                 }}>
                 <Box pb={4} pl={2}>
-                    <Typography variant="h4">Courses</Typography>
+                    <Typography color="#9c27b0" variant="h4">
+                        Courses
+                    </Typography>
                 </Box>
                 <Box pt={2} sx={{ height: 'auto', width: '100%' }}>
                     <DataGrid
@@ -181,7 +183,14 @@ const Media = () => {
                             setSelectedRowId(id)
                         }}
                         autoHeight
-                        sx={{ fontSize: '13px' }}
+                        sx={{
+                            width: 'auto',
+                            fontSize: '13px',
+                            backgroundColor: '#fff',
+                            borderRadius: '15px',
+                            padding: '5px',
+                            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                        }}
                         rows={rows}
                         columns={columns}
                         pageSize={pageSize}

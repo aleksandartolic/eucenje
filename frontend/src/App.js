@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Home from './pages/index'
 import Login from './pages/authentication/login'
 import Admin from './pages/admin'
@@ -17,9 +17,20 @@ import Profile from './pages/admin/users/profile'
 import EditUser from './pages/admin/users/editUser'
 import EditCourse from './pages/admin/courses/edit-course'
 import EditMedia from './pages/admin/media/edit-media'
-
+import CourseOverview from './pages/student/course-overview'
+import EditStudentProfile from './pages/student/edit-user'
+import { useNavigate } from 'react-router-dom'
 function App() {
+    const navigate = useNavigate()
     const location = useLocation()
+    const userId = localStorage.getItem('userId')
+
+    useEffect(() => {
+        if (!userId) {
+            navigate('/')
+        }
+    }, [])
+
     return (
         <Fragment>
             <Routes>
@@ -36,7 +47,7 @@ function App() {
                         location.pathname === '/admin' ? <Admin /> : <Outlet />
                     }>
                     {/* ADMIN PROFILE*/}
-                    <Route path="/admin/profile/:uid" element={<Profile />} />
+                    <Route path="/admin/profile/" element={<Profile />} />
 
                     {/* MEDIA ROUTES*/}
                     <Route
@@ -83,6 +94,14 @@ function App() {
                 {/* STUDENT ROUTES */}
 
                 <Route path="/student" element={<Student />} />
+                <Route
+                    path="/student/courses/:cid"
+                    element={<CourseOverview />}
+                />
+                <Route
+                    path="/student/profile/:uid"
+                    element={<EditStudentProfile />}
+                />
                 {/*<Route index element={<Home />} />*/}
                 {/*<Route path="teams" element={<Teams />}>*/}
                 {/*    <Route path=":teamId" element={<Team />} />*/}

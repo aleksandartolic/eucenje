@@ -3,68 +3,61 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
+
 import AdminLayout from '../../../../components/Layouts/AdminLayout'
 import {
     Button,
     CircularProgress,
-    Grow,
     LinearProgress,
     Select,
-    TextareaAutosize,
+    TextField,
 } from '@mui/material'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
-import MenuItem from '@mui/material/MenuItem'
 
+import AuthValidationErrors from '../../../../components/AuthValidationErrors'
 const CreateCourse = () => {
     // const userId = localStorage.getItem('userId')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [loading, setLoading] = useState(false)
     const { addToast } = useToasts()
     const [courses, setCourses] = useState('')
-
     const [course, setCourse] = useState('')
-    const [video, setVideo] = useState('')
-    const [disabled, setDisabled] = useState(true)
+    const [errors, setErrors] = useState([])
     const [selectedFiles, setSelectedFiles] = useState(undefined)
     const [currentFile, setCurrentFile] = useState(undefined)
     const [progress, setProgress] = useState(0)
-    const [message, setMessage] = useState('')
-    const [animate, setAnimate] = useState(false)
 
-    useEffect(() => {
-        if (currentFile) {
-            setAnimate(true)
-        } else {
-            setAnimate(false)
-        }
-    }, [currentFile])
-
+    console.log(errors)
     useEffect(() => {
         axios.get('http://localhost:8001/listCourses').then(value => {
             setCourses(value.data.response)
         })
     }, [])
 
-    const handleChooseCourse = e => {
-        setCourse(e.target.value)
-        console.log(e.target)
+    const handleChangeMultiple = event => {
+        const { options } = event.target
+        const value = []
+        for (let i = 0, l = options.length; i < l; i += 1) {
+            if (options[i].selected) {
+                value.push(options[i].value)
+            }
+        }
+        setCourse(value)
     }
-
     function selectFiles(event) {
         setSelectedFiles(event.target.files[0])
     }
 
     function upload(file, onUploadProgress) {
+        setErrors([])
         let formData = new FormData()
         formData.append('filename', file)
         formData.append('course_id', course)
         formData.append('title', name)
         formData.append('description', description)
-        return axios
+        axios
             .post('http://localhost:8001/uploadMedium/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -72,205 +65,193 @@ const CreateCourse = () => {
                 onUploadProgress,
             })
             .then(response => {
-                setTimeout(() => {
-                    setCurrentFile(undefined)
-                    setSelectedFiles(undefined)
-                    if (response.status === 200) {
-                        addToast('Course added successful!', {
-                            autoDismiss: true,
-                            autoDismissTimeout: 5000,
-                            appearance: 'success',
-                        })
+                if (response.data.response.success === true) {
+                    setCourse('')
+                    setName('')
+                    setDescription('')
+                    addToast('Medium added successful!', {
+                        autoDismiss: true,
+                        autoDismissTimeout: 5000,
+                        appearance: 'success',
+                    })
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 422) {
+                    console.log(error.response)
+                    if (error.response.data.response.message.title) {
+                        setErrors([
+                            error.response.data.response.message.title[0],
+                        ])
+                    } else if (
+                        error.response.data.response.message.description
+                    ) {
+                        setErrors([
+                            error.response.data.response.message.description[0],
+                        ])
+                    } else if (error.response.data.response.message.course_id) {
+                        setErrors(['Course is required'])
                     }
-                }, 3000)
+                }
             })
     }
 
     function uploadService(e) {
         e.preventDefault()
         let currentFile = selectedFiles
-
         setProgress(0)
         setCurrentFile(currentFile)
-
         upload(currentFile, event => {
             setProgress(Math.round((100 * event.loaded) / event.total))
-        }).catch(error => {
-            console.log(error)
-            setProgress(0)
-            setCurrentFile(undefined)
         })
     }
 
-    useEffect(() => {
-        if (video !== '') {
-            setDisabled(false)
-        }
-    }, [video])
-
-    const createCourseHandler = e => {
-        e.preventDefault()
-        setLoading(true)
-        const formData = new FormData()
-        formData.append('course_id', 49)
-        formData.append('title', name)
-        formData.append('description', description)
-        formData.append('filename', video)
-        if (video !== '') {
-            axios.post('http://localhost:8001/uploadMedium/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-        }
-
-        addToast('Course added successful!', {
-            autoDismiss: true,
-            autoDismissTimeout: 5000,
-            appearance: 'success',
-        })
-        setLoading(false)
-        setName('')
-        setDescription('')
-    }
-    console.log(currentFile)
-
-    const handleInputChange = async e => {
-        e.preventDefault()
-
-        let file = e.target.files[0]
-        setVideo(file)
-    }
+    useEffect(() => {}, [errors])
 
     return (
         <AdminLayout>
-            {loading ? (
-                <CircularProgress />
-            ) : (
-                <Box
-                    onSubmit={uploadService}
-                    pt={10}
-                    mb={30}
-                    mt={10}
-                    pl={50}
-                    pr={50}
-                    component="form"
-                    sx={{
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        borderRadius: '10px',
-                        '& > :not(style)': { m: 1 },
-                    }}
-                    noValidate
-                    autoComplete="off">
-                    <Box>
-                        <Typography variant="h4">Upload Medium</Typography>
-                    </Box>
-                    <FormControl>
-                        <InputLabel htmlFor="component-outlined">
-                            Name
-                        </InputLabel>
-                        <OutlinedInput
-                            id="component-outlined"
-                            value={name}
-                            onChange={event => setName(event.target.value)}
-                            label="name"
-                        />
-                    </FormControl>
-                    <FormControl
-                        sx={{
-                            '.MuiFormControl-root': {
-                                fontSize: '5px',
-                                backgroundColor: '#000000',
-                            },
-                        }}>
-                        <TextareaAutosize
-                            sx={{ fontSize: '9px' }}
-                            aria-label="minimum height"
-                            minRows={10}
-                            value={description}
-                            type="text"
-                            placeholder="Description"
-                            style={{
-                                width: '100%',
-                                fontSize: '10px',
-                                padding: '10px',
-                                fontFamily: 'sans-serif',
-                            }}
-                            onChange={event =>
-                                setDescription(event.target.value)
-                            }
-                        />
-                    </FormControl>
-                    <div>
-                        {currentFile && (
-                            <>
-                                <Grow in={animate}>
-                                    <LinearProgress
-                                        value={progress}
-                                        variant="determinate"
-                                        sx={{
-                                            height: '20px',
-                                        }}
-                                    />
-                                </Grow>
-
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary">{`${Math.round(
-                                    progress,
-                                )}%`}</Typography>
-
-                                <br />
-                                <br />
-                            </>
-                        )}
-                        {courses.length > 0 ? (
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">
-                                    Select Course
-                                </InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={course}
-                                    label="Select Course"
-                                    onChange={handleChooseCourse}>
-                                    {courses.map(course => {
-                                        return (
-                                            <MenuItem
-                                                key={course.name}
-                                                value={course.course_id}>
-                                                {course.name}
-                                            </MenuItem>
-                                        )
-                                    })}
-                                </Select>
-                            </FormControl>
-                        ) : (
-                            <CircularProgress />
-                        )}
-                        <br />
-                        <br />
-                        <Button variant="contained" component="label">
-                            Choose File
-                            <input type="file" hidden onChange={selectFiles} />
-                        </Button>
-                        <br />
-                        <p>{selectedFiles && selectedFiles.name}</p>
-                        <br />
-                        <Button
-                            type="submit"
-                            color="secondary"
-                            variant="contained"
-                            disabled={!selectedFiles}>
-                            Upload
-                        </Button>
-                    </div>
+            <Box
+                color="#fff"
+                onSubmit={uploadService}
+                p={10}
+                mr={20}
+                ml={20}
+                mb={30}
+                mt={20}
+                sx={{
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    width: '100%',
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    borderRadius: '20px',
+                    '& > :not(style)': { m: 1 },
+                }}
+                component="form"
+                autoComplete="off">
+                <Box>
+                    <Typography
+                        sx={{ marginBottom: '20px' }}
+                        color="#9c27b0"
+                        variant="h4">
+                        Upload Medium
+                    </Typography>
                 </Box>
-            )}
+
+                {errors.length > 0 && (
+                    <AuthValidationErrors
+                        style={{ marginBottom: '20px' }}
+                        errors={errors}
+                    />
+                )}
+
+                <TextField
+                    inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                    InputLabelProps={{ style: { fontSize: 13 } }}
+                    style={{
+                        width: '100%',
+                        margin: '5px',
+                        marginBottom: '2rem',
+                    }}
+                    label="Title"
+                    variant="outlined"
+                    id="title"
+                    type="text"
+                    value={name}
+                    className="block mt-1 w-full"
+                    onChange={event => setName(event.target.value)}
+                    required
+                />
+
+                <TextField
+                    inputProps={{ style: { fontSize: 17 } }} // font size of input text
+                    InputLabelProps={{ style: { fontSize: 13 } }}
+                    style={{
+                        width: '100%',
+                        margin: '5px',
+                        marginBottom: '2rem',
+                    }}
+                    multiline
+                    rows={4}
+                    label="Description"
+                    variant="outlined"
+                    id="description"
+                    type="text"
+                    value={description}
+                    className="block mt-1 w-full"
+                    onChange={event => setDescription(event.target.value)}
+                    required
+                />
+                {courses.length > 0 ? (
+                    <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 300 }}>
+                        <InputLabel shrink htmlFor="select-multiple-native">
+                            Choose Course
+                        </InputLabel>
+                        <Select
+                            native
+                            value={course}
+                            // @ts-ignore Typings are not considering `native`
+                            onChange={handleChangeMultiple}
+                            label="Choose Course"
+                            inputProps={{
+                                id: 'select-multiple-native',
+                            }}>
+                            <option value={''}>-</option>
+                            {courses.map(name => {
+                                return (
+                                    <option
+                                        key={name.course_id}
+                                        value={name.course_id}>
+                                        {name.name}
+                                    </option>
+                                )
+                            })}
+                        </Select>
+                    </FormControl>
+                ) : (
+                    <CircularProgress />
+                )}
+                {currentFile && (
+                    <>
+                        <LinearProgress
+                            value={progress}
+                            variant="determinate"
+                            sx={{
+                                marginTop: '10px',
+                                height: '20px',
+                            }}
+                        />
+
+                        <Typography
+                            variant="body2"
+                            color="text.secondary">{`${Math.round(
+                            progress,
+                        )}%`}</Typography>
+                    </>
+                )}
+
+                <Button
+                    sx={{ marginTop: '10px', width: '100px' }}
+                    variant="contained"
+                    component="label">
+                    Choose File
+                    <input type="file" hidden onChange={selectFiles} />
+                </Button>
+                <br />
+                <Typography color="#9c27b0" variant="h5" fontWeight="bold">
+                    {selectedFiles && selectedFiles.name}
+                </Typography>
+                <br />
+                <Button
+                    sx={{ width: '100px' }}
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    disabled={!selectedFiles}>
+                    Upload
+                </Button>
+            </Box>
         </AdminLayout>
     )
 }
