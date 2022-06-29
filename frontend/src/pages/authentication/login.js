@@ -5,17 +5,16 @@ import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { getUserId } from '../../redux/loginSlice'
-import { useDispatch } from 'react-redux'
 import AuthValidationErrors from '../../components/AuthValidationErrors'
 import React from 'react'
+
 const Login = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [errors, setErrors] = useState([])
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+
     const userId = localStorage.getItem('userId')
 
     useEffect(() => {
@@ -58,7 +57,6 @@ const Login = () => {
             .then(res => {
                 console.log(res)
                 if (res.data.success) {
-                    dispatch(getUserId(res.data.user.id))
                     localStorage.setItem('userId', res.data.user.id)
                     if (res.data.user.role === 1) {
                         navigate(`/admin`)

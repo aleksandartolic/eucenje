@@ -16,7 +16,6 @@ import {
 } from '@mui/material'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import TextField from '@mui/material/TextField'
@@ -53,13 +52,6 @@ export default function StudentHome() {
     const [searchQuery, setSearchQuery] = useState('')
     const onChangeCategory = e => {
         setCategory(e.target.value)
-    }
-    const filterData = (query, data) => {
-        if (!query) {
-            return data
-        } else {
-            return data.filter(d => d.toLowerCase().includes(query))
-        }
     }
 
     useEffect(async () => {
@@ -145,7 +137,6 @@ export default function StudentHome() {
                     </Select>
                 </FormControl>
             </Box>
-
             {!coursesLoadiong ? (
                 <Box
                     display="flex"
@@ -178,10 +169,11 @@ export default function StudentHome() {
                                         sx={{
                                             paddingTop: '10px',
                                         }}>
-                                        <LazyLoadImage
+                                        <img
                                             width="400px"
                                             height="300px"
-                                            src={`http://localhost:8001/storage/picture/${
+                                            alt="za malo da se ucita"
+                                            src={`http://127.0.0.1:8001/storage/picture/${
                                                 course.picture ? (
                                                     course.picture
                                                 ) : (
