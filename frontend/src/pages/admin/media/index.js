@@ -150,7 +150,6 @@ const Media = () => {
             <AdminLayout>
                 <Box
                     component="main"
-                    mt={10}
                     sx={{
                         flexGrow: 1,
                         p: 7,

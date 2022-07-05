@@ -48,12 +48,12 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{
                             cursor: 'pointer',
-                            display: { xs: 'none', sm: 'block' },
+                            display: { sm: 'block' },
                         }}>
                         A D E M Y
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ display: { md: 'flex' } }}>
                         <IconButton
                             onClick={() => {
                                 navigate(`/student/profile/${userId}`)

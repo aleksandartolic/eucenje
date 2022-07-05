@@ -1,5 +1,4 @@
 import AdminLayout from '../../../../components/Layouts/AdminLayout'
-// eslint-disable-next-line import/extensions
 import Videojs from '../../../../video.js'
 import {
     Box,
@@ -139,10 +138,6 @@ const EditMedia = () => {
         <AdminLayout>
             <Box
                 p={8}
-                mr={20}
-                ml={28}
-                mb={30}
-                mt={20}
                 display="flex"
                 flexDirection="column"
                 sx={{

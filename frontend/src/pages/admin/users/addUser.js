@@ -57,19 +57,14 @@ const AddUser = () => {
 
     return (
         <AdminLayout>
-            <Box pt={5}>
                 <Box
                     color="#fff"
                     onSubmit={addUserHandler}
                     component="form"
                     p={10}
-                    mr={20}
-                    ml={40}
-                    mb={30}
-                    mt={20}
+                    width="100%"
                     sx={{
                         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        width: '100%',
                         backgroundColor: '#fff',
                         display: 'flex',
                         flexDirection: 'column',
@@ -170,7 +165,6 @@ const AddUser = () => {
                         Add
                     </Button>
                 </Box>
-            </Box>
         </AdminLayout>
     )
 }

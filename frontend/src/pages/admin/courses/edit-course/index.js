@@ -66,7 +66,6 @@ const EditCourse = () => {
     return (
         <AdminLayout>
             <Box
-                mt={10}
                 sx={{
                     height: 'auto',
                     display: 'flex',
@@ -200,6 +199,8 @@ const EditCourse = () => {
                                     Description
                                 </InputLabel>
                                 <OutlinedInput
+                                    multiline
+                                    row={3}
                                     id="component-outlined"
                                     value={courseDescription}
                                     onChange={event =>

@@ -24,8 +24,19 @@ import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 
 const SearchBar = ({ setSearchQuery }) => (
-    <form>
+    <form
+        style={{
+            '@media screen and (max-width: 1000px)': {
+                marginBottom: '5%',
+                width:"100%"
+            },
+        }}>
         <TextField
+            sx={{
+                '@media screen and (max-width: 1000px)': {
+                    marginBottom: '10%',
+                },
+            }}
             id="search-bar"
             className="text"
             onInput={e => {
@@ -99,10 +110,33 @@ export default function StudentHome() {
     }
 
     return (
-        <Box>
-            <Box minWidth="90vw" display="flex" justifyContent="space-between">
+        <Box
+            sx={{
+                '@media screen and (max-width: 1000px)': {
+                    justifyContent: 'center',
+                },
+            }}
+            display="flex"
+            flexDirection="column">
+            <Box
+                sx={{
+                    '@media screen and (max-width: 1000px)': {
+                      alignItems:"center",
+                        flexDirection: 'column',
+                    },
+                }}
+                minWidth="90vw"
+                display="flex"
+                justifyContent="space-between">
                 {courses ? (
-                    <Box pb={7}>
+                    <Box
+                        sx={{
+                            '@media screen and (max-width: 1000px)': {
+                                paddingBottom: '0',
+                                marginBottom: '3%',
+                            },
+                        }}
+                        pb={7}>
                         <Typography variant="h3">
                             Choose over {courses.length} courses
                         </Typography>{' '}
@@ -111,11 +145,16 @@ export default function StudentHome() {
                     <CircularProgress />
                 )}
                 <SearchBar
+                    sx={{
+                        '@media screen and (max-width: 1000px)': {
+                            marginBottom: '5%',
+                        },
+                    }}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                 />
                 <FormControl
-                    sx={{ alignSelf: 'flex-start', marginBottom: '20px' }}>
+                    sx={{ marginBottom: '5%' }}>
                     <InputLabel>Categories</InputLabel>
                     <Select
                         sx={{ minWidth: '200px' }}
@@ -142,10 +181,15 @@ export default function StudentHome() {
                     display="flex"
                     justifyContent="space-between"
                     flexWrap={'wrap'}
+                    sx={{
+                        '@media screen and (max-width: 1669px)': {
+                            justifyContent: 'center',
+                        },
+                    }}
                     height="auto">
                     {courses.map((course, index) => {
                         return (
-                            <Box mb={3} key={index}>
+                            <Box mb={3} mr={3} key={index}>
                                 <Card
                                     sx={{
                                         maxWidth: 400,

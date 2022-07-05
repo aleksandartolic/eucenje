@@ -63,7 +63,7 @@ const Login = () => {
                     } else if (res.data.user.role === 3) {
                         navigate(`/student`)
                     } else {
-                        navigate(`/teacher`)
+                        navigate(`/admin`)
                     }
                 } else {
                     setErrors([res.data.message])

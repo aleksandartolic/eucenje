@@ -114,10 +114,6 @@ const CreateCourse = () => {
                 color="#fff"
                 onSubmit={uploadService}
                 p={10}
-                mr={20}
-                ml={20}
-                mb={30}
-                mt={20}
                 sx={{
                     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                     width: '100%',

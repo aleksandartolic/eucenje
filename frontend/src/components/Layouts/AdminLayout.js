@@ -10,7 +10,12 @@ const AdminLayout = props => {
         <Fragment>
             <Box
                 border={0}
+                pt={15}
+                pr={10}
+                pl={10}
+                pb={10}
                 sx={{
+                    minHeight:"90vh",
                     display: 'flex',
                     height: 'auto',
                     backgroundColor: 'rgba(0, 0, 0, 0.1)',

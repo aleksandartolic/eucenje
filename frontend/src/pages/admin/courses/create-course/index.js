@@ -129,10 +129,6 @@ const CreateCourse = () => {
                 color="#fff"
                 onSubmit={uploadService}
                 p={10}
-                mr={20}
-                ml={40}
-                mb={30}
-                mt={20}
                 sx={{
                     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                     width: '100%',
@@ -154,7 +150,7 @@ const CreateCourse = () => {
                     pl={0}
                     component="form"
                     sx={{
-                        width: '600px',
+                        width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',

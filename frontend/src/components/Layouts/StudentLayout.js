@@ -7,7 +7,7 @@ const StudentLayout = props => {
         <Box display="flex" flexDirection="column">
             <Navbar />
             <Box
-                height
+                minHeight="80vh"
                 p={5}
                 sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex' }}>
                 {props.children}

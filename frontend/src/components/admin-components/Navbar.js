@@ -29,8 +29,8 @@ const Navbar = props => {
             <AppBar
                 position="fixed"
                 sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
+                    width: { lg: `calc(100% - ${drawerWidth}px)` },
+                    ml: { lg: `${drawerWidth}px` },
                     border: 'none',
                 }}>
                 <Toolbar
@@ -43,7 +43,7 @@ const Navbar = props => {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}>
+                        sx={{ mr: 2, display: { lg: 'none' } }}>
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
@@ -98,7 +98,7 @@ const Navbar = props => {
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                sx={{ width: { lg: drawerWidth }, flexShrink: { lg: 0 } }}
                 aria-label="mailbox folders">
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                 <Drawer
@@ -110,7 +110,7 @@ const Navbar = props => {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
+                        display: { xs: 'block', sm: 'block' },
                         '& .MuiDrawer-paper': {
                             boxSizing: 'border-box',
                             width: drawerWidth,
@@ -121,7 +121,10 @@ const Navbar = props => {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        display: { xs: 'none', sm: 'block' },
+                        '@media screen and (max-width: 627px)': {
+                           display:"none"
+                        },
+                        display: { xs: 'none', sm: 'none', lg:"block" },
                         '& .MuiDrawer-paper': {
                             boxSizing: 'border-box',
                             width: drawerWidth,

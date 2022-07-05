@@ -18,6 +18,11 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import AddIcon from '@mui/icons-material/Add'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import {useEffect} from 'react'
+import axios from "axios"
+
+
+
 const links = [
     {
         name: 'Media',
@@ -77,10 +82,22 @@ const links = [
 const Sidenav = () => {
     const navigate = useNavigate()
     const [expanded, setExpanded] = React.useState(false)
+    const [userRole,setUserRole] = React.useState("");
+
     const handleChange = panel => (event, isExpanded) => {
         event.stopPropagation()
         setExpanded(isExpanded ? panel : false)
     }
+
+    const  userId = localStorage.getItem("userId");
+    useEffect(async ()=>{
+        await axios.get(`http://localhost:8001/getUser/${userId}`).then((response)=>{
+            setUserRole(response.data.user.role)
+
+        })
+
+    },[])
+
     return (
         <Box
             border={0}
@@ -106,6 +123,17 @@ const Sidenav = () => {
             </Box>
             <Box mb="auto" mt={3} border={0}>
                 {links.map((link, index) => {
+                    if(link.name === "Users" && userRole === 2){
+                        return null;
+                    }
+                    if(link.name === "Media" && userRole === 2){
+
+                        link.name = "My Media"
+                    }
+                    if(link.name === "Courses" && userRole === 2){
+                        link.name = "My Courses"
+                    }
+
                     if (
                         link.name === 'Categories' ||
                         link.name === 'Comments' ||
