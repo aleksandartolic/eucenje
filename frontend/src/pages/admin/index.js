@@ -10,8 +10,6 @@ function Admin() {
     return (
         <AdminLayout>
             <Box
-                mt={10}
-                p={10}
                 component="main"
                 sx={{
                     alignItems: 'center',

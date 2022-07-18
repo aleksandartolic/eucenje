@@ -166,7 +166,6 @@ const Media = () => {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p: 7,
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     height: '100%',
                 }}>
@@ -186,7 +185,7 @@ const Media = () => {
                             width: 'auto',
                             fontSize: '13px',
                             backgroundColor: '#fff',
-                            minHeight:"500px",
+                            minHeight: '500px',
                             borderRadius: '15px',
                             padding: '5px',
                             boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',

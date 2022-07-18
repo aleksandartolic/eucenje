@@ -76,9 +76,9 @@ const Users = () => {
     }
 
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 1 },
-        { field: 'name', headerName: 'Name', flex: 1 },
-        { field: 'email', headerName: 'Email', flex: 1 },
+        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'name', headerName: 'Name', width: 150 },
+        { field: 'email', headerName: 'Email', width: 150 },
         {
             field: 'username',
             headerName: 'Username',
@@ -93,12 +93,14 @@ const Users = () => {
                 return (
                     <div>
                         <MoreIcon
+                            sx={{ cursor: 'pointer' }}
                             aria-controls={open ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
                         />
                         <Menu
+                            elevation={1}
                             id="basic-menu"
                             anchorEl={anchorEl}
                             open={open}
@@ -122,7 +124,7 @@ const Users = () => {
                 <DeleteIcon
                     color="info"
                     fontSize="large"
-                    sx={{ cursor: 'pointer', marginTop: '20px' }}
+                    sx={{ cursor: 'pointer' }}
                     onClick={() => {
                         console.log(selectedRowId)
                         if (selectedRowId.length !== 0) {
@@ -169,10 +171,8 @@ const Users = () => {
             <AdminLayout>
                 <Box
                     component="main"
-                    mt={10}
                     sx={{
                         flexGrow: 1,
-                        p: 7,
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
                     }}>
                     <Box pb={4} pl={2}>
@@ -190,7 +190,7 @@ const Users = () => {
                                 }}
                                 autoHeight
                                 sx={{
-                                    width: 'auto',
+                                    minHeight: '60vh',
                                     fontSize: '13px',
                                     backgroundColor: '#fff',
                                     borderRadius: '15px',
@@ -212,7 +212,6 @@ const Users = () => {
                         )}
                     </Box>
                 </Box>
-                );
             </AdminLayout>
         </Fragment>
     )

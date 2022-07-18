@@ -12,16 +12,16 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useNavigate } from 'react-router-dom'
-// import { useNavigate } from 'react-router-dom'
 
 const Media = () => {
-    // const [rows, setRows] = useState(null)
     const [pageSize, setPageSize] = useState(10)
     const [selectedRowId, setSelectedRowId] = useState(null)
     const [loading, setLoading] = useState(false)
     const [rows, setRows] = useState([])
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
+
+    console.log("im on this page");
     const navigate = useNavigate()
     const handleClick = event => {
         event.stopPropagation()
@@ -70,7 +70,7 @@ const Media = () => {
         {
             field: 'filename',
             headerName: 'Filename',
-            flex: 1,
+            width:150,
         },
         {
             field: 'created_at',
@@ -152,7 +152,6 @@ const Media = () => {
                     component="main"
                     sx={{
                         flexGrow: 1,
-                        p: 7,
                         width: { sm: `calc(100% - ${drawerWidth}px)` },
                     }}>
                     <Box pb={4} pl={2}>
@@ -160,15 +159,15 @@ const Media = () => {
                             Media
                         </Typography>
                     </Box>
-                    <Box pt={2} sx={{ height: '100%', width: '100%' }}>
+                    <Box pt={2} sx={{ minHeight:'40vh', height: '100%', width: '100%' }}>
                         {loading ? (
                             <CircularProgress />
                         ) : (
                             <DataGrid
-                                autoHeight
                                 getRowId={row => row.cm_id}
                                 sx={{
                                     width: 'auto',
+                                    minHeight:'40vh',
                                     fontSize: '13px',
                                     backgroundColor: '#fff',
                                     borderRadius: '15px',
