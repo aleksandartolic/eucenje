@@ -12,6 +12,8 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useNavigate } from 'react-router-dom'
+import env from 'react-dotenv'
+
 
 const Media = () => {
     const [pageSize, setPageSize] = useState(10)
@@ -33,7 +35,7 @@ const Media = () => {
 
     const getData = () => {
         setLoading(true)
-        axios.get('http://localhost:8001/listMedia').then(value => {
+        axios.get(`${env.REACT_PUBLIC_BACKEND_URL}/listMedia`).then(value => {
             setRows(value.data.response)
         })
         setLoading(false)
@@ -45,7 +47,7 @@ const Media = () => {
     const handleDelete = () => {
         setAnchorEl(null)
         axios
-            .delete(`http://localhost:8001/deleteMedium/${selectedRowId[0]}`)
+            .delete(`${env.REACT_PUBLIC_BACKEND_URL}/deleteMedium/${selectedRowId[0]}`)
             .then(() => {
                 getData()
             })
@@ -104,7 +106,7 @@ const Media = () => {
                         console.log(selectedRowId)
                         axios
                             .delete(
-                                `http://localhost:8001/deleteMedia/${selectedRowId.join(
+                                `${env.REACT_PUBLIC_BACKEND_URL}/deleteMedia/${selectedRowId.join(
                                     ',',
                                 )}`,
                             )

@@ -15,6 +15,7 @@ import {
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
+import env from 'react-dotenv'
 
 import AuthValidationErrors from '../../../../components/AuthValidationErrors'
 const CreateCourse = () => {
@@ -31,7 +32,7 @@ const CreateCourse = () => {
 
     console.log(errors)
     useEffect(() => {
-        axios.get('http://localhost:8001/listCourses').then(value => {
+        axios.get(`${env.REACT_PUBLIC_BACKEND_URL}/listCourses`).then(value => {
             setCourses(value.data.response)
         })
     }, [])
@@ -58,7 +59,7 @@ const CreateCourse = () => {
         formData.append('title', name)
         formData.append('description', description)
         axios
-            .post('http://localhost:8001/uploadMedium/', formData, {
+            .post(`${env.REACT_PUBLIC_BACKEND_URL}/uploadMedium/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

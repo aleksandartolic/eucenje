@@ -18,6 +18,8 @@ import { useToasts } from 'react-toast-notifications'
 import AuthValidationErrors from '../../components/AuthValidationErrors'
 import React from 'react'
 import { useEffect } from 'react'
+import env from 'react-dotenv'
+
 const Register = () => {
     const navigate = useNavigate()
     const [name, setName] = useState('')
@@ -34,7 +36,7 @@ const Register = () => {
     useEffect(() => {
         if (userId) {
             axios
-                .get(`http://localhost:8001/getUser/${userId}`)
+                .get(`${env.REACT_PUBLIC_BACKEND_URL}/getUser/${userId}`)
                 .then(response => {
                     if (response.data.user.role === 3) {
                         navigate('/student')
@@ -52,7 +54,7 @@ const Register = () => {
     const submitForm = async event => {
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8001/register', {
+            .post(`${env.REACT_PUBLIC_BACKEND_URL}/register`, {
                 name,
                 email,
                 password,

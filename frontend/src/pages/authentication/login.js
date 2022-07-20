@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import AuthValidationErrors from '../../components/AuthValidationErrors'
 import React from 'react'
+import env from 'react-dotenv'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -17,10 +18,11 @@ const Login = () => {
 
     const userId = localStorage.getItem('userId')
 
+    console.log(env.REACT_PUBLIC_BACKEND_URL)
     useEffect(() => {
         if (userId) {
             axios
-                .get(`http://localhost:8001/getUser/${userId}`)
+                .get(`${env.REACT_PUBLIC_BACKEND_URL}/getUser/${userId}`)
                 .then(response => {
                     if (response.data.user.role === 3) {
                         navigate('/student')
@@ -50,7 +52,7 @@ const Login = () => {
         setLoading(true)
         event.preventDefault()
         axios
-            .post('http://127.0.0.1:8001/login', {
+            .post(`${env.REACT_PUBLIC_BACKEND_URL}/login`, {
                 email,
                 password,
             })

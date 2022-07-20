@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useToasts } from 'react-toast-notifications'
+import env from 'react-dotenv'
 
 const EditMedia = () => {
     const [createdAt, setCreatedAt] = useState('')
@@ -51,7 +52,7 @@ const EditMedia = () => {
         formData.append('title', title)
         formData.append('description', description)
         axios
-            .post('http://localhost:8001/updateMedium', formData, {
+            .post(`${env.REACT_PUBLIC_BACKEND_URL}/updateMedium`, formData, {
                 onUploadProgress,
             })
             .then(response => {
@@ -88,7 +89,7 @@ const EditMedia = () => {
     }
     const getData = () => {
         axios
-            .get(`http://localhost:8001/getMedium/${mediumId.mid}`)
+            .get(`${env.REACT_PUBLIC_BACKEND_URL}/getMedium/${mediumId.mid}`)
             .then(res => {
                 const {
                     cm_id,
@@ -100,7 +101,9 @@ const EditMedia = () => {
                     title,
                 } = res.data.media
                 axios
-                    .get(`http://localhost:8001/getCourse/${course_id}`)
+                    .get(
+                        `${env.REACT_PUBLIC_BACKEND_URL}/getCourse/${course_id}`,
+                    )
                     .then(value => {
                         setCourseName(value.data.media.name)
                     })
@@ -128,7 +131,7 @@ const EditMedia = () => {
             controls: true,
             sources: [
                 {
-                    src: `http://localhost:8001/storage/media/${video}`,
+                    src: `${env.REACT_PUBLIC_BACKEND_URL}/storage/media/${video}`,
                     type: 'video/mp4',
                 },
             ],
